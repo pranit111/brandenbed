@@ -1,0 +1,24 @@
+# Django Deployment Commands for Render
+# Run these commands manually if needed
+
+# Force recreate all migrations
+python manage.py makemigrations accounts
+python manage.py makemigrations employees  
+python manage.py makemigrations properties
+python manage.py makemigrations landlords
+python manage.py makemigrations residents
+python manage.py makemigrations leads
+python manage.py makemigrations payments
+python manage.py makemigrations support
+python manage.py makemigrations maintenance
+python manage.py makemigrations housekeeping
+python manage.py makemigrations reports
+
+# Apply all migrations
+python manage.py migrate
+
+# Create superuser
+python manage.py createsuperuser --username admin --email initcore25@gmail.com
+
+# Collect static files
+python manage.py collectstatic --noinput
