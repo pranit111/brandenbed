@@ -1,0 +1,220 @@
+<!-- templates/dashboards/includes/sidebar.html -->
+{% load i18n %}
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-20 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
+        <!-- User Info Section -->
+        <div class="mb-6 pb-4 border-b border-gray-200">
+            <div class="flex items-center p-3 rounded-lg bg-gray-50">
+                {% if user.profile_picture %}
+                    <img class="w-10 h-10 rounded-full" src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name|default:user.username }}">
+                {% else %}
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style="background-color: var(--brand-gold);">
+                        {{ user.get_full_name.0|default:user.username.0|upper }}
+                    </div>
+                {% endif %}
+
+                <div class="ml-3 flex-1">
+                    <p class="text-sm font-medium text-gray-900">{{ user.get_full_name|default:user.username }}</p>
+                    <p class="text-xs text-gray-500">
+                        {% if user.is_superuser %}{% trans "System Administrator" %}
+                        {% elif user.user_type == 'employee' %}{% trans "BrandenBed Employee" %}
+                        {% elif user.user_type == 'landlord' %}{% trans "Property Partner" %}
+                        {% elif user.user_type == 'resident' %}{% trans "Resident" %}
+                        {% else %}{% trans "User" %}{% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <ul class="space-y-2 font-medium">
+            {% if user.is_superuser %}
+           <!-- Admin Menu -->
+            <li>
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="dashboard">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    <span class="ms-3">{% trans "Dashboard " %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'employees:employee_list' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="users">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% trans "Employees " %}</span>
+                   
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'properties:property_list' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="properties">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% trans "Properties" %}</span>
+                   
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'leads:lead_dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="leads">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% trans "Leads" %}</span>
+                   
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'residents:resident_dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="residents">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% trans "Residents" %}</span>
+                   
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'support:support_dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="users">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% trans "support " %}</span>
+                   
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'landlords:landlord_dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="users">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% trans "landlord" %}</span>
+                   
+                </a>
+            </li>
+            {% elif user.user_type == 'employee' %}
+                <!-- Employee Menu -->
+                <li>
+                    <a href="{% url 'dashboard:dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="dashboard">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+                        </svg>
+                        <span class="ms-3">{% trans "Dashboard" %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="properties">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                        <span class="ms-3">{% trans "Property Management" %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="residents">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="ms-3">{% trans "Resident Services" %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="support">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="ms-3">{% trans "Support Tickets" %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="maintenance">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="ms-3">{% trans "Maintenance" %}</span>
+                    </a>
+                </li>
+                
+            {% elif user.user_type == 'landlord' %}
+            <!-- Landlord Menu -->
+            <li>
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="dashboard">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+                    </svg>
+                    <span class="ms-3">{% trans "Dashboard" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="properties">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    <span class="ms-3">{% trans "My Properties" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="earnings">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-1.092a4.535 4.535 0 001.676-.662C13.398 12.766 14 11.991 14 11c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 8.092V6.151c.391.127.68.317.843.504a1 1 0 101.51-1.31c-.562-.649-1.413-1.076-2.353-1.253V4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="ms-3">{% trans "Earnings & Payouts" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="contracts">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="ms-3">{% trans "Contracts" %}</span>
+                </a>
+            </li>
+            
+            {% elif user.user_type == 'resident' %}
+            <!-- Resident Menu -->
+            <li>
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="dashboard">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+                    </svg>
+                    <span class="ms-3">{% trans "My Dashboard" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="room">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    <span class="ms-3">{% trans "My Room" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="payments">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                    </svg>
+                    <span class="ms-3">{% trans "Payments" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="support">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="ms-3">{% trans "Support" %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group nav-item" data-page="documents">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="ms-3">{% trans "Documents" %}</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    
+    </div>
+</aside>

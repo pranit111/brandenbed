@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load employee_tags %}
+
+{% block title %}Performance Report - {{ landlord.company_name|default:landlord.user.get_full_name }} - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <nav class="flex mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{% url 'landlords:landlord_dashboard' %}" class="text-gray-600 hover:text-blue-600">Dashboard</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <a href="{% url 'landlords:landlord_detail' landlord.landlord_id %}" class="text-gray-600 hover:text-blue-600">{{ landlord.landlord_id }}</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-500">Performance Report</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Performance Report</h1>
+                    <p class="text-gray-600 mt-1">{{ landlord.company_name|default:landlord.user.get_full_name }} • Generated on {{ report_date }}</p>
+                </div>
+            </div>
+            
+            <div class="mt-6 lg:mt-0 flex items-center space-x-3">
+                <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                    </svg>
+                    Print Report
+                </button>
+                <button onclick="exportToPDF()" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Export PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="bg-gray-100 rounded-xl border border-gray-900 p-8 mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Executive Summary</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-lg p-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Properties</p>
+                        <p class="text-2xl font-bold text-blue-600">{{ properties.count }}</p>
+                    </div>
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Rooms</p>
+                        <p class="text-2xl font-bold text-green-600">{{ total_rooms }}</p>
+                    </div>
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Occupied Rooms</p>
+                        <p class="text-2xl font-bold text-purple-600">{{ occupied_rooms }}</p>
+                    </div>
+                    <div class="p-2 bg-purple-100 rounded-lg">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Occupancy Rate</p>
+                        <p class="text-2xl font-bold text-yellow-600">{{ occupancy_rate|floatformat:1 }}%</p>
+                    </div>
+                    <div class="p-2 bg-yellow-100 rounded-lg">
+                        <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Property Portfolio -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Property Portfolio</h3>
+                </div>
+                
+                <div class="p-6">
+                    {% if properties %}
+                    <div class="space-y-4">
+                        {% for property in properties %}
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <h4 class="font-medium text-gray-900">{{ property.title }}</h4>
+                                    <p class="text-sm text-gray-600">{{ property.address }}</p>
+                                </div>
+                                {% if property.status == 'active' %}
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                {% else %}
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ property.get_status_display }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                <div>
+                                    <span class="text-gray-500">Rooms:</span>
+                                    <span class="font-medium text-gray-900">{{ property.total_rooms|default:0 }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-500">Occupied:</span>
+                                    <span class="font-medium text-gray-900">{{ property.occupied_rooms|default:0 }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-500">Rent/Room:</span>
+                                    <span class="font-medium text-gray-900">€{{ property.rent_per_room|default:0 }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-500">Occupancy:</span>
+                                    <span class="font-medium text-gray-900">
+                                        {% if property.total_rooms and property.total_rooms > 0 %}
+                                            {{ property.occupied_rooms|default:0|mul:100|div:property.total_rooms|floatformat:0 }}%
+                                        {% else %}
+                                            0%
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-8">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/>
+                        </svg>
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">No Properties</h3>
+                        <p class="mt-2 text-sm text-gray-500">This landlord hasn't added any properties yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Key Performance Indicators</h3>
+                </div>
+                
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Occupancy Trend -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">Occupancy Performance</h4>
+                            <div class="flex items-end space-x-1 h-20">
+                                <div class="bg-blue-500 w-4 h-12 rounded-sm"></div>
+                                <div class="bg-blue-500 w-4 h-16 rounded-sm"></div>
+                                <div class="bg-blue-500 w-4 h-14 rounded-sm"></div>
+                                <div class="bg-blue-500 w-4 h-18 rounded-sm"></div>
+                                <div class="bg-blue-500 w-4 h-20 rounded-sm"></div>
+                                <div class="bg-blue-500 w-4 h-16 rounded-sm"></div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2">Last 6 months</p>
+                        </div>
+
+                        <!-- Revenue Trend -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">Revenue Trend</h4>
+                            <div class="flex items-end space-x-1 h-20">
+                                <div class="bg-green-500 w-4 h-10 rounded-sm"></div>
+                                <div class="bg-green-500 w-4 h-14 rounded-sm"></div>
+                                <div class="bg-green-500 w-4 h-16 rounded-sm"></div>
+                                <div class="bg-green-500 w-4 h-12 rounded-sm"></div>
+                                <div class="bg-green-500 w-4 h-18 rounded-sm"></div>
+                                <div class="bg-green-500 w-4 h-20 rounded-sm"></div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2">Last 6 months</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-8">
+            <!-- Partnership Information -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Partnership Details</h3>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-sm text-gray-500">Status:</span>
+                        {% if landlord.partnership_status == 'active' %}
+                            <span class="ml-2 inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active Partner</span>
+                        {% else %}
+                            <span class="ml-2 inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ landlord.get_partnership_status_display }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    {% if landlord.partnership_start_date %}
+                    <div>
+                        <span class="text-sm text-gray-500">Partnership Since:</span>
+                        <p class="font-medium text-gray-900">{{ landlord.partnership_start_date|date:"F d, Y" }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div>
+                        <span class="text-sm text-gray-500">Landlord Type:</span>
+                        <p class="font-medium text-gray-900">{{ landlord.get_landlord_type_display }}</p>
+                    </div>
+                    
+                    {% if landlord.assigned_bd_executive %}
+                    <div>
+                        <span class="text-sm text-gray-500">BD Executive:</span>
+                        <p class="font-medium text-gray-900">{{ landlord.assigned_bd_executive.user.get_full_name }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Financial Summary -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Financial Summary</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Total Earnings:</span>
+                        <span class="font-medium text-gray-900">€{{ landlord.total_earnings_to_date|floatformat:2 }}</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Payout Schedule:</span>
+                        <span class="font-medium text-gray-900">{{ landlord.preferred_payout_schedule }}</span>
+                    </div>
+                    
+                    {% if landlord.guaranteed_rent_preference %}
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-sm text-gray-600">Guaranteed Rent Preference</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Recommendations</h3>
+                <div class="space-y-3">
+                    {% if occupancy_rate < 80 %}
+                    <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <h4 class="text-sm font-medium text-yellow-800">Improve Occupancy</h4>
+                        <p class="text-xs text-yellow-600 mt-1">Current occupancy is below optimal. Consider marketing improvements.</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if properties.count < 3 %}
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <h4 class="text-sm font-medium text-blue-800">Expand Portfolio</h4>
+                        <p class="text-xs text-blue-600 mt-1">Consider adding more properties to increase revenue potential.</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <h4 class="text-sm font-medium text-green-800">Partnership Strong</h4>
+                        <p class="text-xs text-green-600 mt-1">Maintain current quality standards and communication.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function exportToPDF() {
+    // This would integrate with a PDF generation library
+    alert('PDF export functionality would be implemented here');
+}
+
+// Print styles
+const printStyles = `
+    @media print {
+        .no-print { display: none !important; }
+        .print-break { page-break-before: always; }
+        body { font-size: 12pt; }
+        .bg-gradient-to-r { background: #f8fafc !important; }
+    }
+`;
+
+const styleSheet = document.createElement('style');
+styleSheet.textContent = printStyles;
+document.head.appendChild(styleSheet);
+</script>
+{% endblock %}

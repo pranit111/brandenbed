@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Support Ticket - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center space-x-2 mb-2">
+            <a href="{% url 'support:support_dashboard' %}" class="text-gray-500 hover:text-gray-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <h1 class="text-3xl font-bold text-gray-900">Create Support Ticket</h1>
+        </div>
+        <p class="text-gray-600">Report a new issue or maintenance request</p>
+    </div>
+
+    <!-- Add this right after the category field div -->
+    <div class="md:col-span-2">
+        <div class="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg">
+            <div class="flex items-center space-x-2">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-sm text-gray-600">Need a new category?</span>
+            </div>
+            <a href="{% url 'support:category_create' %}" target="_blank" class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                Create Category
+            </a>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="w-auto mx-auto">
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            
+            <!-- Basic Information -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.resident.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Resident *</label>
+                        {{ form.resident }}
+                        {% if form.resident.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.resident.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.property_ref.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Property *</label>
+                        {{ form.property_ref }}
+                        {% if form.property_ref.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.property_ref.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.room.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Room</label>
+                        {{ form.room }}
+                        {% if form.room.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.room.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.category.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.category.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issue Details -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Issue Details</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label for="{{ form.subject.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Subject *</label>
+                        {{ form.subject }}
+                        {% if form.subject.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.subject.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">Provide a brief, clear description of the issue</p>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.description.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">Include as much detail as possible: location, what happened, when it occurred, etc.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.priority.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Priority *</label>
+                            {{ form.priority }}
+                            {% if form.priority.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.priority.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.assigned_to.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Assign To</label>
+                            {{ form.assigned_to }}
+                            {% if form.assigned_to.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.assigned_to.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <p class="mt-1 text-sm text-gray-500">Leave blank for auto-assignment based on category</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Estimation & Follow-up -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Cost & Follow-up</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.estimated_cost.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Estimated Cost</label>
+                        {{ form.estimated_cost }}
+                        {% if form.estimated_cost.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.estimated_cost.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">Initial cost estimate (if known)</p>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.followup_date.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Follow-up Date</label>
+                        {{ form.followup_date }}
+                        {% if form.followup_date.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.followup_date.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <div class="flex items-center">
+                            {{ form.requires_followup }}
+                            <label for="{{ form.requires_followup.id_for_label }}" class="ml-2 text-sm font-medium text-gray-700">
+                                This issue requires follow-up
+                            </label>
+                        </div>
+                        {% if form.requires_followup.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.requires_followup.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Guidelines -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h4 class="text-sm font-medium text-blue-800 mb-2">Priority Guidelines</h4>
+                <div class="text-sm text-blue-700 space-y-1">
+                    <p><strong>Emergency:</strong> Safety hazards, no heat/AC, water leaks, electrical issues</p>
+                    <p><strong>High:</strong> Security issues, major appliance failures, urgent repairs</p>
+                    <p><strong>Medium:</strong> Minor repairs, cosmetic issues, non-urgent maintenance</p>
+                    <p><strong>Low:</strong> Enhancement requests, routine maintenance</p>
+                </div>
+            </div>
+
+            <!-- Form Errors -->
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="text-sm text-red-700">
+                    {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-4">
+                <a href="{% url 'support:support_dashboard' %}" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Cancel
+                </a>
+                <button type="submit" style="background-color: var(--brand-navy);" class="px-6 py-2 text-white rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Create Ticket
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Form enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-populate priority based on category
+    const categoryField = document.getElementById('{{ form.category.id_for_label }}');
+    const priorityField = document.getElementById('{{ form.priority.id_for_label }}');
+    
+    if (categoryField && priorityField) {
+        categoryField.addEventListener('change', function() {
+            // Category-based priority mapping (you can adjust based on your categories)
+            const categoryPriorityMap = {
+                'emergency': 1,
+                'maintenance': 2,
+                'general': 3,
+                'request': 4
+            };
+            
+            const selectedCategory = this.options[this.selectedIndex];
+            if (selectedCategory && selectedCategory.text) {
+                const categoryText = selectedCategory.text.toLowerCase();
+                for (const [key, priority] of Object.entries(categoryPriorityMap)) {
+                    if (categoryText.includes(key)) {
+                        priorityField.value = priority;
+                        break;
+                    }
+                }
+            }
+        });
+    }
+    
+    // Follow-up date validation
+    const requiresFollowupField = document.getElementById('{{ form.requires_followup.id_for_label }}');
+    const followupDateField = document.getElementById('{{ form.followup_date.id_for_label }}');
+    
+    if (requiresFollowupField && followupDateField) {
+        requiresFollowupField.addEventListener('change', function() {
+            if (this.checked) {
+                followupDateField.required = true;
+                followupDateField.closest('div').classList.add('required-field');
+            } else {
+                followupDateField.required = false;
+                followupDateField.closest('div').classList.remove('required-field');
+            }
+        });
+    }
+});
+</script>
+
+<style>
+.required-field label::after {
+    content: ' *';
+    color: #ef4444;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-check-input {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.125rem;
+    vertical-align: top;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
+
+.form-check-input:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.select2 {
+    width: 100% !important;
+}
+</style>
+{% endblock %}

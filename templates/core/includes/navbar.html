@@ -1,0 +1,170 @@
+{% load i18n %}
+{% load static %}
+
+<nav class="glassmorphism fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-white/90 border-b border-yellow-300/30 shadow-lg">
+    <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
+        <!-- Logo -->
+        <a href="{% url 'core:home' %}" class="flex items-center space-x-3 group">
+            <div class="relative overflow-hidden rounded-xl bg-white p-3 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 border border-gray-200">
+                <img src="{% static 'images/logo.png' %}" alt="BrandenBed Living Spaces" class="h-12 w-12 object-contain">
+            </div>
+            <div class="flex flex-col">
+                <span class="text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-600 bg-clip-text text-transparent hover:from-yellow-600 hover:to-yellow-500 transition-all duration-300">
+                    BrandenBed
+                </span>
+                <span class="text-xs text-slate-600 font-medium tracking-wide">
+                    {% trans "Premium Living Spaces" %}
+                </span>
+            </div>
+        </a>
+
+        <!-- Mobile menu button -->
+        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-3 rounded-xl md:hidden bg-white/50 hover:bg-white/70 border border-yellow-300/30 shadow-md hover:shadow-lg transition-all duration-300 text-slate-700 hover:text-yellow-600" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">{% trans "Open main menu" %}</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <!-- Navigation menu -->
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="flex flex-col p-4 md:p-0 mt-4 rounded-xl md:flex-row md:space-x-2 md:mt-0 bg-white/50 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none border border-yellow-300/30 md:border-0">
+                <li>
+                    <a href="{% url 'core:home' %}" class="nav-link block py-3 px-4 rounded-lg text-slate-700 hover:text-yellow-600 hover:bg-white/60 transition-all duration-300 font-medium">
+                        {% trans "Home" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'core:properties' %}" class="nav-link block py-3 px-4 rounded-lg text-slate-700 hover:text-yellow-600 hover:bg-white/60 transition-all duration-300 font-medium">
+                        {% trans "Properties" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'core:services' %}" class="nav-link block py-3 px-4 rounded-lg text-slate-700 hover:text-yellow-600 hover:bg-white/60 transition-all duration-300 font-medium">
+                        {% trans "Services" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'core:about' %}" class="nav-link block py-3 px-4 rounded-lg text-slate-700 hover:text-yellow-600 hover:bg-white/60 transition-all duration-300 font-medium">
+                        {% trans "About Us" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'core:contact' %}" class="nav-link block py-3 px-4 rounded-lg text-slate-700 hover:text-yellow-600 hover:bg-white/60 transition-all duration-300 font-medium">
+                        {% trans "Contact" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'core:landlords' %}" class="nav-link block py-3 px-4 rounded-lg text-slate-700 hover:text-yellow-600 hover:bg-white/60 transition-all duration-300 font-medium">
+                        {% trans "For Landlords" %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right side buttons -->
+        <div class="flex items-center space-x-4">
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <!-- Desktop Version -->
+                <div class="hidden md:flex items-center">
+                    <div class="flex bg-white/50 backdrop-blur-sm rounded-xl p-1 shadow-md border border-white/30 space-x-1">
+                        <form method="post" action="{% url 'set_language' %}" class="m-0">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="/" />
+                            <input name="language" type="hidden" value="en" />
+                            <button type="submit" 
+                                    class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 hover:scale-105
+                                        {% if LANGUAGE_CODE == 'en' %}
+                                            bg-gradient-to-r from-yellow-500 to-yellow-600 text-white shadow-lg
+                                        {% else %}
+                                            text-slate-700 hover:text-yellow-600 hover:bg-white/70
+                                        {% endif %}">
+                                <span class="text-base">🇺🇸</span>
+                                <span>EN</span>
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'set_language' %}" class="m-0">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                            <input name="language" type="hidden" value="de" />
+                            <button type="submit" 
+                                    class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 hover:scale-105
+                                        {% if LANGUAGE_CODE == 'de' %}
+                                            bg-gradient-to-r from-yellow-500 to-yellow-600 text-white shadow-lg
+                                        {% else %}
+                                            text-slate-700 hover:text-yellow-600 hover:bg-white/70
+                                        {% endif %}">
+                                <span class="text-base">🇩🇪</span>
+                                <span>DE</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Mobile Version -->
+                <div class="md:hidden relative">
+                    <button type="button" 
+                            class="flex items-center space-x-2 px-4 py-2 bg-white/50 backdrop-blur-sm rounded-xl text-slate-700 hover:text-yellow-600 hover:bg-white/70 transition-all duration-300 border border-white/30 shadow-md hover:shadow-lg hover:scale-105"
+                            onclick="toggleLanguageDropdown()">
+                        <span class="text-base">
+                            {% if LANGUAGE_CODE == 'en' %}🇺🇸{% else %}🇩🇪{% endif %}
+                        </span>
+                        <span class="text-sm font-medium">
+                            {% if LANGUAGE_CODE == 'en' %}EN{% else %}DE{% endif %}
+                        </span>
+                        <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <div id="mobile-language-dropdown" class="hidden absolute right-0 mt-3 w-36 glassmorphism bg-white/90 backdrop-blur-lg rounded-xl shadow-xl border border-white/30 z-50 overflow-hidden">
+                        <form method="post" action="{% url 'set_language' %}" class="block">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="/" />
+                            <input name="language" type="hidden" value="en" />
+                            <button type="submit" 
+                                    class="flex items-center w-full px-4 py-3 text-sm transition-all duration-300 hover:bg-white/50
+                                        {% if LANGUAGE_CODE == 'en' %}bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 text-yellow-700 font-medium{% else %}text-slate-700 hover:text-yellow-600{% endif %}">
+                                <span class="mr-3 text-base">🇺🇸</span>
+                                <span>English</span>
+                                {% if LANGUAGE_CODE == 'en' %}
+                                <svg class="ml-auto w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                {% endif %}
+                            </button>
+                        </form>
+                        
+                        <form method="post" action="{% url 'set_language' %}" class="block">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                            <input name="language" type="hidden" value="de" />
+                            <button type="submit" 
+                                    class="flex items-center w-full px-4 py-3 text-sm transition-all duration-300 hover:bg-white/50
+                                        {% if LANGUAGE_CODE == 'de' %}bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 text-yellow-700 font-medium{% else %}text-slate-700 hover:text-yellow-600{% endif %}">
+                                <span class="mr-3 text-base">🇩🇪</span>
+                                <span>Deutsch</span>
+                                {% if LANGUAGE_CODE == 'de' %}
+                                <svg class="ml-auto w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign In Button -->
+            <a href="{% url 'accounts:login' %}" class="btn btn-primary px-6 py-3 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-600 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-white/20">
+                <span class="flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span>{% trans "Sign In" %}</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</nav>

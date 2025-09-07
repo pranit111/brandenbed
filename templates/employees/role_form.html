@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if role %}Edit Role{% else %}Add Role{% endif %} - BrandenBed{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                    {% if role %}Edit Role{% else %}Add New Role{% endif %}
+                </h1>
+                <p class="text-gray-600">
+                    {% if role %}Update role information and permissions{% else %}Create a new employee role with specific permissions{% endif %}
+                </p>
+            </div>
+            <a href="{% url 'employees:employee_list' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back to List
+            </a>
+        </div>
+    </div>
+
+    <form method="post" class="space-y-8">
+        {% csrf_token %}
+        
+        <!-- Basic Information Section -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Basic Information</h3>
+                <p class="text-sm text-gray-600">Role name and description</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Role Name <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Description
+                        </label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.description.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Permissions Section -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Permissions</h3>
+                <p class="text-sm text-gray-600">Select the permissions for this role</p>
+            </div>
+            <div class="p-6">
+                <!-- Core Management Permissions -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <h4 class="text-md font-medium text-gray-900">Core Management</h4>
+                        <div class="ml-auto flex items-center space-x-2">
+                            <button type="button" id="select-all-core" class="text-xs text-blue-600 hover:text-blue-900 font-medium">Select All</button>
+                            <span class="text-gray-400">|</span>
+                            <button type="button" id="deselect-all-core" class="text-xs text-gray-600 hover:text-gray-900 font-medium">Deselect All</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_manage_properties }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_manage_properties.id_for_label }}" class="font-medium text-gray-700">
+                                    Manage Properties
+                                </label>
+                                <p class="text-gray-500 text-xs">Create, update, and manage property listings</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_manage_landlords }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_manage_landlords.id_for_label }}" class="font-medium text-gray-700">
+                                    Manage Landlords
+                                </label>
+                                <p class="text-gray-500 text-xs">Handle landlord accounts and relationships</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_manage_residents }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_manage_residents.id_for_label }}" class="font-medium text-gray-700">
+                                    Manage Residents
+                                </label>
+                                <p class="text-gray-500 text-xs">Manage tenant accounts and bookings</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_manage_employees }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_manage_employees.id_for_label }}" class="font-medium text-gray-700">
+                                    Manage Employees
+                                </label>
+                                <p class="text-gray-500 text-xs">Add, edit, and manage staff members</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operations Permissions -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <h4 class="text-md font-medium text-gray-900">Operations</h4>
+                        <div class="ml-auto flex items-center space-x-2">
+                            <button type="button" id="select-all-ops" class="text-xs text-blue-600 hover:text-blue-900 font-medium">Select All</button>
+                            <span class="text-gray-400">|</span>
+                            <button type="button" id="deselect-all-ops" class="text-xs text-gray-600 hover:text-gray-900 font-medium">Deselect All</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_handle_payments }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_handle_payments.id_for_label }}" class="font-medium text-gray-700">
+                                    Handle Payments
+                                </label>
+                                <p class="text-gray-500 text-xs">Process payments and billing</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_handle_maintenance }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_handle_maintenance.id_for_label }}" class="font-medium text-gray-700">
+                                    Handle Maintenance
+                                </label>
+                                <p class="text-gray-500 text-xs">Manage maintenance requests and tasks</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_handle_support_tickets }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_handle_support_tickets.id_for_label }}" class="font-medium text-gray-700">
+                                    Handle Support Tickets
+                                </label>
+                                <p class="text-gray-500 text-xs">Respond to customer support requests</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_manage_housekeeping }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_manage_housekeeping.id_for_label }}" class="font-medium text-gray-700">
+                                    Manage Housekeeping
+                                </label>
+                                <p class="text-gray-500 text-xs">Schedule and manage cleaning services</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business & Reports Permissions -->
+                <div class="mb-6">
+                    <div class="flex items-center mb-4">
+                        <h4 class="text-md font-medium text-gray-900">Business & Reports</h4>
+                        <div class="ml-auto flex items-center space-x-2">
+                            <button type="button" id="select-all-business" class="text-xs text-blue-600 hover:text-blue-900 font-medium">Select All</button>
+                            <span class="text-gray-400">|</span>
+                            <button type="button" id="deselect-all-business" class="text-xs text-gray-600 hover:text-gray-900 font-medium">Deselect All</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_manage_leads }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_manage_leads.id_for_label }}" class="font-medium text-gray-700">
+                                    Manage Leads
+                                </label>
+                                <p class="text-gray-500 text-xs">Handle business development and leads</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_view_reports }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_view_reports.id_for_label }}" class="font-medium text-gray-700">
+                                    View Reports
+                                </label>
+                                <p class="text-gray-500 text-xs">Access analytics and reporting</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.can_access_crm }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="{{ form.can_access_crm.id_for_label }}" class="font-medium text-gray-700">
+                                    Access CRM
+                                </label>
+                                <p class="text-gray-500 text-xs">Use customer relationship management tools</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Permission Summary -->
+                <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+                    <h5 class="text-sm font-medium text-gray-900 mb-2">Permission Summary</h5>
+                    <div id="permission-summary" class="text-sm text-gray-600">
+                        <span id="selected-count">0</span> permissions selected
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+            <a href="{% url 'employees:employee_list' %}" class="inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Cancel
+            </a>
+            <button type="submit" style="background-color: var(--brand-navy);" class="inline-flex justify-center items-center px-6 py-3 rounded-lg text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                {% if role %}Update Role{% else %}Create Role{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript for Permission Management -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Permission groups
+    const permissionGroups = {
+        core: ['can_manage_properties', 'can_manage_landlords', 'can_manage_residents', 'can_manage_employees'],
+        ops: ['can_handle_payments', 'can_handle_maintenance', 'can_handle_support_tickets', 'can_manage_housekeeping'],
+        business: ['can_manage_leads', 'can_view_reports', 'can_access_crm']
+    };
+
+    // Select/Deselect All functionality
+    function setupSelectAll(buttonId, deselectButtonId, permissions) {
+        const selectButton = document.getElementById(buttonId);
+        const deselectButton = document.getElementById(deselectButtonId);
+
+        selectButton?.addEventListener('click', function(e) {
+            e.preventDefault();
+            permissions.forEach(permission => {
+                const checkbox = document.getElementById(`id_${permission}`);
+                if (checkbox) checkbox.checked = true;
+            });
+            updatePermissionSummary();
+        });
+
+        deselectButton?.addEventListener('click', function(e) {
+            e.preventDefault();
+            permissions.forEach(permission => {
+                const checkbox = document.getElementById(`id_${permission}`);
+                if (checkbox) checkbox.checked = false;
+            });
+            updatePermissionSummary();
+        });
+    }
+
+    // Setup select all buttons for each group
+    setupSelectAll('select-all-core', 'deselect-all-core', permissionGroups.core);
+    setupSelectAll('select-all-ops', 'deselect-all-ops', permissionGroups.ops);
+    setupSelectAll('select-all-business', 'deselect-all-business', permissionGroups.business);
+
+    // Update permission summary
+    function updatePermissionSummary() {
+        const allPermissions = [...permissionGroups.core, ...permissionGroups.ops, ...permissionGroups.business];
+        let selectedCount = 0;
+        
+        allPermissions.forEach(permission => {
+            const checkbox = document.getElementById(`id_${permission}`);
+            if (checkbox && checkbox.checked) {
+                selectedCount++;
+            }
+        });
+
+        const summaryElement = document.getElementById('selected-count');
+        if (summaryElement) {
+            summaryElement.textContent = selectedCount;
+        }
+    }
+
+    // Add event listeners to all permission checkboxes
+    const allPermissions = [...permissionGroups.core, ...permissionGroups.ops, ...permissionGroups.business];
+    allPermissions.forEach(permission => {
+        const checkbox = document.getElementById(`id_${permission}`);
+        if (checkbox) {
+            checkbox.addEventListener('change', updatePermissionSummary);
+        }
+    });
+
+    // Initial summary update
+    updatePermissionSummary();
+
+    // Form validation
+    const form = document.querySelector('form');
+    const nameField = document.getElementById('id_name');
+
+    form?.addEventListener('submit', function(e) {
+        // Basic validation
+        if (!nameField?.value.trim()) {
+            e.preventDefault();
+            nameField?.focus();
+            
+            // Show error message
+            const existingError = nameField?.parentNode.querySelector('.validation-error');
+            if (!existingError) {
+                const errorElement = document.createElement('p');
+                errorElement.className = 'mt-1 text-sm text-red-600 validation-error';
+                errorElement.textContent = 'Role name is required.';
+                nameField?.parentNode.appendChild(errorElement);
+            }
+        }
+    });
+
+    // Clear validation errors on input
+    nameField?.addEventListener('input', function() {
+        const errorElement = this.parentNode.querySelector('.validation-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+    });
+
+    // Role templates for quick setup
+    const roleTemplates = {
+        admin: {
+            name: 'System Administrator',
+            permissions: [...permissionGroups.core, ...permissionGroups.ops, ...permissionGroups.business]
+        },
+        manager: {
+            name: 'Operations Manager',
+            permissions: ['can_manage_properties', 'can_manage_residents', 'can_handle_maintenance', 'can_handle_support_tickets', 'can_view_reports', 'can_access_crm']
+        },
+        support: {
+            name: 'Customer Support Agent',
+            permissions: ['can_handle_support_tickets', 'can_access_crm']
+        }
+    };
+
+    // Quick template buttons (if you want to add them)
+    function applyTemplate(templateName) {
+        const template = roleTemplates[templateName];
+        if (!template) return;
+
+        // Clear all checkboxes first
+        allPermissions.forEach(permission => {
+            const checkbox = document.getElementById(`id_${permission}`);
+            if (checkbox) checkbox.checked = false;
+        });
+
+        // Set template permissions
+        template.permissions.forEach(permission => {
+            const checkbox = document.getElementById(`id_${permission}`);
+            if (checkbox) checkbox.checked = true;
+        });
+
+        updatePermissionSummary();
+    }
+});
+</script>
+{% endblock %}

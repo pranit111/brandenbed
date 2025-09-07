@@ -1,0 +1,425 @@
+{% extends 'profiles/profile_base.html' %}
+
+{% block profile_content %}
+<!-- Personal Information Card -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-user text-brand-gold mr-3"></i>
+        Personal Information
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Visa Expiry</label>
+            <p class="text-gray-900 {% if resident.visa_expiry and resident.visa_expiry < today %}text-red-600{% endif %}">
+                {{ resident.visa_expiry|date:"F d, Y"|default:"Not provided" }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Emergency Contact Card -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-phone text-brand-gold mr-3"></i>
+        Emergency Contact
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contact Name</label>
+            <p class="text-gray-900">{{ user.emergency_contact_name|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <p class="text-gray-900">{{ user.emergency_contact_phone|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Relationship</label>
+            <p class="text-gray-900">{{ user.emergency_contact_relation|default:"Not provided" }}</p>
+        </div>
+    </div>
+    
+    {% if resident.parent_guardian_name %}
+    <div class="mt-6 pt-6 border-t border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Parent/Guardian Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <p class="text-gray-900">{{ resident.parent_guardian_name }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <p class="text-gray-900">{{ resident.parent_guardian_phone|default:"Not provided" }}</p>
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <p class="text-gray-900">{{ resident.parent_guardian_email|default:"Not provided" }}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Special Requirements Card -->
+{% if resident.dietary_requirements or resident.medical_conditions or resident.special_needs %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-heart text-brand-gold mr-3"></i>
+        Special Requirements
+    </h2>
+    
+    <div class="space-y-4">
+        {% if resident.dietary_requirements %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Dietary Requirements</label>
+            <p class="text-gray-900">{{ resident.dietary_requirements }}</p>
+        </div>
+        {% endif %}
+        
+        {% if resident.medical_conditions %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Medical Conditions</label>
+            <p class="text-gray-900">{{ resident.medical_conditions }}</p>
+        </div>
+        {% endif %}
+        
+        {% if resident.special_needs %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Special Needs</label>
+            <p class="text-gray-900">{{ resident.special_needs }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_content %}
+<!-- Current Contract -->
+{% if current_contract %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Current Contract</h3>
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Contract ID</span>
+            <span class="text-sm font-mono text-gray-900">{{ current_contract.contract_id }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Monthly Rent</span>
+            <span class="text-lg font-bold text-green-600">€{{ current_contract.monthly_rent|floatformat:2 }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Contract End</span>
+            <span class="text-sm text-gray-900">{{ current_contract.end_date|date:"M d, Y" }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Days Remaining</span>
+            <span class="text-sm font-bold {% if current_contract.days_remaining < 30 %}text-red-600{% else %}text-gray-900{% endif %}">
+                {{ current_contract.days_remaining }} days
+            </span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Onboarding Progress -->
+{% if resident %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Onboarding Progress</h3>
+    <div class="space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Verification</span>
+            <div class="flex items-center">
+                {% if resident.verification_completed %}
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span class="text-sm text-green-600">Complete</span>
+                {% else %}
+                    <i class="fas fa-clock text-yellow-500 mr-2"></i>
+                    <span class="text-sm text-yellow-600">Pending</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Deposit</span>
+            <div class="flex items-center">
+                {% if resident.deposit_paid %}
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span class="text-sm text-green-600">Paid</span>
+                {% else %}
+                    <i class="fas fa-clock text-yellow-500 mr-2"></i>
+                    <span class="text-sm text-yellow-600">Pending</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Agreement</span>
+            <div class="flex items-center">
+                {% if resident.agreement_signed %}
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span class="text-sm text-green-600">Signed</span>
+                {% else %}
+                    <i class="fas fa-clock text-yellow-500 mr-2"></i>
+                    <span class="text-sm text-yellow-600">Pending</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Orientation</span>
+            <div class="flex items-center">
+                {% if resident.orientation_completed %}
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span class="text-sm text-green-600">Complete</span>
+                {% else %}
+                    <i class="fas fa-clock text-yellow-500 mr-2"></i>
+                    <span class="text-sm text-yellow-600">Pending</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Support Agent -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Support Contact</h3>
+    {% if resident.assigned_support_agent %}
+    <div class="flex items-center space-x-3">
+        {% if resident.assigned_support_agent.user.profile_picture %}
+            <img class="w-10 h-10 rounded-full" src="{{ resident.assigned_support_agent.user.profile_picture.url }}" alt="Support agent">
+        {% else %}
+            <div class="w-10 h-10 rounded-full bg-brand-gold bg-opacity-20 flex items-center justify-center">
+                <span class="text-sm font-medium text-brand-gold">{{ resident.assigned_support_agent.user.first_name.0|upper }}</span>
+            </div>
+        {% endif %}
+        <div>
+            <p class="text-sm font-medium text-gray-900">{{ resident.assigned_support_agent.user.get_full_name }}</p>
+            <p class="text-xs text-gray-500">Support Agent</p>
+            <p class="text-xs text-brand-gold">{{ resident.assigned_support_agent.user.email }}</p>
+        </div>
+    </div>
+    <div class="mt-4">
+        <a href="#" class="inline-flex items-center text-sm text-brand-gold hover:text-brand-gold-600 font-medium">
+            <i class="fas fa-envelope mr-2"></i>
+            Contact Support
+        </a>
+    </div>
+    {% else %}
+    <p class="text-gray-500 text-sm">No support agent assigned yet.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- Communication Preferences -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Communication</h3>
+    <div class="space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Preferred Language</span>
+            <span class="text-sm text-gray-900">{{ user.preferred_language }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Marketing Emails</span>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+                {% if user.marketing_consent %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                {% if user.marketing_consent %}Enabled{% else %}Disabled{% endif %}
+            </span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">WhatsApp Updates</span>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+                {% if user.whatsapp_consent %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                {% if user.whatsapp_consent %}Enabled{% else %}Disabled{% endif %}
+            </span>
+        </div>
+    </div>
+    
+    <div class="mt-4 pt-4 border-t border-gray-200">
+        <a href="{% url 'dashboard:notification_settings' %}" 
+           class="text-sm text-brand-gold hover:text-brand-gold-600 font-medium">
+            <i class="fas fa-cog mr-1"></i>
+            Update Settings
+        </a>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="bg-gradient-to-br from-brand-navy to-brand-navy-2 rounded-lg p-6 text-white">
+    <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+    <div class="space-y-3">
+        <a href="#" class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+            <i class="fas fa-ticket-alt mr-3 w-4"></i>
+            Submit Support Ticket
+        </a>
+        <a href="#" class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+            <i class="fas fa-credit-card mr-3 w-4"></i>
+            View Payment History
+        </a>
+        <a href="#" class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+            <i class="fas fa-file-contract mr-3 w-4"></i>
+            View Contract
+        </a>
+        <a href="#" class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+            <i class="fas fa-tools mr-3 w-4"></i>
+            Request Maintenance
+        </a>
+    </div>
+</div>
+{% endblock %}">Full Name</label>
+            <p class="text-gray-900">{{ user.get_full_name|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <p class="text-gray-900">{{ user.email|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <p class="text-gray-900">{{ user.phone_number|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+            <p class="text-gray-900">{{ user.whatsapp_number|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <p class="text-gray-900">{{ user.date_of_birth|date:"F d, Y"|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
+            <p class="text-gray-900">{{ user.nationality|default:"Not provided" }}</p>
+        </div>
+    </div>
+    
+    <div class="mt-6">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+        <p class="text-gray-900">
+            {% if user.address_line_1 %}
+                {{ user.address_line_1 }}{% if user.address_line_2 %}, {{ user.address_line_2 }}{% endif %}<br>
+                {{ user.city }}{% if user.state %}, {{ user.state }}{% endif %} {{ user.pincode }}<br>
+                {{ user.country }}
+            {% else %}
+                Not provided
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<!-- Residency Information Card -->
+{% if resident %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-home text-brand-gold mr-3"></i>
+        Residency Information
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Resident ID</label>
+            <p class="text-gray-900 font-mono">{{ resident.resident_id }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Resident Type</label>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                {% if resident.resident_type == 'student' %}bg-blue-100 text-blue-800
+                {% elif resident.resident_type == 'professional' %}bg-green-100 text-green-800
+                {% else %}bg-purple-100 text-purple-800{% endif %}">
+                {{ resident.get_resident_type_display }}
+            </span>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                {% if resident.status == 'active' %}bg-green-100 text-green-800
+                {% elif resident.status == 'verified' %}bg-blue-100 text-blue-800
+                {% elif resident.status == 'applied' %}bg-yellow-100 text-yellow-800
+                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                {{ resident.get_status_display }}
+            </span>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Current Property</label>
+            <p class="text-gray-900">{{ resident.current_property.name|default:"Not assigned" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Current Room</label>
+            <p class="text-gray-900">{{ resident.current_room.room_number|default:"Not assigned" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Move-in Date</label>
+            <p class="text-gray-900">{{ resident.move_in_date|date:"F d, Y"|default:"Not set" }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Academic/Professional Information Card -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-graduation-cap text-brand-gold mr-3"></i>
+        Academic & Professional Information
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% if resident.university %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">University</label>
+            <p class="text-gray-900">{{ resident.university }}</p>
+        </div>
+        {% endif %}
+        {% if resident.course %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Course</label>
+            <p class="text-gray-900">{{ resident.course }}</p>
+        </div>
+        {% endif %}
+        {% if resident.employer %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Employer</label>
+            <p class="text-gray-900">{{ resident.employer }}</p>
+        </div>
+        {% endif %}
+        {% if resident.job_title %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+            <p class="text-gray-900">{{ resident.job_title }}</p>
+        </div>
+        {% endif %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Monthly Income</label>
+            <p class="text-gray-900">
+                {% if resident.monthly_income %}€{{ resident.monthly_income|floatformat:2 }}{% else %}Not provided{% endif %}
+            </p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Income Source</label>
+            <p class="text-gray-900">{{ resident.income_source|default:"Not provided" }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Visa Information Card (for international residents) -->
+{% if resident.is_international %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-passport text-brand-gold mr-3"></i>
+        Visa & Legal Information
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Identification Type</label>
+            <p class="text-gray-900">{{ resident.get_identification_type_display }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">ID Number</label>
+            <p class="text-gray-900 font-mono">{{ resident.identification_number|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Visa Type</label>
+            <p class="text-gray-900">{{ resident.visa_type|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1

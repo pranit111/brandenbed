@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Landlords - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Landlords</h1>
+                <p class="text-gray-600">Manage all property owners and partnerships</p>
+            </div>
+            <div class="mt-4 sm:mt-0 flex flex-col sm:flex-row gap-3">
+                <a href="{% url 'landlords:export_landlords' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Export
+                </a>
+                <a href="{% url 'landlords:landlord_create' %}" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Add Landlord
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="text-2xl font-bold text-gray-900">{{ filtered_count }}</div>
+            <div class="text-sm text-gray-500">Total Results</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="text-2xl font-bold text-green-600">{{ active_count }}</div>
+            <div class="text-sm text-gray-500">Active Partners</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="text-2xl font-bold text-blue-600">{{ landlords|length }}</div>
+            <div class="text-sm text-gray-500">Current Page</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="text-2xl font-bold text-gray-600">{% widthratio filtered_count 1 100 %}%</div>
+            <div class="text-sm text-gray-500">Match Rate</div>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                {{ filter_form.search }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Partnership Status</label>
+                {{ filter_form.partnership_status }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Landlord Type</label>
+                {{ filter_form.landlord_type }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BD Executive</label>
+                {{ filter_form.assigned_bd_executive }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Properties</label>
+                {{ filter_form.has_properties }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Partnership From</label>
+                {{ filter_form.partnership_date_from }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Partnership To</label>
+                {{ filter_form.partnership_date_to }}
+            </div>
+            <div class="flex items-end">
+                <button type="submit" style="background-color: var(--brand-navy);" class="px-4 py-2 text-white rounded-lg hover:opacity-90">
+                    Apply Filters
+                </button>
+                <a href="{% url 'landlords:landlord_list' %}" class="ml-3 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                    Clear
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bulk Actions -->
+    {% if landlords %}
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+        <form method="post" action="{% url 'landlords:bulk_assign_bd_executive' %}" id="bulk-action-form">
+            {% csrf_token %}
+            <div class="flex items-center gap-4">
+                <div class="flex items-center">
+                    <input type="checkbox" id="select-all" class="form-check-input">
+                    <label for="select-all" class="ml-2 text-sm text-gray-700">Select All</label>
+                </div>
+                <div>
+                    <select name="bd_executive_id" class="form-control" required>
+                        <option value="">Assign BD Executive...</option>
+                        {% for employee in employees %}
+                        <option value="{{ employee.id }}">{{ employee.user.get_full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Bulk Assign
+                </button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Landlords List -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        {% if landlords %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                        h class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <input type="checkbox" class="form-check-input">
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Landlord
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Type
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Partnership Status
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Properties
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                BD Executive
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Partnership Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    {% for landlord in landlords %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <input type="checkbox" name="landlord_ids" value="{{ landlord.id }}" class="form-check-input landlord-checkbox">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-medium text-gray-700">
+                                        {{ landlord.user.first_name|first }}{{ landlord.user.last_name|first }}
+                                    </span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        <a href="{% url 'landlords:landlord_detail' landlord.landlord_id %}" class="hover:text-blue-600">
+                                            {% if landlord.company_name %}{{ landlord.company_name }}{% else %}{{ landlord.user.get_full_name }}{% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="text-sm text-gray-500">{{ landlord.landlord_id }}</div>
+                                    <div class="text-sm text-gray-500">{{ landlord.user.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                    
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">{{ landlord.get_landlord_type_display }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if landlord.partnership_status == 'active' %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                            {% elif landlord.partnership_status == 'prospect' %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Prospect</span>
+                            {% elif landlord.partnership_status == 'under_evaluation' %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Under Evaluation</span>
+                            {% elif landlord.partnership_status == 'inactive' %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">Inactive</span>
+                            {% else %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Terminated</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">{{ landlord.total_properties }}</div>
+                            {% if landlord.total_properties > 0 %}
+                            <div class="text-xs text-gray-500">properties</div>
+                            {% else %}
+                            <div class="text-xs text-gray-400">No properties</div>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {% if landlord.assigned_bd_executive %}
+                                <div class="text-sm font-medium text-gray-900">{{ landlord.assigned_bd_executive.user.get_full_name }}</div>
+                                <div class="text-xs text-gray-500">{{ landlord.assigned_bd_executive.role.name|title }}</div>
+                            {% else %}
+                                <span class="text-gray-400">Unassigned</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {% if landlord.partnership_start_date %}
+                                {{ landlord.partnership_start_date }}
+                            {% else %}
+                                <span class="text-gray-400">Not set</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div class="flex space-x-2">
+                                <a href="{% url 'landlords:landlord_detail' landlord.landlord_id %}" class="text-blue-600 hover:text-blue-900">View</a>
+                                <a href="{% url 'landlords:landlord_update' landlord.landlord_id %}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="px-6 py-4 border-t border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-700">
+                    Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ paginator.count }} landlords
+                </div>
+                <div class="flex space-x-2">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1{% if query_string %}&{{ query_string }}{% endif %}" class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Previous</a>
+                    {% endif %}
+                    
+                    <span class="px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md">
+                        Page {{ page_obj.number }} of {{ paginator.num_pages }}
+                    </span>
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Next</a>
+                    <a href="?page={{ paginator.num_pages }}{% if query_string %}&{{ query_string }}{% endif %}" class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Last</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <h3 class="mt-4 text-lg font-medium text-gray-900">No landlords found</h3>
+            <p class="mt-2 text-sm text-gray-500">Get started by adding a new landlord or adjust your filters.</p>
+            <div class="mt-6">
+                <a href="{% url 'landlords:landlord_create' %}" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Add Landlord
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Bulk selection functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const selectAll = document.getElementById('select-all');
+    const checkboxes = document.querySelectorAll('.landlord-checkbox');
+    
+    if (selectAll) {
+        selectAll.addEventListener('change', function() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    }
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (!this.checked && selectAll) {
+                selectAll.checked = false;
+            } else if (document.querySelectorAll('.landlord-checkbox:checked').length === checkboxes.length && selectAll) {
+                selectAll.checked = true;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

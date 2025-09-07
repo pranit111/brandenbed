@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Overdue Tickets - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                    <span class="flex items-center">
+                        <svg class="w-8 h-8 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Overdue Tickets
+                    </span>
+                </h1>
+                <p class="text-gray-600">Tickets that have exceeded their SLA due date and require immediate attention</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="{% url 'support:export_tickets' %}?overdue_only=true" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Export Overdue
+                </a>
+                <a href="{% url 'support:dashboard' %}" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert if no overdue tickets -->
+    {% if not tickets %}
+        <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+            <div class="flex items-center">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div class="ml-4">
+                    <h3 class="text-lg font-medium text-green-800">Great news!</h3>
+                    <p class="text-green-700">There are currently no overdue tickets. All tickets are within their SLA timeframes.</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Overdue Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-red-600">Total Overdue</p>
+                        <p class="text-2xl font-semibold text-red-900">{{ tickets|length }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Emergency Priority</p>
+                        <p class="text-2xl font-semibold text-gray-900">
+                            {{ tickets|length|add:0 }}
+                            {% comment %}Count emergency priorities{% endcomment %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Unassigned</p>
+                        <p class="text-2xl font-semibold text-gray-900">
+                            {% comment %}Count unassigned tickets{% endcomment %}
+                            0
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">In Progress</p>
+                        <p class="text-2xl font-semibold text-gray-900">
+                            {% comment %}Count in progress tickets{% endcomment %}
+                            0
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-medium text-gray-900">Bulk Actions</h3>
+                <div class="flex items-center gap-3">
+                    <select id="bulkAction" class="form-control text-sm" style="max-width: 200px;">
+                        <option value="">Select action...</option>
+                        <option value="assign">Assign to Employee</option>
+                        <option value="priority">Update Priority</option>
+                        <option value="escalate">Escalate Tickets</option>
+                    </select>
+                    <button type="button" id="applyBulkAction" 
+                            class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 disabled:opacity-50" 
+                            disabled>
+                        Apply
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overdue Tickets List -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Overdue Support Tickets</h3>
+            </div>
+            
+            <div class="p-6">
+                <div class="space-y-4">
+                    {% for ticket in tickets %}
+                    <div class="flex items-start p-4 border-2 border-red-200 rounded-lg bg-red-50 hover:bg-red-100 transition-colors">
+                        <div class="flex-shrink-0 mr-4">
+                            <input type="checkbox" name="selected_tickets" value="{{ ticket.id }}" 
+                                   class="h-4 w-4 text-red-600 border-gray-300 rounded ticket-checkbox">
+                        </div>
+                        
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <!-- Priority Indicator -->
+                                    {% if ticket.priority == 1 %}
+                                        <div class="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+                                        <span class="text-xs font-semibold text-red-800 bg-red-200 px-2 py-1 rounded-full">EMERGENCY</span>
+                                    {% elif ticket.priority == 2 %}
+                                        <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                                        <span class="text-xs font-semibold text-orange-800 bg-orange-200 px-2 py-1 rounded-full">HIGH</span>
+                                    {% elif ticket.priority == 3 %}
+                                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                                        <span class="text-xs font-semibold text-blue-800 bg-blue-200 px-2 py-1 rounded-full">MEDIUM</span>
+                                    {% else %}
+                                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                        <span class="text-xs font-semibold text-green-800 bg-green-200 px-2 py-1 rounded-full">LOW</span>
+                                    {% endif %}
+                                    
+                                    <h4 class="text-base font-medium text-gray-900">
+                                        <a href="{% url 'support:ticket_detail' ticket.ticket_id %}" class="hover:text-red-600">
+                                            {{ ticket.ticket_id }} - {{ ticket.subject }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                
+                                <!-- Overdue Badge -->
+                                <div class="flex items-center space-x-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-600 text-white">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        OVERDUE
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                <div>
+                                    <p class="text-gray-500">Resident</p>
+                                    <p class="font-medium text-gray-900">{{ ticket.resident.user.get_full_name }}</p>
+                                </div>
+                                
+                                <div>
+                                    <p class="text-gray-500">Property & Room</p>
+                                    <p class="font-medium text-gray-900">
+                                        {{ ticket.property_ref.name }}{% if ticket.room %} - {{ ticket.room.name }}{% endif %}
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <p class="text-gray-500">Category</p>
+                                    <p class="font-medium text-gray-900">{{ ticket.category.get_name_display }}</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-sm">
+                                    <div>
+                                        <span class="text-gray-500">Status:</span>
+                                        {% if ticket.status == 'open' %}
+                                            <span class="ml-1 inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Open</span>
+                                        {% elif ticket.status == 'in_progress' %}
+                                            <span class="ml-1 inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                                        {% else %}
+                                            <span class="ml-1 inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ ticket.get_status_display }}</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div>
+                                        <span class="text-gray-500">Assigned:</span>
+                                        <span class="ml-1 font-medium">
+                                            {% if ticket.assigned_to %}
+                                                {{ ticket.assigned_to.user.get_full_name }}
+                                            {% else %}
+                                                <span class="text-red-600">Unassigned</span>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-red-600">
+                                    <span class="font-medium">Due:</span> 
+                                    {{ ticket.sla_due_date|timesince }} ago
+                                    <br>
+                                    <span class="font-medium">Created:</span> 
+                                    {{ ticket.created_at|timesince }} ago
+                                </div>
+                            </div>
+
+                            {% if ticket.description %}
+                                <div class="mt-3">
+                                    <p class="text-sm text-gray-600">{{ ticket.description|truncatewords:20 }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="flex-shrink-0 ml-4">
+                            <a href="{% url 'support:ticket_detail' ticket.ticket_id %}" 
+                               class="inline-flex items-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-white hover:bg-red-50">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+            <div class="mt-6 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 rounded-lg">
+                <div class="flex flex-1 justify-between sm:hidden">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+                    {% endif %}
+                </div>
+                <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Showing <span class="font-medium">{{ page_obj.start_index }}</span> to <span class="font-medium">{{ page_obj.end_index }}</span> of <span class="font-medium">{{ page_obj.paginator.count }}</span> results
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                    <span class="sr-only">Previous</span>
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            {% endif %}
+                            
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <a href="?page={{ num }}" aria-current="page" class="relative z-10 inline-flex items-center bg-red-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">{{ num }}</a>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                    <a href="?page={{ num }}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+<script>
+    // JavaScript for bulk actions
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.ticket-checkbox');
+        const applyButton = document.getElementById('applyBulkAction');
+        const bulkAction = document.getElementById('bulkAction');
+        
+        function updateApplyButton() {
+            const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            applyButton.disabled = !anyChecked || bulkAction.value === '';
+        }
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateApplyButton);
+        });
+        
+        bulkAction.addEventListener('change', updateApplyButton);
+        
+        applyButton.addEventListener('click', function() {
+            // Implement bulk action functionality here
+            const selectedTickets = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+                
+            if (selectedTickets.length === 0) return;
+            
+            // Example: Handle different bulk actions
+            switch(bulkAction.value) {
+                case 'assign':
+                    // Code to assign tickets
+                    console.log('Assign tickets:', selectedTickets);
+                    break;
+                case 'priority':
+                    // Code to update priority
+                    console.log('Update priority for:', selectedTickets);
+                    break;
+                case 'escalate':
+                    // Code to escalate tickets
+                    console.log('Escalate tickets:', selectedTickets);
+                    break;
+            }
+        });
+    });
+</script>
+{% endblock %}

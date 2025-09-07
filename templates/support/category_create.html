@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Support Category - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center space-x-2 mb-2">
+            <a href="{% url 'support:category_list' %}" class="text-gray-500 hover:text-gray-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <h1 class="text-3xl font-bold text-gray-900">Create Support Category</h1>
+        </div>
+        <p class="text-gray-600">Set up a new category for organizing support tickets</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="w-auto mx-auto">
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            
+            <!-- Basic Information -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Category Information</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Category Name *</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.name.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">Choose the type of issues this category will handle</p>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.description.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">Describe what types of issues this category covers and any specific guidelines</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority & SLA Settings -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Priority & Service Level Settings</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.priority_level.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Default Priority Level *</label>
+                        {{ form.priority_level }}
+                        {% if form.priority_level.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.priority_level.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">{{ form.priority_level.help_text }}</p>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.sla_hours.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">SLA Hours *</label>
+                        {{ form.sla_hours }}
+                        {% if form.sla_hours.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.sla_hours.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500">{{ form.sla_hours.help_text }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Guidelines -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h4 class="text-sm font-medium text-blue-800 mb-2">Priority Level Guidelines</h4>
+                <div class="text-sm text-blue-700 space-y-1">
+                    <p><strong>High Priority (1):</strong> Emergency issues, safety hazards, critical system failures</p>
+                    <p><strong>Medium Priority (2):</strong> Important but non-critical issues, standard maintenance requests</p>
+                    <p><strong>Low Priority (3):</strong> Minor issues, enhancement requests, routine maintenance</p>
+                </div>
+            </div>
+
+            <!-- SLA Guidelines -->
+            <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                <h4 class="text-sm font-medium text-green-800 mb-2">Common SLA Hours</h4>
+                <div class="text-sm text-green-700 space-y-1">
+                    <p><strong>Emergency:</strong> 2-4 hours (immediate response required)</p>
+                    <p><strong>High Priority:</strong> 8-24 hours (same or next business day)</p>
+                    <p><strong>Medium Priority:</strong> 24-72 hours (within 3 business days)</p>
+                    <p><strong>Low Priority:</strong> 72-168 hours (within a week)</p>
+                </div>
+            </div>
+
+            <!-- Form Errors -->
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="text-sm text-red-700">
+                    {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-4">
+                <a href="{% url 'support:category_list' %}" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Cancel
+                </a>
+                <button type="submit" style="background-color: var(--brand-navy);" class="px-6 py-2 text-white rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Create Category
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Form enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-suggest SLA hours based on priority level
+    const priorityField = document.getElementById('{{ form.priority_level.id_for_label }}');
+    const slaField = document.getElementById('{{ form.sla_hours.id_for_label }}');
+    
+    if (priorityField && slaField) {
+        priorityField.addEventListener('change', function() {
+            const priorityLevel = parseInt(this.value);
+            let suggestedSLA;
+            
+            switch(priorityLevel) {
+                case 1: // High Priority
+                    suggestedSLA = 24;
+                    break;
+                case 2: // Medium Priority
+                    suggestedSLA = 48;
+                    break;
+                case 3: // Low Priority
+                    suggestedSLA = 72;
+                    break;
+                default:
+                    suggestedSLA = 24;
+            }
+            
+            if (!slaField.value || confirm('Would you like to set the SLA to ' + suggestedSLA + ' hours based on the selected priority level?')) {
+                slaField.value = suggestedSLA;
+            }
+        });
+    }
+    
+    // Form validation enhancements
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const slaHours = parseInt(slaField.value);
+        const priorityLevel = parseInt(priorityField.value);
+        
+        // Warn about potentially inconsistent SLA/Priority combinations
+        if (priorityLevel === 1 && slaHours > 48) {
+            if (!confirm('High priority categories typically have SLA of 48 hours or less. Are you sure you want to continue?')) {
+                e.preventDefault();
+                return;
+            }
+        }
+        
+        if (priorityLevel === 3 && slaHours < 24) {
+            if (!confirm('Low priority categories typically have SLA of 24 hours or more. Are you sure you want to continue?')) {
+                e.preventDefault();
+                return;
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+select.form-control {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+input[type="number"].form-control {
+    -moz-appearance: textfield;
+}
+
+input[type="number"].form-control::-webkit-outer-spin-button,
+input[type="number"].form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+</style>
+{% endblock %}

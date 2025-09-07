@@ -1,0 +1,1 @@
+web: gunicorn brandenbed.wsgi --log-file -

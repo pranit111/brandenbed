@@ -1,0 +1,645 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if form.instance.pk %}Edit Room {{ form.instance.room_number }}{% else %}Add New Room{% endif %} - {{ property.name }} - BrandenBed{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center mb-6">
+            <a href="{% if form.instance.pk %}{% url 'properties:room_detail' property.pk form.instance.pk %}{% else %}{% url 'properties:room_list' property.pk %}{% endif %}" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                {% if form.instance.pk %}Back to Room Details{% else %}Back to Rooms{% endif %}
+            </a>
+        </div>
+        
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                {% if form.instance.pk %}Edit Room {{ form.instance.room_number }}{% else %}Add New Room{% endif %}
+            </h1>
+            <p class="text-gray-600">{{ property.name }} - {{ property.property_id }}</p>
+        </div>
+    </div>
+
+    <!-- Error Messages -->
+    {% if form.non_field_errors %}
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">Please fix the following errors:</h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        <ul class="list-disc pl-5 space-y-1">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="post" class="space-y-8" novalidate>
+        {% csrf_token %}
+        
+        <!-- Basic Information -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Basic Information</h3>
+                <p class="mt-1 text-sm text-gray-500">Essential details about the room</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_room_number" class="block text-sm font-medium text-gray-700 mb-1">
+                            Room Number <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.room_number }}
+                        {% if form.room_number.errors %}
+                            <div class="mt-1">
+                                {% for error in form.room_number.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Unique room identifier within this property (e.g., 101, A1, B2)</p>
+                    </div>
+                    
+                    <div>
+                        <label for="id_room_type" class="block text-sm font-medium text-gray-700 mb-1">
+                            Room Type <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.room_type }}
+                        {% if form.room_type.errors %}
+                            <div class="mt-1">
+                                {% for error in form.room_type.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="id_area" class="block text-sm font-medium text-gray-700 mb-1">
+                            Room Area (m²) <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.area }}
+                        {% if form.area.errors %}
+                            <div class="mt-1">
+                                {% for error in form.area.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Minimum 5 m², maximum 200 m²</p>
+                    </div>
+                    
+                    <div>
+                        <label for="id_max_occupants" class="block text-sm font-medium text-gray-700 mb-1">
+                            Maximum Occupants <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.max_occupants }}
+                        {% if form.max_occupants.errors %}
+                            <div class="mt-1">
+                                {% for error in form.max_occupants.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Maximum number of people allowed in this room (1-4)</p>
+                    </div>
+                    
+                    {% if form.instance.pk %}
+                    <div>
+                        <label for="id_current_occupants" class="block text-sm font-medium text-gray-700 mb-1">
+                            Current Occupants
+                        </label>
+                        {{ form.current_occupants }}
+                        {% if form.current_occupants.errors %}
+                            <div class="mt-1">
+                                {% for error in form.current_occupants.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Current number of occupants</p>
+                    </div>
+                    {% else %}
+                        {{ form.current_occupants }}
+                    {% endif %}
+                    
+                    <div>
+                        <label for="id_available_from" class="block text-sm font-medium text-gray-700 mb-1">
+                            Available From <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.available_from }}
+                        {% if form.available_from.errors %}
+                            <div class="mt-1">
+                                {% for error in form.available_from.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Date when the room becomes available for occupancy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Pricing</h3>
+                <p class="mt-1 text-sm text-gray-500">Rental pricing and deposit information</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_monthly_rent" class="block text-sm font-medium text-gray-700 mb-1">
+                            Monthly Rent (€) <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.monthly_rent }}
+                        {% if form.monthly_rent.errors %}
+                            <div class="mt-1">
+                                {% for error in form.monthly_rent.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Monthly rental amount in Euros</p>
+                    </div>
+                    
+                    <div>
+                        <label for="id_security_deposit" class="block text-sm font-medium text-gray-700 mb-1">
+                            Security Deposit (€) <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.security_deposit }}
+                        {% if form.security_deposit.errors %}
+                            <div class="mt-1">
+                                {% for error in form.security_deposit.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Refundable security deposit</p>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <div class="flex items-center">
+                            {{ form.utilities_included }}
+                            <label for="id_utilities_included" class="ml-2 text-sm text-gray-700">
+                                All utilities included in rent
+                            </label>
+                        </div>
+                        {% if form.utilities_included.errors %}
+                            <div class="mt-1">
+                                {% for error in form.utilities_included.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Check if electricity, water, heating, and internet are included</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contract Details -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Contract Details</h3>
+                <p class="mt-1 text-sm text-gray-500">Lease term and availability settings</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_min_contract_duration" class="block text-sm font-medium text-gray-700 mb-1">
+                            Minimum Contract Duration (months) <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.min_contract_duration }}
+                        {% if form.min_contract_duration.errors %}
+                            <div class="mt-1">
+                                {% for error in form.min_contract_duration.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Minimum lease duration (1-36 months)</p>
+                    </div>
+                    
+                    <div>
+                        <label for="id_max_contract_duration" class="block text-sm font-medium text-gray-700 mb-1">
+                            Maximum Contract Duration (months) <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.max_contract_duration }}
+                        {% if form.max_contract_duration.errors %}
+                            <div class="mt-1">
+                                {% for error in form.max_contract_duration.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Maximum lease duration (1-36 months)</p>
+                    </div>
+                    
+                    <div>
+                        <label for="id_status" class="block text-sm font-medium text-gray-700 mb-1">
+                            Room Status <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <div class="mt-1">
+                                {% for error in form.status.errors %}
+                                    <p class="text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Current availability status of the room</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Features -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Room Features</h3>
+                <p class="mt-1 text-sm text-gray-500">Available amenities and features in this room</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-medium text-gray-900">Bathroom & Privacy</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                {{ form.has_private_bathroom }}
+                                <label for="id_has_private_bathroom" class="ml-2 text-sm text-gray-700">
+                                    Private Bathroom
+                                </label>
+                            </div>
+                            {% if form.has_private_bathroom.errors %}
+                                <div class="ml-6">
+                                    {% for error in form.has_private_bathroom.errors %}
+                                        <p class="text-sm text-red-600">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-medium text-gray-900">Furniture & Storage</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                {{ form.has_work_desk }}
+                                <label for="id_has_work_desk" class="ml-2 text-sm text-gray-700">
+                                    Dedicated Work Desk
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_storage }}
+                                <label for="id_has_storage" class="ml-2 text-sm text-gray-700">
+                                    Storage Space
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-medium text-gray-900">Climate & Comfort</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                {{ form.has_ac }}
+                                <label for="id_has_ac" class="ml-2 text-sm text-gray-700">
+                                    Air Conditioning
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_window }}
+                                <label for="id_has_window" class="ml-2 text-sm text-gray-700">
+                                    Natural Light (Window)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Description</h3>
+                <p class="mt-1 text-sm text-gray-500">Additional details and description of the room</p>
+            </div>
+            <div class="px-6 py-4">
+                <div>
+                    <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">
+                        Room Description
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="mt-1">
+                            {% for error in form.description.errors %}
+                                <p class="text-sm text-red-600">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p class="mt-1 text-xs text-gray-500">Detailed description of the room, its features, and any special notes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4">
+                <div class="flex justify-end space-x-3">
+                    <a href="{% if form.instance.pk %}{% url 'properties:room_detail' property.pk form.instance.pk %}{% else %}{% url 'properties:room_list' property.pk %}{% endif %}" 
+                       class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Cancel
+                    </a>
+                    <button type="submit" 
+                            style="background-color: var(--brand-navy);" 
+                            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                            id="submit-button">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                        </svg>
+                        <span id="submit-text">{% if form.instance.pk %}Update Room{% else %}Create Room{% endif %}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitButton = document.getElementById('submit-button');
+    const submitText = document.getElementById('submit-text');
+    
+    // Form submission handling
+    form.addEventListener('submit', function(e) {
+        submitButton.disabled = true;
+        submitText.textContent = 'Processing...';
+        
+        // Re-enable button after 5 seconds to prevent permanent disability
+        setTimeout(() => {
+            submitButton.disabled = false;
+            submitText.textContent = '{% if form.instance.pk %}Update Room{% else %}Create Room{% endif %}';
+        }, 5000);
+    });
+    
+    // Contract duration validation
+    const minDuration = document.getElementById('id_min_contract_duration');
+    const maxDuration = document.getElementById('id_max_contract_duration');
+    
+    function validateContractDurations() {
+        if (minDuration && maxDuration) {
+            const min = parseInt(minDuration.value) || 0;
+            const max = parseInt(maxDuration.value) || 0;
+            
+            if (min > 0 && max > 0 && min > max) {
+                maxDuration.setCustomValidity('Maximum duration must be greater than or equal to minimum duration');
+                showFieldError(maxDuration, 'Maximum duration must be greater than or equal to minimum duration');
+            } else {
+                maxDuration.setCustomValidity('');
+                clearFieldError(maxDuration);
+            }
+        }
+    }
+    
+    if (minDuration && maxDuration) {
+        minDuration.addEventListener('change', validateContractDurations);
+        maxDuration.addEventListener('change', validateContractDurations);
+    }
+
+    // Occupancy validation
+    const maxOccupants = document.getElementById('id_max_occupants');
+    const currentOccupants = document.getElementById('id_current_occupants');
+    const roomType = document.getElementById('id_room_type');
+    
+    function validateOccupancy() {
+        if (maxOccupants && currentOccupants) {
+            const max = parseInt(maxOccupants.value) || 0;
+            const current = parseInt(currentOccupants.value) || 0;
+            
+            if (current > max) {
+                currentOccupants.setCustomValidity('Current occupants cannot exceed maximum occupants');
+                showFieldError(currentOccupants, 'Current occupants cannot exceed maximum occupants');
+            } else {
+                currentOccupants.setCustomValidity('');
+                clearFieldError(currentOccupants);
+            }
+        }
+    }
+    
+    function validateRoomTypeOccupancy() {
+        if (roomType && maxOccupants) {
+            const type = roomType.value;
+            const max = parseInt(maxOccupants.value) || 0;
+            
+            if (type === 'single' && max > 1) {
+                maxOccupants.setCustomValidity('Single occupancy rooms can only have 1 occupant');
+                showFieldError(maxOccupants, 'Single occupancy rooms can only have 1 occupant');
+            } else if (type === 'double' && max > 2) {
+                maxOccupants.setCustomValidity('Double occupancy rooms can have at most 2 occupants');
+                showFieldError(maxOccupants, 'Double occupancy rooms can have at most 2 occupants');
+            } else {
+                maxOccupants.setCustomValidity('');
+                clearFieldError(maxOccupants);
+            }
+        }
+    }
+    
+    if (maxOccupants) {
+        maxOccupants.addEventListener('change', function() {
+            validateOccupancy();
+            validateRoomTypeOccupancy();
+        });
+    }
+    
+    if (currentOccupants) {
+        currentOccupants.addEventListener('change', validateOccupancy);
+    }
+    
+    if (roomType) {
+        roomType.addEventListener('change', validateRoomTypeOccupancy);
+    }
+
+    // Area validation
+    const areaInput = document.getElementById('id_area');
+    if (areaInput) {
+        areaInput.addEventListener('change', function() {
+            const area = parseFloat(areaInput.value) || 0;
+            if (area > 0 && area < 5) {
+                areaInput.setCustomValidity('Room area should be at least 5 m²');
+                showFieldError(areaInput, 'Room area should be at least 5 m²');
+            } else if (area > 200) {
+                areaInput.setCustomValidity('Room area seems unusually large. Please verify.');
+                showFieldError(areaInput, 'Room area seems unusually large. Please verify.');
+            } else {
+                areaInput.setCustomValidity('');
+                clearFieldError(areaInput);
+            }
+        });
+    }
+
+    // Rent validation
+    const rentInput = document.getElementById('id_monthly_rent');
+    const depositInput = document.getElementById('id_security_deposit');
+    
+    if (rentInput) {
+        rentInput.addEventListener('change', function() {
+            const rent = parseFloat(rentInput.value) || 0;
+            if (rent > 0 && rent < 50) {
+                rentInput.setCustomValidity('Monthly rent should be at least €50');
+                showFieldError(rentInput, 'Monthly rent should be at least €50');
+            } else if (rent > 5000) {
+                rentInput.setCustomValidity('Monthly rent seems unusually high. Please verify.');
+                showFieldError(rentInput, 'Monthly rent seems unusually high. Please verify.');
+            } else {
+                rentInput.setCustomValidity('');
+                clearFieldError(rentInput);
+            }
+            
+            validateDeposit();
+        });
+    }
+    
+    function validateDeposit() {
+        if (rentInput && depositInput) {
+            const rent = parseFloat(rentInput.value) || 0;
+            const deposit = parseFloat(depositInput.value) || 0;
+            
+            if (deposit > 0 && rent > 0 && deposit > (rent * 3)) {
+                depositInput.setCustomValidity('Security deposit seems unusually high compared to monthly rent');
+                showFieldError(depositInput, 'Security deposit seems unusually high compared to monthly rent');
+            } else {
+                depositInput.setCustomValidity('');
+                clearFieldError(depositInput);
+            }
+        }
+    }
+    
+    if (depositInput) {
+        depositInput.addEventListener('change', validateDeposit);
+    }
+
+    // Date validation
+    const availableFromInput = document.getElementById('id_available_from');
+    if (availableFromInput && !form.querySelector('input[name="id"]')) { // Only for new rooms
+        availableFromInput.addEventListener('change', function() {
+            const selectedDate = new Date(availableFromInput.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                availableFromInput.setCustomValidity('Available from date cannot be in the past');
+                showFieldError(availableFromInput, 'Available from date cannot be in the past');
+            } else {
+                availableFromInput.setCustomValidity('');
+                clearFieldError(availableFromInput);
+            }
+        });
+    }
+    
+    // Utility functions for showing/clearing field errors
+    function showFieldError(field, message) {
+        clearFieldError(field);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'mt-1 field-error';
+        errorDiv.innerHTML = `<p class="text-sm text-red-600">${message}</p>`;
+        field.parentNode.insertBefore(errorDiv, field.nextSibling);
+        field.classList.add('border-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+    }
+    
+    function clearFieldError(field) {
+        const existingError = field.parentNode.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        field.classList.remove('border-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+    }
+    
+    // Room number formatting
+    const roomNumberInput = document.getElementById('id_room_number');
+    if (roomNumberInput) {
+        roomNumberInput.addEventListener('blur', function() {
+            this.value = this.value.trim().toUpperCase();
+        });
+    }
+});
+</script>
+
+<style>
+    /* Custom styles for form elements */
+    .form-input, .form-select, .form-textarea {
+        @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors;
+    }
+    
+    .form-textarea {
+        @apply resize-vertical;
+        min-height: 100px;
+    }
+    
+    .form-checkbox {
+        @apply h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded;
+    }
+    
+    input[type="date"] {
+        @apply form-input;
+    }
+    
+    input[type="number"] {
+        @apply form-input;
+    }
+    
+    input[type="text"] {
+        @apply form-input;
+    }
+    
+    select {
+        @apply form-select;
+    }
+    
+    textarea {
+        @apply form-textarea;
+    }
+    
+    input[type="checkbox"] {
+        @apply form-checkbox;
+    }
+    
+    /* Error state styling */
+    input.border-red-300 {
+        border-color: #fca5a5 !important;
+    }
+    
+    input.focus\:border-red-500:focus {
+        border-color: #ef4444 !important;
+    }
+    
+    input.focus\:ring-red-500:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+    }
+    
+    /* Loading state */
+    .loading {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+</style>
+{% endblock %}

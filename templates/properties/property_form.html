@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if form.instance.pk %}Edit Property - {{ form.instance.name }}{% else %}Add New Property{% endif %} - BrandenBed{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center mb-6">
+            <a href="{% if form.instance.pk %}{% url 'properties:property_detail' form.instance.pk %}{% else %}{% url 'properties:property_list' %}{% endif %}" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                {% if form.instance.pk %}Back to Property Details{% else %}Back to Properties{% endif %}
+            </a>
+        </div>
+        
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                {% if form.instance.pk %}Edit Property{% else %}Add New Property{% endif %}
+            </h1>
+            <p class="text-gray-600">
+                {% if form.instance.pk %}Update property information and settings{% else %}Create a new property in your portfolio{% endif %}
+            </p>
+        </div>
+    </div>
+
+    <form method="post" class="space-y-8">
+        {% csrf_token %}
+        
+        <!-- Basic Information -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Basic Information</h3>
+                <p class="mt-1 text-sm text-gray-500">Essential details about the property</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_property_id" class="block text-sm font-medium text-gray-700 mb-1">Property ID <span class="text-red-500">*</span></label>
+                        {{ form.property_id }}
+                        {% if form.property_id.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.property_id.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Unique identifier for this property</p>
+                    </div>
+                    <div>
+                        <label for="id_name" class="block text-sm font-medium text-gray-700 mb-1">Property Name <span class="text-red-500">*</span></label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_property_type" class="block text-sm font-medium text-gray-700 mb-1">Property Type <span class="text-red-500">*</span></label>
+                        {{ form.property_type }}
+                        {% if form.property_type.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.property_type.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_furnishing" class="block text-sm font-medium text-gray-700 mb-1">Furnishing</label>
+                        {{ form.furnishing }}
+                        {% if form.furnishing.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.furnishing.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_total_area" class="block text-sm font-medium text-gray-700 mb-1">Total Area (m²) <span class="text-red-500">*</span></label>
+                        {{ form.total_area }}
+                        {% if form.total_area.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.total_area.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_year_built" class="block text-sm font-medium text-gray-700 mb-1">Year Built</label>
+                        {{ form.year_built }}
+                        {% if form.year_built.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.year_built.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address & Location -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Address & Location</h3>
+                <p class="mt-1 text-sm text-gray-500">Property address and location details</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label for="id_address_line_1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 <span class="text-red-500">*</span></label>
+                        {{ form.address_line_1 }}
+                        {% if form.address_line_1.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.address_line_1.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="id_address_line_2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
+                        {{ form.address_line_2 }}
+                        {% if form.address_line_2.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.address_line_2.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_city" class="block text-sm font-medium text-gray-700 mb-1">City <span class="text-red-500">*</span></label>
+                        {{ form.city }}
+                        {% if form.city.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.city.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_pincode" class="block text-sm font-medium text-gray-700 mb-1">Pincode <span class="text-red-500">*</span></label>
+                        {{ form.pincode }}
+                        {% if form.pincode.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.pincode.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                        {{ form.state }}
+                        {% if form.state.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.state.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_district" class="block text-sm font-medium text-gray-700 mb-1">District</label>
+                        {{ form.district }}
+                        {% if form.district.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.district.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Berlin district (e.g., Mitte, Kreuzberg)</p>
+                    </div>
+                    <div>
+                        <label for="id_nearest_university" class="block text-sm font-medium text-gray-700 mb-1">Nearest University</label>
+                        {{ form.nearest_university }}
+                        {% if form.nearest_university.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.nearest_university.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_distance_to_university" class="block text-sm font-medium text-gray-700 mb-1">Distance to University</label>
+                        {{ form.distance_to_university }}
+                        {% if form.distance_to_university.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.distance_to_university.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">e.g., 10 mins walk, 15 mins by U-Bahn</p>
+                    </div>
+                    <div>
+                        <label for="id_nearest_metro_station" class="block text-sm font-medium text-gray-700 mb-1">Nearest Metro Station</label>
+                        {{ form.nearest_metro_station }}
+                        {% if form.nearest_metro_station.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.nearest_metro_station.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_distance_to_metro" class="block text-sm font-medium text-gray-700 mb-1">Distance to Metro</label>
+                        {{ form.distance_to_metro }}
+                        {% if form.distance_to_metro.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.distance_to_metro.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Walking distance to nearest station</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Details -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Property Details</h3>
+                <p class="mt-1 text-sm text-gray-500">Room and facility information</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="id_total_rooms" class="block text-sm font-medium text-gray-700 mb-1">Total Rooms <span class="text-red-500">*</span></label>
+                        {{ form.total_rooms }}
+                        {% if form.total_rooms.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.total_rooms.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_total_beds" class="block text-sm font-medium text-gray-700 mb-1">Total Beds <span class="text-red-500">*</span></label>
+                        {{ form.total_beds }}
+                        {% if form.total_beds.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.total_beds.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_total_washrooms" class="block text-sm font-medium text-gray-700 mb-1">Total Washrooms <span class="text-red-500">*</span></label>
+                        {{ form.total_washrooms }}
+                        {% if form.total_washrooms.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.total_washrooms.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_available_from" class="block text-sm font-medium text-gray-700 mb-1">Available From <span class="text-red-500">*</span></label>
+                        {{ form.available_from }}
+                        {% if form.available_from.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.available_from.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_expected_monthly_rent" class="block text-sm font-medium text-gray-700 mb-1">Expected Monthly Rent (€) <span class="text-red-500">*</span></label>
+                        {{ form.expected_monthly_rent }}
+                        {% if form.expected_monthly_rent.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.expected_monthly_rent.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_security_deposit" class="block text-sm font-medium text-gray-700 mb-1">Security Deposit (€)</label>
+                        {{ form.security_deposit }}
+                        {% if form.security_deposit.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.security_deposit.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Amenities & Features -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Amenities & Features</h3>
+                <p class="mt-1 text-sm text-gray-500">Available facilities and services</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Core BrandenBed Features -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-medium text-gray-900">Core Features</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                {{ form.has_wifi }}
+                                <label for="id_has_wifi" class="ml-2 text-sm text-gray-700">High-speed WiFi</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_security }}
+                                <label for="id_has_security" class="ml-2 text-sm text-gray-700">24/7 Security & Support</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_power_backup }}
+                                <label for="id_has_power_backup" class="ml-2 text-sm text-gray-700">24/7 Power Backup</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_work_desk }}
+                                <label for="id_has_work_desk" class="ml-2 text-sm text-gray-700">Dedicated Work Desk</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shared Facilities -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-medium text-gray-900">Shared Facilities</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                {{ form.has_shared_kitchen }}
+                                <label for="id_has_shared_kitchen" class="ml-2 text-sm text-gray-700">Shared Kitchen</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_shared_lounge }}
+                                <label for="id_has_shared_lounge" class="ml-2 text-sm text-gray-700">Shared Lounge</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_laundry }}
+                                <label for="id_has_laundry" class="ml-2 text-sm text-gray-700">Laundry Facilities</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_gym }}
+                                <label for="id_has_gym" class="ml-2 text-sm text-gray-700">Gym/Fitness Center</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Features -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-medium text-gray-900">Additional Features</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                {{ form.has_parking }}
+                                <label for="id_has_parking" class="ml-2 text-sm text-gray-700">Parking</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_balcony }}
+                                <label for="id_has_balcony" class="ml-2 text-sm text-gray-700">Balcony</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.has_elevator }}
+                                <label for="id_has_elevator" class="ml-2 text-sm text-gray-700">Elevator</label>
+                            </div>
+                            <div class="flex items-center">
+                                {{ form.near_public_transport }}
+                                <label for="id_near_public_transport" class="ml-2 text-sm text-gray-700">Near Public Transport</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Management & Partnership -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Management & Partnership</h3>
+                <p class="mt-1 text-sm text-gray-500">Property management and landlord details</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_landlord" class="block text-sm font-medium text-gray-700 mb-1">Landlord <span class="text-red-500">*</span></label>
+                        {{ form.landlord }}
+                        {% if form.landlord.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.landlord.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_property_manager" class="block text-sm font-medium text-gray-700 mb-1">Property Manager</label>
+                        {{ form.property_manager }}
+                        {% if form.property_manager.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.property_manager.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_housekeeping_supervisor" class="block text-sm font-medium text-gray-700 mb-1">Housekeeping Supervisor</label>
+                        {{ form.housekeeping_supervisor }}
+                        {% if form.housekeeping_supervisor.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.housekeeping_supervisor.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_maintenance_supervisor" class="block text-sm font-medium text-gray-700 mb-1">Maintenance Supervisor</label>
+                        {{ form.maintenance_supervisor }}
+                        {% if form.maintenance_supervisor.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.maintenance_supervisor.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_partnership_start_date" class="block text-sm font-medium text-gray-700 mb-1">Partnership Start Date <span class="text-red-500">*</span></label>
+                        {{ form.partnership_start_date }}
+                        {% if form.partnership_start_date.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.partnership_start_date.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_partnership_end_date" class="block text-sm font-medium text-gray-700 mb-1">Partnership End Date</label>
+                        {{ form.partnership_end_date }}
+                        {% if form.partnership_end_date.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.partnership_end_date.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Leave blank for ongoing partnership</p>
+                    </div>
+                    <div>
+                        <label for="id_status" class="block text-sm font-medium text-gray-700 mb-1">Property Status <span class="text-red-500">*</span></label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.status.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Additional Information</h3>
+                <p class="mt-1 text-sm text-gray-500">Extra notes and special requirements</p>
+            </div>
+            <div class="px-6 py-4">
+                <div class="space-y-6">
+                    <div>
+                        <label for="id_additional_notes" class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
+                        {{ form.additional_notes }}
+                        {% if form.additional_notes.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.additional_notes.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Any additional information about the property</p>
+                    </div>
+                    <div>
+                        <label for="id_special_requirements" class="block text-sm font-medium text-gray-700 mb-1">Special Requirements</label>
+                        {{ form.special_requirements }}
+                        {% if form.special_requirements.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.special_requirements.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">Any special requirements for residents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4">
+                <div class="flex justify-end space-x-3">
+                    <a href="{% if form.instance.pk %}{% url 'properties:property_detail' form.instance.pk %}{% else %}{% url 'properties:property_list' %}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        Cancel
+                    </a>
+                    <button type="submit" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                        </svg>
+                        {% if form.instance.pk %}Update Property{% else %}Create Property{% endif %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Add form validation and interaction scripts here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-calculate total area based on rooms if needed
+        const roomsInput = document.getElementById('id_total_rooms');
+        const bedsInput = document.getElementById('id_total_beds');
+        
+        if (roomsInput && bedsInput) {
+            [roomsInput, bedsInput].forEach(input => {
+                input.addEventListener('change', function() {
+                    // Add validation logic here
+                    const rooms = parseInt(roomsInput.value) || 0;
+                    const beds = parseInt(bedsInput.value) || 0;
+                    
+                    if (beds < rooms) {
+                        bedsInput.setCustomValidity('Number of beds should be at least equal to number of rooms');
+                    } else {
+                        bedsInput.setCustomValidity('');
+                    }
+                });
+            });
+        }
+
+        // Date field validation
+        const startDate = document.getElementById('id_partnership_start_date');
+        const endDate = document.getElementById('id_partnership_end_date');
+        
+        if (startDate && endDate) {
+            endDate.addEventListener('change', function() {
+                if (startDate.value && endDate.value) {
+                    if (new Date(endDate.value) <= new Date(startDate.value)) {
+                        endDate.setCustomValidity('End date must be after start date');
+                    } else {
+                        endDate.setCustomValidity('');
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    /* Custom styles for form elements */
+    .form-input, .form-select, .form-textarea {
+        @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+    }
+    
+    .form-textarea {
+        @apply resize-vertical;
+        min-height: 100px;
+    }
+    
+    .form-checkbox {
+        @apply h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded;
+    }
+    
+    input[type="date"] {
+        @apply form-input;
+    }
+    
+    input[type="number"] {
+        @apply form-input;
+    }
+    
+    input[type="text"] {
+        @apply form-input;
+    }
+    
+    select {
+        @apply form-select;
+    }
+    
+    textarea {
+        @apply form-textarea;
+    }
+    
+    input[type="checkbox"] {
+        @apply form-checkbox;
+    }
+</style>
+{% endblock %}

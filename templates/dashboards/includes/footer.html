@@ -1,0 +1,35 @@
+<!-- templates/dashboards/includes/footer.html -->
+{% load i18n %}
+{% load static %}
+
+
+<footer class="bg-white border-t border-gray-200">
+    <div class="w-auto mx-8 p-4 md:py-8">
+        <div class="sm:flex flex-col sm:items-end sm:justify-end gap-5">
+            <a href="{% url 'dashboard:dashboard' %}" class="flex items-center sm:mb-0 space-x-3 rtl:space-x-reverse">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="bg-blue-900 rounded-xl p-1">
+                        <img src="{% static 'images/logo.png' %}" alt="Brandenbed Living Spaces" class="h-10 w-10 rounded-xl shadow-card group-hover:shadow-card-hover transition-shadow duration-300 object-contain">             
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="self-center text-xl font-semibold whitespace-nowrap" style="color: var(--brand-navy);">BrandenBed</span>
+                    <span class="text-sm font-medium -mt-1" style="color: var(--brand-gold);">Living Spaces</span>
+                </div>
+            </a>
+            <ul class="flex flex-wrap items-center text-sm font-medium text-gray-500 sm:mb-0">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">{% trans "Support" %}</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">{% trans "Privacy Policy" %}</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">{% trans "Contact" %}</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center">© 2025 <a href="#" class="hover:underline">BrandenBed Living Spaces™</a>. {% trans "All Rights Reserved" %}.</span>
+    </div>
+</footer>

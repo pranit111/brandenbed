@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#1e3a8a" stroke="#fbbf24" stroke-width="4"/>
+  
+  <!-- Brandenburg Gate Structure -->
+  <!-- Base -->
+  <rect x="30" y="150" width="140" height="15" fill="#d4af37"/>
+  
+  <!-- Columns (6 columns) -->
+  <rect x="40" y="80" width="12" height="70" fill="#d4af37"/>
+  <rect x="60" y="80" width="12" height="70" fill="#d4af37"/>
+  <rect x="80" y="80" width="12" height="70" fill="#d4af37"/>
+  <rect x="108" y="80" width="12" height="70" fill="#d4af37"/>
+  <rect x="128" y="80" width="12" height="70" fill="#d4af37"/>
+  <rect x="148" y="80" width="12" height="70" fill="#d4af37"/>
+  
+  <!-- Top architrave -->
+  <rect x="35" y="70" width="130" height="10" fill="#d4af37"/>
+  
+  <!-- Central arch -->
+  <path d="M 80 150 A 20 20 0 0 1 120 150 Z" fill="#1e3a8a"/>
+  
+  <!-- Quadriga (chariot) on top -->
+  <rect x="92" y="55" width="16" height="15" fill="#d4af37"/>
+  
+  <!-- House icon in center -->
+  <g transform="translate(100, 120)">
+    <!-- House base -->
+    <rect x="-15" y="-5" width="30" height="20" fill="#fbbf24"/>
+    <!-- Roof -->
+    <polygon points="-18,-15 0,-25 18,-15" fill="#1e3a8a"/>
+    <!-- Door -->
+    <rect x="-4" y="5" width="8" height="12" fill="#1e3a8a"/>
+    <!-- Windows -->
+    <rect x="-12" y="2" width="5" height="5" fill="#1e3a8a"/>
+    <rect x="7" y="2" width="5" height="5" fill="#1e3a8a"/>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="40" r="3" fill="#fbbf24"/>
+  <circle cx="85" cy="45" r="2" fill="#fbbf24"/>
+  <circle cx="115" cy="45" r="2" fill="#fbbf24"/>
+</svg>

@@ -1,0 +1,1373 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-30 03:48+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\templates\core\about.html:4 .\templates\core\includes\footer.html:42
+#: .\templates\core\includes\navbar.html:43
+msgid "About Us"
+msgstr "Über uns"
+
+#: .\templates\core\about.html:11
+msgid "About BrandenBed"
+msgstr "Über Brandenbed"
+
+#: .\templates\core\about.html:14
+msgid ""
+"Your trusted partner in finding the perfect home for your academic and "
+"professional journey in Berlin."
+msgstr "Ihr vertrauenswürdiger Partner, um das perfekte Zuhause für Ihre akademische und professionelle Reise in Berlin zu finden."
+
+#: .\templates\core\about.html:25
+msgid "Our Mission"
+msgstr "Unsere Mission"
+
+#: .\templates\core\about.html:28
+msgid ""
+"At BrandenBed, we understand the challenges of finding accommodation in a "
+"new city. Our goal is to deliver a stress-free, reliable service that "
+"connects students and professionals with quality apartments that suit their "
+"needs and budgets."
+msgstr "Bei Brandenbedble verstehen wir die Herausforderungen bei der Suche nach Unterkünften in einer neuen Stadt. "
+
+#: .\templates\core\about.html:31
+msgid ""
+"We foster a supportive environment where residents can focus on their goals "
+"and enjoy their time in Berlin, making the transition from their home "
+"country as smooth as possible."
+msgstr "Wir fördern ein unterstützendes Umfeld, in dem sich die Bewohner auf ihre Ziele konzentrieren und ihre Zeit in Berlin genießen können, was den Übergang aus ihrem Heimatland so reibungslos wie möglich macht."
+
+#: .\templates\core\about.html:46
+msgid "Why Choose BrandenBed Living Spaces"
+msgstr "Warum Wählen Sie Brandenbett Living Spaces"
+
+#: .\templates\core\about.html:49
+msgid ""
+"We're not just a housing company - we're your partners in making Berlin feel "
+"like home."
+msgstr "Wir sind nicht nur eine Wohnungsgesellschaft - wir sind Ihre Partner, um Berlin wie zu Hause zu fühlen."
+
+#: .\templates\core\about.html:59
+msgid "Local Expertise"
+msgstr "Lokales Fachwissen"
+
+#: .\templates\core\about.html:60
+msgid ""
+"Deep knowledge of the Berlin housing scene and international student needs, "
+"ensuring you get the best accommodation options."
+msgstr "Tiefes Wissen über die Berliner Wohnungsszene und die internationalen Studentenbedürfnisse, um sicherzustellen, dass Sie die besten Unterkunftsmöglichkeiten erhalten."
+
+#: .\templates\core\about.html:68
+msgid "Trusted Partnerships"
+msgstr "vertrauenswürdige Partnerschaften"
+
+#: .\templates\core\about.html:69
+msgid ""
+"Reputable property owners and quality housing in prime locations across "
+"Berlin's most desirable neighborhoods."
+msgstr "Renommierte Immobilienbesitzer und qualitativ hochwertige Wohnungen an erstklassigen Standorten in Berlins begehrtesten Stadtteilen."
+
+#: .\templates\core\about.html:77
+msgid "Commitment to Excellence"
+msgstr "Engagement für Exzellenz"
+
+#: .\templates\core\about.html:78
+msgid ""
+"Exceptional service and long-term relationships for a positive rental "
+"experience throughout your stay in Berlin."
+msgstr "Außergewöhnlicher Service und langfristige Beziehungen für eine positive Mieterfahrung während Ihres gesamten Aufenthalts in Berlin."
+
+#: .\templates\core\about.html:93
+msgid "Our Story"
+msgstr "Unsere Geschichte"
+
+#: .\templates\core\about.html:96
+msgid ""
+"BrandenBed Living Spaces UG was founded with a simple mission: to make "
+"finding quality student accommodation in Berlin as easy and stress-free as "
+"possible."
+msgstr "Brandenbed Living Spaces UG wurde mit einer einfachen Mission gegründet: Die Suche nach qualitativ hochwertigen Studentenunterkünften in Berlin so einfach und stressfrei wie möglich."
+
+#: .\templates\core\about.html:99
+msgid ""
+"As a Berlin-based housing company, we specialize in providing high-quality, "
+"fully managed accommodation for international students, expats, and young "
+"professionals who are making Germany their new home."
+msgstr "Als in Berlin ansässiges Wohnungsunternehmen sind wir auf eine qualitativ hochwertige, vollständig verwaltete Unterkunft für internationale Studenten, Expats und junge Fachkräfte spezialisiert, die Deutschland zu ihrem neuen Zuhause machen."
+
+#: .\templates\core\about.html:102
+msgid ""
+"We understand the unique challenges that come with relocating to a new "
+"country, which is why we've built our services around comprehensive support "
+"- from helping with Anmeldung to creating community spaces where lifelong "
+"friendships are formed."
+msgstr "Wir verstehen die einzigartigen Herausforderungen, die mit dem Umzug in ein neues Land einhergehen. Deshalb haben wir unsere Dienste um umfassende Unterstützung aufgebaut - von der Hilfe mit Anmeldung bis hin zur Schaffung von Gemeinschaftsräumen, in denen lebenslange Freundschaften gebildet werden."
+
+#: .\templates\core\about.html:114
+msgid "What We Offer"
+msgstr "Was wir anbieten"
+
+#: .\templates\core\about.html:117
+msgid ""
+"Comprehensive housing solutions tailored for international students and "
+"young professionals."
+msgstr "umfassende Wohnungslösungen, die auf internationale Studenten und junge Fachkräfte zugeschnitten sind."
+
+#: .\templates\core\about.html:122
+msgid "For Students"
+msgstr "Für Studenten"
+
+#: .\templates\core\about.html:128
+msgid "Furnished private & shared rooms"
+msgstr "Eingerichtet privat"
+
+#: .\templates\core\about.html:134
+msgid "All-inclusive rent (utilities, Wi-Fi, heating)"
+msgstr "All-Inclusive-Miete (Versorgungsunternehmen, Wi-Fi, Heizung)"
+
+#: .\templates\core\about.html:140
+msgid "Multilingual tenant onboarding & support"
+msgstr "Mehrsprachiger Mieter Onboarding"
+
+#: .\templates\core\about.html:146
+msgid "Anmeldung assistance"
+msgstr "Anmeldung Assistance"
+
+#: .\templates\core\about.html:152
+msgid "Community events & networking"
+msgstr "Community -Veranstaltungen"
+
+#: .\templates\core\about.html:157 .\templates\core\landlords.html:11
+#: .\templates\core\services.html:158
+msgid "For Property Owners"
+msgstr "Für Immobilienbesitzer"
+
+#: .\templates\core\about.html:163
+msgid "Professional property management"
+msgstr "Professionelle Immobilienverwaltung"
+
+#: .\templates\core\about.html:169
+msgid "Guaranteed rent options"
+msgstr "Garantierte Mietoptionen"
+
+#: .\templates\core\about.html:175
+msgid "Marketing & tenant screening"
+msgstr "Marketing"
+
+#: .\templates\core\about.html:181
+msgid "Maintenance & repairs coordination"
+msgstr "Wartung"
+
+#: .\templates\core\about.html:187
+msgid "Transparent reporting & timely payouts"
+msgstr "transparente Berichterstattung"
+
+#: .\templates\core\about.html:200
+msgid "Ready to Start Your Berlin Journey?"
+msgstr "Bist du bereit, deine Berlin -Reise zu beginnen?"
+
+#: .\templates\core\about.html:203
+msgid ""
+"Whether you're a student looking for the perfect home or a property owner "
+"seeking professional management, we're here to help."
+msgstr "Egal, ob Sie ein Student sind, der nach dem perfekten Zuhause oder nach einem Eigentümer sucht, der professionelle Management sucht, wir sind hier, um zu helfen."
+
+#: .\templates\core\about.html:207 .\templates\core\services.html:271
+msgid "Find Housing"
+msgstr "Wohnraum finden"
+
+#: .\templates\core\about.html:210 .\templates\core\contact.html:4
+#: .\templates\core\contact.html:11 .\templates\core\properties.html:241
+msgid "Contact Us"
+msgstr "Kontaktieren Sie uns"
+
+#: .\templates\core\base.html:7 .\templates\core\home.html:4
+msgid "Premium Student Housing in Berlin"
+msgstr "Premium-Studentenwohnen in Berlin"
+
+#: .\templates\core\contact.html:14
+msgid ""
+"Get in touch with our team. We're here to help you find your perfect home in "
+"Berlin."
+msgstr "Kontakt mit unserem Team. "
+
+#: .\templates\core\contact.html:26
+msgid "Send Us a Message"
+msgstr "Senden Sie uns eine Nachricht"
+
+#: .\templates\core\contact.html:29
+msgid "Fill out the form below and we'll get back to you within 24 hours."
+msgstr "Füllen Sie das folgende Formular aus und wir melden uns innerhalb von 24 Stunden bei Ihnen."
+
+#: .\templates\core\contact.html:33 .\templates\core\landlords.html:285
+msgid "Full Name"
+msgstr "Vollständiger Name"
+
+#: .\templates\core\contact.html:34 .\templates\core\landlords.html:286
+msgid "Your full name"
+msgstr "Ihr vollständiger Name"
+
+#: .\templates\core\contact.html:37 .\templates\core\landlords.html:289
+msgid "Email Address"
+msgstr "E -Mail -Adresse"
+
+#: .\templates\core\contact.html:41 .\templates\core\landlords.html:296
+msgid "Phone Number"
+msgstr "Telefonnummer"
+
+#: .\templates\core\contact.html:45
+msgid "Subject"
+msgstr "Betreff"
+
+#: .\templates\core\contact.html:47
+msgid "Choose a subject"
+msgstr "Wählen Sie ein Thema"
+
+#: .\templates\core\contact.html:48
+msgid "Housing Inquiry"
+msgstr "Wohnungsanfrage"
+
+#: .\templates\core\contact.html:49 .\templates\core\includes\footer.html:28
+msgid "Property Management"
+msgstr "Immobilienverwaltung"
+
+#: .\templates\core\contact.html:50
+msgid "Resident Support"
+msgstr "Unterstützung der Bewohner"
+
+#: .\templates\core\contact.html:51
+msgid "General Question"
+msgstr "Allgemeine Frage"
+
+#: .\templates\core\contact.html:55
+msgid "Message"
+msgstr "Nachricht"
+
+#: .\templates\core\contact.html:56
+msgid "Tell us about your housing needs or questions..."
+msgstr "Erzählen Sie uns von Ihren Wohnbedürfnissen oder Fragen ..."
+
+#: .\templates\core\contact.html:59
+msgid "Send Message"
+msgstr "Nachricht senden"
+
+#: .\templates\core\contact.html:68
+msgid "Get in Touch"
+msgstr "Kontakt auf den Kontakt"
+
+#: .\templates\core\contact.html:71
+msgid ""
+"We're here to help you with all your housing needs. Reach out to us through "
+"any of the channels below."
+msgstr "Wir sind hier, um Ihnen bei all Ihren Wohnbedürfnissen zu helfen. "
+
+#: .\templates\core\contact.html:85
+msgid "Office Address"
+msgstr "Büroadresse"
+
+#: .\templates\core\contact.html:102
+msgid "Phone Support"
+msgstr "Telefonunterstützung"
+
+#: .\templates\core\contact.html:104
+msgid "24/7 Support:"
+msgstr "24/7 Unterstützung:"
+
+#: .\templates\core\contact.html:105
+msgid "Office Hours:"
+msgstr "Bürozeiten:"
+
+#: .\templates\core\contact.html:119
+msgid "Email Support"
+msgstr "E -Mail -Support"
+
+#: .\templates\core\contact.html:121
+msgid "General Inquiries:"
+msgstr "Allgemeine Anfragen:"
+
+#: .\templates\core\contact.html:122
+msgid "Housing Support:"
+msgstr "Wohnungsunterstützung:"
+
+#: .\templates\core\contact.html:123
+msgid "Property Owners:"
+msgstr "Immobilienbesitzer:"
+
+#: .\templates\core\contact.html:136
+msgid "WhatsApp Support"
+msgstr "WhatsApp -Unterstützung"
+
+#: .\templates\core\contact.html:138
+msgid "Quick support via WhatsApp:"
+msgstr "Schnelle Unterstützung über WhatsApp:"
+
+#: .\templates\core\contact.html:139
+msgid "Available 24/7 for urgent matters"
+msgstr "verfügbar rund um die Uhr für dringende Angelegenheiten"
+
+#: .\templates\core\contact.html:152
+msgid "Office Hours"
+msgstr "Bürozeiten"
+
+#: .\templates\core\contact.html:154
+msgid "Monday - Friday:"
+msgstr "Montag - Freitag:"
+
+#: .\templates\core\contact.html:155
+msgid "Saturday:"
+msgstr "Samstag:"
+
+#: .\templates\core\contact.html:156
+msgid "Sunday:"
+msgstr "Sonntag:"
+
+#: .\templates\core\contact.html:156
+msgid "Closed"
+msgstr "geschlossen"
+
+#: .\templates\core\contact.html:157
+msgid "Emergency support available 24/7"
+msgstr "Notfallunterstützung 24/7 verfügbar"
+
+#: .\templates\core\contact.html:172
+msgid "Visit Our Office"
+msgstr "Besuchen Sie unser Büro"
+
+#: .\templates\core\contact.html:175
+msgid ""
+"Located in the heart of Berlin, we're easily accessible by public transport."
+msgstr "Im Herzen von Berlin sind wir mit öffentlichen Verkehrsmitteln leicht zugänglich."
+
+#: .\templates\core\contact.html:185
+msgid "Interactive Map"
+msgstr "Interaktive Karte"
+
+#: .\templates\core\contact.html:186
+msgid "Map integration would be implemented here"
+msgstr "Die Kartenintegration wird hier implementiert"
+
+#: .\templates\core\contact.html:188
+msgid "View on Google Maps"
+msgstr "Ansicht auf Google Maps"
+
+#: .\templates\core\contact.html:203
+msgid "Frequently Asked Questions"
+msgstr "Häufig gestellte Fragen"
+
+#: .\templates\core\contact.html:206
+msgid "Find quick answers to common questions about our housing services."
+msgstr "Finden Sie schnelle Antworten auf gemeinsame Fragen zu unseren Wohnungsdiensten."
+
+#: .\templates\core\contact.html:214
+msgid "How quickly can I move in?"
+msgstr "Wie schnell kann ich hineinziehen?"
+
+#: .\templates\core\contact.html:222
+msgid ""
+"Most of our properties are available for immediate move-in. Once your "
+"application is approved and deposit is paid, you can typically move in "
+"within 2-3 business days."
+msgstr "Die meisten unserer Eigenschaften stehen für sofortige Einschaltungen zur Verfügung. "
+
+#: .\templates\core\contact.html:228
+msgid "What documents do I need to apply?"
+msgstr "Welche Dokumente muss ich mich bewerben?"
+
+#: .\templates\core\contact.html:236
+msgid ""
+"You'll need a valid passport/ID, proof of enrollment or employment, proof of "
+"income or financial guarantee, and completed application form. We accept "
+"international documents."
+msgstr "Sie benötigen einen gültigen Reisepass/eine gültige ID, einen Einschreibung oder eine Beschäftigung, einen Einkommens- oder finanziellen Garantie -Nachweis und ein ausgefülltes Antragsformular. "
+
+#: .\templates\core\contact.html:242
+msgid "Do you help with Anmeldung?"
+msgstr "Hilfst du bei Anmeldung?"
+
+#: .\templates\core\contact.html:250
+msgid ""
+"Yes! We provide comprehensive Anmeldung support including appointment "
+"booking, document preparation, and accompaniment to appointments if needed."
+msgstr "Ja! "
+
+#: .\templates\core\home.html:11
+msgid "New"
+msgstr "neu"
+
+#: .\templates\core\home.html:12
+msgid "500+ Properties available for booking"
+msgstr "500 Eigenschaften zur Buchung verfügbar"
+
+#: .\templates\core\home.html:18
+msgid "A Home Away From Home"
+msgstr "Ein Zuhause außerhalb von zu Hause"
+
+#: .\templates\core\home.html:21
+msgid ""
+"Discover spacious, stylish, and secure accommodation for students and "
+"professionals in Berlin. Your comfort and community start here."
+msgstr "Entdecken Sie geräumige, stilvolle und sichere Unterkünfte für Studenten und Fachleute in Berlin. "
+
+#: .\templates\core\home.html:25
+msgid "Find Your Home"
+msgstr "Finden Sie Ihr Zuhause"
+
+#: .\templates\core\home.html:31 .\templates\core\includes\footer.html:31
+#: .\templates\core\includes\navbar.html:53 .\templates\core\landlords.html:4
+msgid "For Landlords"
+msgstr "für Vermieter"
+
+#: .\templates\core\home.html:45
+msgid "Trusted by Students Across Berlin"
+msgstr "Vertrauen von Studenten in ganz Berlin"
+
+#: .\templates\core\home.html:48
+msgid ""
+"We've been helping international students find their perfect home in Berlin "
+"for years."
+msgstr "Wir helfen internationalen Studenten seit Jahren dabei, ihr perfektes Zuhause in Berlin zu finden."
+
+#: .\templates\core\home.html:54
+msgid "Properties Managed"
+msgstr "Eigenschaften verwaltet"
+
+#: .\templates\core\home.html:58
+msgid "Happy Students"
+msgstr "Glückliche Schüler"
+
+#: .\templates\core\home.html:62
+msgid "Years Experience"
+msgstr "Jahre Erfahrung"
+
+#: .\templates\core\home.html:66
+msgid "Districts in Berlin"
+msgstr "Bezirke in Berlin"
+
+#: .\templates\core\home.html:77
+msgid "What Makes Us Different"
+msgstr "Was macht uns anders aus"
+
+#: .\templates\core\home.html:80
+msgid ""
+"We go beyond just providing rooms – we create homes and communities for "
+"international students."
+msgstr "Wir gehen über die Bereitstellung von Räumen hinaus - wir schaffen Häuser und Gemeinden für internationale Studenten."
+
+#: .\templates\core\home.html:90
+msgid "Fully Furnished Rooms"
+msgstr "Voll möblierte Zimmer"
+
+#: .\templates\core\home.html:91
+msgid ""
+"Move-in ready spaces with modern furniture, high-speed WiFi, and all "
+"essentials included."
+msgstr "Einzugsfertige Räume mit modernen Möbeln, Hochgeschwindigkeits-WLAN und allen wichtigen Grundlagen."
+
+#: .\templates\core\home.html:99
+msgid "24/7 Security & Support"
+msgstr "24/7 Sicherheit"
+
+#: .\templates\core\home.html:100
+msgid ""
+"Round-the-clock security and multilingual support team to help you feel safe "
+"and supported."
+msgstr "Rund um die Uhr Sicherheit und mehrsprachiges Support-Team, mit dem Sie sich sicher und unterstützt fühlen."
+
+#: .\templates\core\home.html:108 .\templates\core\services.html:74
+msgid "All-Inclusive Pricing"
+msgstr "All-inclusive-Preisgestaltung"
+
+#: .\templates\core\home.html:109
+msgid ""
+"Transparent pricing with utilities, WiFi, and maintenance all included. No "
+"hidden fees."
+msgstr "transparente Preisgestaltung mit Versorgungsunternehmen, WLAN und Wartung alle enthalten. "
+
+#: .\templates\core\home.html:117 .\templates\core\includes\footer.html:34
+msgid "Registration Support"
+msgstr "Anmeldung Support"
+
+#: .\templates\core\home.html:118
+msgid ""
+"We help with city registration and all necessary paperwork to make your move "
+"seamless."
+msgstr "Wir helfen bei der Registrierung der Stadt und allen erforderlichen Unterlagen, um Ihren Umzug nahtlos zu machen."
+
+#: .\templates\core\home.html:126
+msgid "Community Events"
+msgstr "Community -Veranstaltungen"
+
+#: .\templates\core\home.html:127
+msgid ""
+"Regular networking events and social activities to help you connect with "
+"fellow residents."
+msgstr "Regelmäßige Netzwerkveranstaltungen und soziale Aktivitäten, mit denen Sie sich mit anderen Bewohnern in Verbindung setzen können."
+
+#: .\templates\core\home.html:135
+msgid "Prime Locations"
+msgstr "Hauptstandorte"
+
+#: .\templates\core\home.html:136
+msgid ""
+"Properties near universities and public transport, perfectly connected to "
+"Berlin's best areas."
+msgstr "Immobilien in der Nähe von Universitäten und öffentlichen Verkehrsmitteln, perfekt mit Berlins besten Gebieten verbunden."
+
+#: .\templates\core\home.html:147
+msgid "Ready to Find Your Home?"
+msgstr "Bist du bereit, dein Zuhause zu finden?"
+
+#: .\templates\core\home.html:150
+msgid ""
+"Join thousands of students who have made Berlin their home with BrandenBed "
+"Living Spaces."
+msgstr "Schließen Sie sich Tausenden von Studenten an, die Berlin mit Brandenbett -Wohnräumen zu ihrem Zuhause gemacht haben."
+
+#: .\templates\core\home.html:153
+msgid "Browse Properties"
+msgstr "Immobilien durchsuchen"
+
+#: .\templates\core\home.html:164
+msgid "What Our Residents Say"
+msgstr "Was unsere Bewohner sagen"
+
+#: .\templates\core\home.html:167
+msgid "Hear from students who have found their perfect home with us."
+msgstr "Hören Sie von Schülern, die ihr perfektes Zuhause bei uns gefunden haben."
+
+#: .\templates\core\home.html:174
+msgid ""
+"BrandenBed made my move to Berlin so easy. The room was exactly as "
+"described, and the support team helped me with everything from Anmeldung to "
+"finding the nearest grocery store."
+msgstr "Brandenbed machte mich so einfach nach Berlin. "
+
+#: .\templates\core\home.html:180
+msgid "Master's Student, TU Berlin"
+msgstr "Master -Student Tu Berlin"
+
+#: .\templates\core\home.html:187
+msgid ""
+"The community events helped me make friends quickly. Living in a BrandenBed "
+"property feels like being part of a real community, not just renting a room."
+msgstr "Die Community -Events haben mir geholfen, schnell Freunde zu finden. "
+
+#: .\templates\core\home.html:193
+msgid "Exchange Student, Humboldt University"
+msgstr "Austauschstudent, Humboldt Universität"
+
+#: .\templates\core\includes\footer.html:17
+msgid ""
+"Premium student housing solutions in Berlin. Making relocation smooth, stress-free, and reliable for international students and young professionals."
+msgstr "Erstklassige Studentenwohnlösungen in Berlin. Wir sorgen für einen reibungslosen, stressfreien und zuverlässigen Umzug für internationale Studierende und junge Berufstätige."
+
+#: .\templates\core\includes\footer.html:22
+#: .\templates\core\includes\navbar.html:38 .\templates\core\services.html:4
+msgid "Services"
+msgstr "Dienstleistungen"
+
+#: .\templates\core\includes\footer.html:25
+msgid "Student Housing"
+msgstr "Studentenwohnheime"
+
+#: .\templates\core\includes\footer.html:39
+msgid "Company"
+msgstr "Firma"
+
+#: .\templates\core\includes\footer.html:45
+#: .\templates\core\includes\navbar.html:48
+msgid "Contact"
+msgstr "Kontakt"
+
+#: .\templates\core\includes\footer.html:48
+msgid "Careers"
+msgstr "Karrieren"
+
+#: .\templates\core\includes\footer.html:51
+msgid "Press"
+msgstr "Drücken Sie"
+
+#: .\templates\core\includes\footer.html:56
+msgid "Support"
+msgstr "Unterstützung"
+
+#: .\templates\core\includes\footer.html:59
+msgid "FAQ"
+msgstr ""
+
+#: .\templates\core\includes\footer.html:62
+msgid "Terms & Conditions"
+msgstr "Begriffe"
+
+#: .\templates\core\includes\footer.html:65
+#: .\templates\core\landlords.html:339
+msgid "Privacy Policy"
+msgstr "Datenschutzrichtlinie"
+
+#: .\templates\core\includes\footer.html:68
+msgid "Help Center"
+msgstr "Hilfezentrum"
+
+#: .\templates\core\includes\footer.html:77
+msgid "All Rights Reserved."
+msgstr "Alle Rechte vorbehalten."
+
+#: .\templates\core\includes\navbar.html:28
+msgid "Home"
+msgstr "Zuhause"
+
+#: .\templates\core\includes\navbar.html:33 .\templates\core\properties.html:4
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: .\templates\core\includes\navbar.html:157
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: .\templates\core\landlords.html:14 .\templates\core\services.html:161
+msgid "We manage. You earn. Zero drama."
+msgstr "Wir schaffen es. "
+
+#: .\templates\core\landlords.html:17 .\templates\core\services.html:164
+msgid ""
+"From marketing to maintenance, BrandenBed handles every moving piece so your "
+"property stays full and fuss-free."
+msgstr "Vom Marketing bis zur Wartung verarbeitet Brandenbed jedes bewegliche Stück, sodass Ihre Immobilie voll und unkompliziert bleibt."
+
+#: .\templates\core\landlords.html:21
+msgid "Get Started Today"
+msgstr "Beginnen Sie noch heute"
+
+#: .\templates\core\landlords.html:27
+msgid "Learn More"
+msgstr "Erfahren Sie mehr"
+
+#: .\templates\core\landlords.html:38
+msgid "Why Partner with BrandenBed?"
+msgstr "Warum Partner mit Brandenbed?"
+
+#: .\templates\core\landlords.html:41
+msgid ""
+"Maximize your property investment with our comprehensive management services."
+msgstr "Maximieren Sie Ihre Immobilieninvestition mit unseren umfassenden Managementdiensten."
+
+#: .\templates\core\landlords.html:51
+msgid "Guaranteed Income"
+msgstr "Garantiertes Einkommen"
+
+#: .\templates\core\landlords.html:52
+msgid ""
+"Steady rental income with our guaranteed rent options. No more chasing late "
+"payments or dealing with vacancies."
+msgstr "Stabiles Mieteinkommen mit unseren garantierten Mietoptionen. "
+
+#: .\templates\core\landlords.html:60
+msgid "Zero Management Hassle"
+msgstr "Zero Management Müde"
+
+#: .\templates\core\landlords.html:61
+msgid ""
+"We handle everything from tenant screening to maintenance. Enjoy passive "
+"income without the headaches."
+msgstr "Wir bearbeiten alles, vom Mieter -Screening bis zur Wartung. "
+
+#: .\templates\core\landlords.html:69
+msgid "Professional Standards"
+msgstr "Professionelle Standards"
+
+#: .\templates\core\landlords.html:70
+msgid ""
+"High-quality tenants, transparent agreements, and professional property "
+"maintenance that preserves your investment."
+msgstr "Hochwertige Mieter, transparente Vereinbarungen und professionelle Immobilienwartung, die Ihre Investition bewahrt."
+
+#: .\templates\core\landlords.html:78
+msgid "Complete Transparency"
+msgstr "Komplette Transparenz"
+
+#: .\templates\core\landlords.html:79
+msgid ""
+"Real-time reporting, regular updates, and clear communication about your "
+"property's performance."
+msgstr "Echtzeitberichterstattung, regelmäßige Updates und klare Kommunikation über die Leistung Ihrer Immobilie."
+
+#: .\templates\core\landlords.html:87
+msgid "Market Expertise"
+msgstr "Marktkompetenz"
+
+#: .\templates\core\landlords.html:88
+msgid ""
+"Deep knowledge of Berlin's student housing market ensures optimal pricing "
+"and high occupancy rates."
+msgstr "Tiefes Wissen über den Berliner Studentenwohnungsmarkt sorgt für optimale Preisgestaltung und hohe Belegungsraten."
+
+#: .\templates\core\landlords.html:96
+msgid "Property Protection"
+msgstr "Eigentumsschutz"
+
+#: .\templates\core\landlords.html:97
+msgid ""
+"Regular inspections, preventive maintenance, and comprehensive insurance "
+"coverage protect your investment."
+msgstr "Regelmäßige Inspektionen, vorbeugende Wartung und umfassender Versicherungsschutz schützen Ihre Investition."
+
+#: .\templates\core\landlords.html:108
+msgid "Common Landlord Headaches We Solve"
+msgstr "Gemeinsame Vermieterkopfschmerzen, die wir lösen"
+
+#: .\templates\core\landlords.html:111
+msgid "Stop dealing with these property management nightmares."
+msgstr "Hören Sie auf, mit diesen Alpträumen der Immobilienverwaltung umzugehen."
+
+#: .\templates\core\landlords.html:118 .\templates\core\services.html:171
+#: .\templates\core\services.html:178 .\templates\core\services.html:185
+#: .\templates\core\services.html:192 .\templates\core\services.html:199
+#: .\templates\core\services.html:206
+msgid "Without BrandenBed"
+msgstr "Ohne Brandenbed"
+
+#: .\templates\core\landlords.html:124
+msgid "Contract errors and legal paperwork"
+msgstr "Vertragsfehler und legale Papierkram"
+
+#: .\templates\core\landlords.html:130
+msgid "Deposit disputes and damage claims"
+msgstr "Einlagenstreitigkeiten und Schadensansprüche"
+
+#: .\templates\core\landlords.html:136 .\templates\core\services.html:207
+msgid "No visibility on property performance"
+msgstr "Keine Sichtbarkeit auf die Immobilienleistung"
+
+#: .\templates\core\landlords.html:143
+msgid "With BrandenBed"
+msgstr "Mit Brandenbedb"
+
+#: .\templates\core\landlords.html:149 .\templates\core\services.html:174
+msgid "Dynamic pricing + multi-channel advertising"
+msgstr "Dynamische Preiswerbung für Mehrkanalwerbung"
+
+#: .\templates\core\landlords.html:155 .\templates\core\services.html:181
+msgid "Auto CRM follow-ups + WhatsApp bot"
+msgstr "Auto CRM-Follow-up WhatsApp Bot"
+
+#: .\templates\core\landlords.html:161 .\templates\core\services.html:188
+msgid "Auto reminders + secure payment links"
+msgstr "automatische Erinnerungen sichere Zahlungslinks sicheren Zahlungslinks"
+
+#: .\templates\core\landlords.html:167 .\templates\core\services.html:202
+msgid "24/7 vendor SLAs + spare parts inventory"
+msgstr "24/7 Anbieter Slas Ersatzteile Inventar"
+
+#: .\templates\core\landlords.html:173 .\templates\core\services.html:195
+msgid "E-stamp + templates + version control"
+msgstr "Versionskontrolle von E-Stamp-Vorlagen"
+
+#: .\templates\core\landlords.html:179
+msgid "Photo checklists + damage matrix"
+msgstr "Foto -Checklisten Schadensmatrix"
+
+#: .\templates\core\landlords.html:185 .\templates\core\services.html:209
+msgid "Owner dashboard + scheduled payouts"
+msgstr "Eigentümer Dashboard geplante Auszahlungen"
+
+#: .\templates\core\landlords.html:198 .\templates\core\services.html:216
+msgid "How It Works"
+msgstr "Wie es funktioniert"
+
+#: .\templates\core\landlords.html:201
+msgid ""
+"Getting started is simple. Here's how we transform your property into a "
+"profitable, hassle-free investment."
+msgstr "Der Einstieg ist einfach. "
+
+#: .\templates\core\landlords.html:210 .\templates\core\services.html:228
+msgid "Share Property Details"
+msgstr "Immobiliendetails teilen"
+
+#: .\templates\core\landlords.html:211
+msgid ""
+"Tell us about your property location, size, and investment goals through our "
+"simple online form or phone consultation."
+msgstr "Erzählen Sie uns über unsere einfache Online -Formular- oder Telefonkonsultation von Ihrem Immobilienstandort, Größe und Investitionsziele."
+
+#: .\templates\core\landlords.html:214
+msgid "Property specifications"
+msgstr "Eigentumsspezifikationen"
+
+#: .\templates\core\landlords.html:215
+msgid "Current condition"
+msgstr "Strombedingung"
+
+#: .\templates\core\landlords.html:216
+msgid "Investment expectations"
+msgstr "Investitionserwartungen"
+
+#: .\templates\core\landlords.html:225
+msgid "Property Evaluation"
+msgstr "Eigentumsbewertung"
+
+#: .\templates\core\landlords.html:226
+msgid ""
+"Our team visits your property to assess its potential, condition, and "
+"optimal rental pricing for the student market."
+msgstr "Unser Team besucht Ihre Immobilie, um das Potenzial, die Bedingung und die optimale Mietpreise für den Studentenmarkt zu bewerten."
+
+#: .\templates\core\landlords.html:229
+msgid "Professional inspection"
+msgstr "Professionelle Inspektion"
+
+#: .\templates\core\landlords.html:230
+msgid "Market analysis"
+msgstr "Marktanalyse"
+
+#: .\templates\core\landlords.html:231
+msgid "Renovation recommendations"
+msgstr "Renovierungsempfehlungen"
+
+#: .\templates\core\landlords.html:240
+msgid "Agreement & Setup"
+msgstr "Vereinbarung"
+
+#: .\templates\core\landlords.html:241
+msgid ""
+"We finalize management terms, sign agreements, and set up all systems needed "
+"to start marketing your property."
+msgstr "Wir schließen die Managementbedingungen, Zeichenverträge ab und richten alle Systeme ein, die für die Vermarktung Ihrer Immobilie erforderlich sind."
+
+#: .\templates\core\landlords.html:244
+msgid "Management contract"
+msgstr "Verwaltungsvertrag"
+
+#: .\templates\core\landlords.html:245
+msgid "Property photography"
+msgstr "Eigentumsfotografie"
+
+#: .\templates\core\landlords.html:246
+msgid "Listing optimization"
+msgstr "Auflistungsoptimierung"
+
+#: .\templates\core\landlords.html:255 .\templates\core\services.html:252
+msgid "Start Earning"
+msgstr "Verdienen"
+
+#: .\templates\core\landlords.html:256
+msgid ""
+"We handle tenant screening, onboarding, and ongoing management while you "
+"receive regular rental income."
+msgstr "Wir kümmern uns um Mieter -Screening, Onboarding und laufendes Management, während Sie regelmäßige Mieteinnahmen erhalten."
+
+#: .\templates\core\landlords.html:259
+msgid "Tenant placement"
+msgstr "Mieterplatzierung"
+
+#: .\templates\core\landlords.html:260
+msgid "Monthly payouts"
+msgstr "monatliche Auszahlungen"
+
+#: .\templates\core\landlords.html:261
+msgid "Performance reports"
+msgstr "Leistungsberichte"
+
+#: .\templates\core\landlords.html:275 .\templates\core\services.html:264
+msgid "Ready to Get Started?"
+msgstr "Bereit zu beginnen?"
+
+#: .\templates\core\landlords.html:278
+msgid ""
+"Share your property details and we'll contact you within 24 hours with a "
+"customized management proposal."
+msgstr "Teilen Sie Ihre Immobiliendetails und wir werden Sie innerhalb von 24 Stunden mit einem maßgeschneiderten Verwaltungsvorschlag kontaktieren."
+
+#: .\templates\core\landlords.html:300
+msgid "Property Type"
+msgstr "Eigenschaftstyp"
+
+#: .\templates\core\landlords.html:302
+msgid "Select property type"
+msgstr "Wählen Sie den Eigenschaftstyp"
+
+#: .\templates\core\landlords.html:303
+msgid "Apartment"
+msgstr "Wohnung"
+
+#: .\templates\core\landlords.html:304
+msgid "House"
+msgstr "Haus"
+
+#: .\templates\core\landlords.html:305 .\templates\core\properties.html:35
+msgid "Studio"
+msgstr ""
+
+#: .\templates\core\landlords.html:306
+msgid "Commercial Building"
+msgstr "Handelsgebäude"
+
+#: .\templates\core\landlords.html:313
+msgid "Property Location"
+msgstr "Immobilienstandort"
+
+#: .\templates\core\landlords.html:314
+msgid "District, Berlin"
+msgstr "Bezirk, Berlin"
+
+#: .\templates\core\landlords.html:317
+msgid "Number of Rooms"
+msgstr "Anzahl der Zimmer"
+
+#: .\templates\core\landlords.html:319
+msgid "Select room count"
+msgstr "Raumanzahl auswählen"
+
+#: .\templates\core\landlords.html:320
+msgid "Room"
+msgstr "Raum"
+
+#: .\templates\core\landlords.html:321 .\templates\core\landlords.html:322
+#: .\templates\core\landlords.html:323 .\templates\core\landlords.html:324
+msgid "Rooms"
+msgstr "Zimmer"
+
+#: .\templates\core\landlords.html:330
+msgid "Property Details & Goals"
+msgstr "Eigenschaftendetails"
+
+#: .\templates\core\landlords.html:331
+msgid ""
+"Tell us about your property condition, current rental status, and investment "
+"goals..."
+msgstr "Erzählen Sie uns von Ihrer Immobilienbedingung, dem aktuellen Mietstatus und den Investitionszielen ..."
+
+#: .\templates\core\landlords.html:339
+msgid "I agree to the"
+msgstr "Ich stimme dem zu"
+
+#: .\templates\core\landlords.html:339
+msgid "Terms and Conditions"
+msgstr "Allgemeine Geschäftsbedingungen"
+
+#: .\templates\core\landlords.html:339
+msgid "and"
+msgstr "und"
+
+#: .\templates\core\landlords.html:344
+msgid "Submit Property Information"
+msgstr "Immobilieninformationen einreichen"
+
+#: .\templates\core\landlords.html:356
+msgid "What Property Owners Say"
+msgstr "Was Immobilienbesitzer sagen"
+
+#: .\templates\core\landlords.html:359
+msgid "Hear from landlords who have partnered with us."
+msgstr "Hören Sie von Vermietern, die sich mit uns zusammengetan haben."
+
+#: .\templates\core\landlords.html:366
+msgid ""
+"BrandenBed has completely transformed my rental property business. I went "
+"from constantly dealing with vacancy issues to having a steady, reliable "
+"income stream. Their professional management is outstanding."
+msgstr "Brandenbed hat mein Geschäft für Mietobjekte vollständig verändert. "
+
+#: .\templates\core\landlords.html:372
+msgid "Property Owner, Charlottenburg"
+msgstr "Eigentümer, Charlottenburg"
+
+#: .\templates\core\landlords.html:379
+msgid ""
+"The transparency and communication from BrandenBed is exceptional. I receive "
+"detailed reports and my rental income is always on time. It's truly passive "
+"income now."
+msgstr "Die Transparenz und Kommunikation von Brandenbeds ist außergewöhnlich. "
+
+#: .\templates\core\landlords.html:385
+msgid "Property Owner, Friedrichshain"
+msgstr "Eigentümer des Eigentümers, Friedrichshain"
+
+#: .\templates\core\properties.html:11
+msgid "Find Your Perfect Home"
+msgstr "Finden Sie Ihr perfektes Zuhause"
+
+#: .\templates\core\properties.html:14
+msgid ""
+"Browse our collection of fully furnished, all-inclusive student "
+"accommodations across Berlin's best neighborhoods."
+msgstr "Durchsuchen Sie unsere Sammlung voll möblierter, all-inclusive-Studentenunterkünfte in den besten Stadtteilen Berlins."
+
+#: .\templates\core\properties.html:25
+msgid "All Districts"
+msgstr "Alle Bezirke"
+
+#: .\templates\core\properties.html:32
+msgid "Room Type"
+msgstr "Zimmertyp"
+
+#: .\templates\core\properties.html:33 .\templates\core\properties.html:66
+msgid "Private Room"
+msgstr "Privatzimmer"
+
+#: .\templates\core\properties.html:34
+msgid "Shared Room"
+msgstr "Geteilter Raum"
+
+#: .\templates\core\properties.html:38
+msgid "Price Range"
+msgstr "Preisspanne"
+
+#: .\templates\core\properties.html:46
+msgid "24 properties found"
+msgstr "24 Eigenschaften gefunden"
+
+#: .\templates\core\properties.html:63
+msgid "Available Now"
+msgstr "Jetzt verfügbar"
+
+#: .\templates\core\properties.html:72
+msgid "Modern Studio in Mitte"
+msgstr "Modernes Studio in Mitte"
+
+#: .\templates\core\properties.html:74
+msgid ""
+"Fully furnished studio apartment near Alexanderplatz. Perfect for students "
+"at Humboldt University."
+msgstr "Vollstrecktes Studio -Apartment in der Nähe von Alexanderplatz. "
+
+#: .\templates\core\properties.html:83
+msgid "month"
+msgstr "Monat"
+
+#: .\templates\core\properties.html:88
+msgid "Study Room"
+msgstr "Studienraum"
+
+#: .\templates\core\properties.html:89
+msgid "24/7 Security"
+msgstr "24/7 Sicherheit"
+
+#: .\templates\core\properties.html:93
+msgid "View Details"
+msgstr "Details anzeigen"
+
+#: .\templates\core\properties.html:235
+msgid "Can't Find What You're Looking For?"
+msgstr "Kannst du nicht finden, wonach du suchst?"
+
+#: .\templates\core\properties.html:238
+msgid ""
+"Contact our team and we'll help you find the perfect accommodation that "
+"matches your needs and budget."
+msgstr "Wenden Sie sich an unser Team und wir helfen Ihnen, die perfekte Unterkunft zu finden, die Ihren Anforderungen und Ihrem Budget entspricht."
+
+#: .\templates\core\services.html:11
+msgid "Our Services"
+msgstr "unsere Dienstleistungen"
+
+#: .\templates\core\services.html:14
+msgid ""
+"Comprehensive housing solutions designed to make your Berlin experience "
+"seamless and enjoyable."
+msgstr "Umfassende Wohnungslösungen, die Ihr Berliner Erlebnis nahtlos und angenehm machen sollen."
+
+#: .\templates\core\services.html:24
+msgid "Student Housing Solutions"
+msgstr "Studentenwohnungslösungen"
+
+#: .\templates\core\services.html:27
+msgid "Everything you need to feel at home in Berlin from day one."
+msgstr "Alles, was Sie vom ersten Tag an zu Hause in Berlin fühlen müssen."
+
+#: .\templates\core\services.html:37
+msgid "Fully Furnished Accommodations"
+msgstr "voll möblierte Unterkünfte"
+
+#: .\templates\core\services.html:40
+msgid ""
+"Move into your new home with everything you need already provided. Our rooms "
+"come fully furnished with modern furniture, bedding, and all essential items."
+msgstr "Ziehen Sie in Ihr neues Zuhause mit allem, was Sie bereits zur Verfügung stellen müssen. "
+
+#: .\templates\core\services.html:47
+msgid "Modern furniture and appliances"
+msgstr "moderne Möbel und Geräte"
+
+#: .\templates\core\services.html:53
+msgid "High-speed WiFi included"
+msgstr "Hochgeschwindigkeits-WLAN enthalten"
+
+#: .\templates\core\services.html:59
+msgid "Dedicated work desk and study area"
+msgstr "spezieller Schreibtisch und Studienbereich"
+
+#: .\templates\core\services.html:65
+msgid "Shared kitchens and common areas"
+msgstr "gemeinsame Küchen und Gemeinschaftsbereiche"
+
+#: .\templates\core\services.html:77
+msgid ""
+"No hidden fees or surprise bills. Our transparent pricing includes "
+"everything you need for comfortable living."
+msgstr "Keine versteckten Gebühren oder Überraschungsrechnungen. "
+
+#: .\templates\core\services.html:84
+msgid "Utilities (electricity, heating, water)"
+msgstr "Versorgungsunternehmen (Strom, Heizung, Wasser)"
+
+#: .\templates\core\services.html:90
+msgid "High-speed internet and WiFi"
+msgstr "Hochgeschwindigkeits-Internet und WLAN"
+
+#: .\templates\core\services.html:96
+msgid "24/7 maintenance and support"
+msgstr "24/7 Wartung und Unterstützung"
+
+#: .\templates\core\services.html:102
+msgid "Regular cleaning of common areas"
+msgstr "regelmäßige Reinigung von Gemeinschaftsbereichen"
+
+#: .\templates\core\services.html:117
+msgid "Multilingual Support & Onboarding"
+msgstr "Mehrsprachige Unterstützung"
+
+#: .\templates\core\services.html:120
+msgid ""
+"Our dedicated support team speaks multiple languages and helps you navigate "
+"German bureaucracy and settle into your new life."
+msgstr "Unser engagiertes Support -Team spricht mehrere Sprachen und hilft Ihnen dabei, die deutsche Bürokratie zu navigieren und sich in Ihr neues Leben niederzulassen."
+
+#: .\templates\core\services.html:127
+msgid "Anmeldung (city registration) assistance"
+msgstr "Anmeldung (Stadtregistrierung) Unterstützung"
+
+#: .\templates\core\services.html:133
+msgid "Bank account opening guidance"
+msgstr "Eröffnung der Bankkontoanleitungen"
+
+#: .\templates\core\services.html:139
+msgid "24/7 emergency support hotline"
+msgstr "24/7 Notunterstützung Hotline"
+
+#: .\templates\core\services.html:145
+msgid "Local orientation and neighborhood tours"
+msgstr "Lokale Orientierung und Nachbarschaftstouren"
+
+#: .\templates\core\services.html:172
+msgid "Empty rooms and constant vacancies"
+msgstr "leere Räume und ständige offene Stellen"
+
+#: .\templates\core\services.html:173 .\templates\core\services.html:180
+#: .\templates\core\services.html:187 .\templates\core\services.html:194
+#: .\templates\core\services.html:201 .\templates\core\services.html:208
+msgid "Our Solution"
+msgstr "Unsere Lösung"
+
+#: .\templates\core\services.html:179
+msgid "Lead ghosting and no-shows"
+msgstr "Lead Ghosting und No-Shows"
+
+#: .\templates\core\services.html:186
+msgid "Late rent and chasing payments"
+msgstr "Verspätete Miete und Verfolgung von Zahlungen"
+
+#: .\templates\core\services.html:193
+msgid "Contract errors and paperwork mistakes"
+msgstr "Vertragsfehler und Papierkramfehler"
+
+#: .\templates\core\services.html:200
+msgid "2 AM emergency repair calls"
+msgstr "2 Uhr Notfallreparaturanrufe"
+
+#: .\templates\core\services.html:219
+msgid "Getting started with BrandenBed is simple and straightforward."
+msgstr "Der Einstieg mit Brandenbed ist einfach und unkompliziert."
+
+#: .\templates\core\services.html:229
+msgid "Tell us about your property and investment goals."
+msgstr "Erzählen Sie uns von Ihren Immobilien- und Investitionszielen."
+
+#: .\templates\core\services.html:236
+msgid "We Visit & Evaluate"
+msgstr "Wir besuchen"
+
+#: .\templates\core\services.html:237
+msgid "Our team inspects the property and assesses market potential."
+msgstr "Unser Team inspiziert die Immobilie und bewertet das Marktpotenzial."
+
+#: .\templates\core\services.html:244
+msgid "Finalize Terms"
+msgstr "Begriffe abschließen"
+
+#: .\templates\core\services.html:245
+msgid "We agree on management terms and sign the partnership agreement."
+msgstr "Wir sind uns einig auf Managementbedingungen und unterzeichnen die Partnerschaftsvereinbarung."
+
+#: .\templates\core\services.html:253
+msgid "We onboard tenants and you start receiving regular rental income."
+msgstr "Wir haben Mieter an Bord und Sie erhalten regelmäßiges Mieteinkommen."
+
+#: .\templates\core\services.html:267
+msgid ""
+"Whether you're looking for housing or want to maximize your property "
+"investment, we're here to help."
+msgstr "Egal, ob Sie nach Wohnraum suchen oder Ihre Immobilieninvestition maximieren möchten, wir sind hier, um zu helfen."
+
+#: .\templates\core\services.html:274
+msgid "List Your Property"
+msgstr "Listen Sie Ihre Eigenschaft auf"
+
+# New translations for updated pages
+msgid "Sarah Chen"
+msgstr "Sarah Chen"
+
+msgid "Miguel Rodriguez"
+msgstr "Miguel Rodriguez"
+
+msgid "About Our Company"
+msgstr "Über Unser Unternehmen"
+
+msgid "Our Values"
+msgstr "Unsere Werte"
+
+msgid "Your trusted partner in finding the perfect home for your academic and professional journey in Berlin."
+msgstr "Ihr vertrauensvoller Partner bei der Suche nach dem perfekten Zuhause für Ihre akademische und berufliche Reise in Berlin."
+
+msgid "At BrandenBed, we understand the challenges of finding accommodation in a new city. Our goal is to deliver a stress-free, reliable service that connects students and professionals with quality apartments that suit their needs and budgets."
+msgstr "Bei BrandenBed verstehen wir die Herausforderungen bei der Suche nach Unterkünften in einer neuen Stadt. Unser Ziel ist es, einen stressfreien, zuverlässigen Service zu bieten, der Studenten und Berufstätige mit hochwertigen Apartments verbindet, die ihren Bedürfnissen und Budgets entsprechen."
+
+msgid "As a Berlin-based housing company, we specialize in providing high-quality, fully managed accommodation for international students, expats, and young professionals who are making Germany their new home."
+msgstr "Als Berliner Wohnungsunternehmen sind wir spezialisiert auf die Bereitstellung hochwertiger, vollständig verwalteter Unterkünfte für internationale Studenten, Expats und junge Berufstätige, die Deutschland zu ihrem neuen Zuhause machen."
+
+msgid "Comprehensive housing solutions tailored for international students and young professionals."
+msgstr "Umfassende Wohnlösungen, die auf internationale Studenten und junge Berufstätige zugeschnitten sind."
+
+msgid "Professional property management"
+msgstr "Professionelle Immobilienverwaltung"
+
+msgid "Whether you're a student looking for the perfect home or a property owner seeking professional management, we're here to help."
+msgstr "Egal, ob Sie ein Student sind, der das perfekte Zuhause sucht, oder ein Immobilienbesitzer, der professionelle Verwaltung sucht - wir sind hier, um zu helfen."
+
+msgid "Professional Standards"
+msgstr "Professionelle Standards"
+
+msgid "High-quality tenants, transparent agreements, and professional property maintenance that preserves your investment."
+msgstr "Hochwertige Mieter, transparente Vereinbarungen und professionelle Immobilienwartung, die Ihre Investition bewahrt."
+
+msgid "Stop dealing with these property management nightmares."
+msgstr "Hören Sie auf, sich mit diesen Albträumen der Immobilienverwaltung zu beschäftigen."
+
+msgid "Professional inspection"
+msgstr "Professionelle Inspektion"
+
+msgid "BrandenBed has completely transformed my rental property business. I went from constantly dealing with vacancy issues to having a steady, reliable income stream. Their professional management is outstanding."
+msgstr "BrandenBed hat mein Mietimmobiliengeschäft völlig transformiert. Ich ging von ständigen Leerstandsproblemen zu einem stetigen, zuverlässigen Einkommensstrom über. Ihr professionelles Management ist hervorragend."
+
+msgid "AI-powered property management solutions"
+msgstr "KI-gestützte Immobilienverwaltungslösungen"
+
+msgid "Premium student housing solutions in Berlin. Making relocation smooth, stress-free, and reliable for international students and young professionals."
+msgstr "Premium-Studentenwohnlösungen in Berlin. Wir machen den Umzug reibungslos, stressfrei und zuverlässig für internationale Studenten und junge Berufstätige."
+
+msgid "Klaus Weber"
+msgstr "Klaus Weber"
+
+msgid "Andrea Schmidt"
+msgstr "Andrea Schmidt"
+
+msgid "Property Owner, Charlottenburg"
+msgstr "Immobilienbesitzer, Charlottenburg"
+
+msgid "Property Owner, Friedrichshain"
+msgstr "Immobilienbesitzer, Friedrichshain"
+
+msgid "Sarah Miller"
+msgstr "Sarah Miller"
+
+msgid "Alex Chen"
+msgstr "Alex Chen"
+
+msgid "Your Dream Home"
+msgstr "Ihr Traumhaus"
+
+msgid "Awaits"
+msgstr "Wartet"
+
+msgid "Experience premium living in Berlin's most sought-after locations. Modern amenities, vibrant community, unmatched comfort."
+msgstr "Erleben Sie erstklassiges Wohnen in Berlins begehrtesten Lagen. Moderne Ausstattung, lebendige Gemeinschaft, unvergleichlicher Komfort."
+
+# Property listings and UI elements
+msgid "Cozy Room in Prenzlauer Berg"
+msgstr "Gemütliches Zimmer in Prenzlauer Berg"
+
+msgid "Available Dec 1st"
+msgstr "Verfügbar ab 1. Dezember"
+
+msgid "Shared Apartment"
+msgstr "Wohngemeinschaft"
+
+msgid "Bright room in shared apartment with international students. Close to Mauerpark and vibrant nightlife."
+msgstr "Helles Zimmer in Wohngemeinschaft mit internationalen Studenten. Nahe am Mauerpark und lebendiges Nachtleben."
+
+msgid "WiFi"
+msgstr "WLAN"
+
+msgid "Common Kitchen"
+msgstr "Gemeinschaftsküche"
+
+msgid "Bike Storage"
+msgstr "Fahrradkeller"
+
+msgid "View Details"
+msgstr "Details ansehen"
+
+msgid "Luxury Flat in Charlottenburg"
+msgstr "Luxuswohnung in Charlottenburg"
+
+msgid "Available Now"
+msgstr "Sofort verfügbar"
+
+msgid "Entire Apartment"
+msgstr "Ganze Wohnung"
+
+msgid "Elegant 2-bedroom apartment near TU Berlin. High-end furnishing with modern amenities and balcony."
+msgstr "Elegante 2-Zimmer-Wohnung nahe der TU Berlin. Hochwertige Ausstattung mit modernen Annehmlichkeiten und Balkon."
+
+msgid "Balcony"
+msgstr "Balkon"
+
+msgid "Dishwasher"
+msgstr "Geschirrspüler"
+
+msgid "Open main menu"
+msgstr "Hauptmenü öffnen"
+
+msgid "Previous"
+msgstr "Zurück"
+
+msgid "Next"
+msgstr "Weiter"
+
+# Missing translations from Properties page
+msgid "Find Your Perfect"
+msgstr "Finden Sie Ihr Perfektes"
+
+msgid "Browse our collection of fully furnished, all-inclusive student accommodations across Berlin's best neighborhoods."
+msgstr "Durchstöbern Sie unsere Sammlung vollständig möblierter, all-inclusive Studentenunterkünfte in Berlins besten Stadtteilen."
+
+msgid "About"
+msgstr "Über"
+
+msgid "Premium Student Housing"
+msgstr "Premium Studentenwohnungen"
+

@@ -1,0 +1,157 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - BrandenBed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-navy: #0D1B2A;
+            --brand-navy-2: #0F2438;
+            --brand-gold: #C8A045;
+            --brand-gold-600: #B0892F;
+        }
+        .brand-navy { color: var(--brand-navy); }
+        .bg-brand-navy { background-color: var(--brand-navy); }
+        .bg-brand-navy-2 { background-color: var(--brand-navy-2); }
+        .brand-gold { color: var(--brand-gold); }
+        .bg-brand-gold { background-color: var(--brand-gold); }
+        .bg-brand-gold-600 { background-color: var(--brand-gold-600); }
+        .border-brand-gold { border-color: var(--brand-gold); }
+        .hover\:bg-brand-gold:hover { background-color: var(--brand-gold); }
+        .focus\:ring-brand-gold:focus { --tw-ring-color: var(--brand-gold); }
+        .text-brand-navy { color: var(--brand-navy); }
+        .text-brand-gold { color: var(--brand-gold); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    {% include 'dashboards/includes/navbar.html' %}
+    
+    <!-- Sidebar -->
+    {% include 'dashboards/includes/sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="w-auto ml-64 px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Profile Header -->
+            <div class="bg-white shadow-sm rounded-lg mb-8">
+                <div class="relative">
+                    <!-- Cover Image -->
+                    <div class="h-32 rounded-t-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                            alt="Cover Image" 
+                            class="w-full h-full object-cover">
+                    </div>
+
+                    
+                    <!-- Profile Info -->
+                    <div class="relative px-6 pb-6">
+                        <div class="flex flex-col sm:flex-row sm:items-end sm:space-x-6">
+                            <!-- Profile Picture -->
+                            <div class="relative -mt-16 mb-4 sm:mb-0">
+                                {% if user.profile_picture %}
+                                    <img class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover" 
+                                         src="{{ user.profile_picture.url }}" alt="Profile picture">
+                                {% else %}
+                                    <div class="w-32 h-32 rounded-full border-4 border-white shadow-lg bg-brand-gold flex items-center justify-center">
+                                        <span class="text-4xl font-bold text-white">{{ user.first_name.0|default:user.username.0|upper }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- User Info -->
+                            <div class="flex-1 min-w-0">
+                                <h1 class="text-2xl font-bold text-gray-900 truncate">
+                                    {{ user.get_full_name|default:user.username }}
+                                </h1>
+                                <p class="text-lg text-brand-gold font-medium">{{ user.get_user_type_display }}</p>
+                                <p class="text-sm text-gray-500 mt-1">Member since {{ user.date_joined|date:"F Y" }}</p>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
+                                <a href="{% url 'dashboard:profile_edit' %}" 
+                                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-brand-gold hover:bg-brand-gold-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-colors">
+                                    <i class="fas fa-edit mr-2"></i>
+                                    Edit Profile
+                                </a>
+                                <a href="{% url 'dashboard:change_password' %}" 
+                                   class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-colors">
+                                    <i class="fas fa-key mr-2"></i>
+                                    Change Password
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex mb-5" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <li class="inline-flex items-center">
+                        <a href="{% url 'dashboard:profile' %}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <svg class="w-3 h-3 me-2.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                            </svg>
+                            {% trans "Profile" %}
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+            {% block profile_content %}
+            <!-- Content will be filled by child templates -->
+            {% endblock %}
+
+        </div>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="fixed top-20 right-4 z-50 space-y-2">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} bg-white border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% elif message.tags == 'warning' %}border-yellow-500{% else %}border-blue-500{% endif %} p-4 rounded-lg shadow-lg max-w-sm" role="alert">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            {% if message.tags == 'success' %}
+                                <i class="fas fa-check-circle text-green-500"></i>
+                            {% elif message.tags == 'error' %}
+                                <i class="fas fa-exclamation-circle text-red-500"></i>
+                            {% elif message.tags == 'warning' %}
+                                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                            {% else %}
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                            {% endif %}
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-gray-900">{{ message }}</p>
+                        </div>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" onclick="this.parentElement.parentElement.remove()">
+                            <span class="sr-only">Close</span>
+                            <i class="fas fa-times text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.transition = 'opacity 0.5s ease-out';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg-info/
+.eggs/
+*.log
+
+# ---- Virtualenv ----
+.venv/
+venv/
+.env/
+.env.local
+*.env
+.env.*
+
+# ---- Django ----
+db.sqlite3
+media/
+staticfiles/
+*.pot
+*.pyc
+local_settings.py
+
+# ---- VSCode / Editors ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# ---- Node (Flowbite/Tailwind) ----
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+.pnp*
+.pnp.js
+
+# ---- Build ----
+dist/
+build/
+coverage/
+htmlcov/
+
+# ---- Render ----
+# (keep collected static out of Git, they’re built in CI/CD)
+staticfiles/

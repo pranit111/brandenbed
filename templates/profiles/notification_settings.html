@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+ 
+    <div class="w-auto">
+        <!-- Header -->
+        <div class="mb-8 border-b-2 pb-4">
+            <h1 class="text-3xl font-bold text-gray-900">Notification Settings</h1>
+            <p class="text-gray-600 mt-2">Manage how you receive communications from BrandenBed</p>
+        </div>
+
+        <!-- Settings Form -->
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            
+            <!-- Communication Preferences -->
+            <div class="bg-white shadow-sm rounded-lg pb-4">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-bell text-brand-gold mr-3"></i>
+                    Communication Preferences
+                </h2>
+                
+                <div class="space-y-6">
+                    <!-- Marketing Consent -->
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="marketing_consent" name="marketing_consent" type="checkbox" 
+                                    {% if user.marketing_consent %}checked{% endif %}
+                                    class="w-4 h-4 text-brand-gold bg-gray-100 border-gray-300 rounded focus:ring-brand-gold focus:ring-2">
+                        </div>
+                        <div class="ml-3">
+                            <label for="marketing_consent" class="text-sm font-medium text-gray-900">
+                                Marketing Communications
+                            </label>
+                            <p class="text-sm text-gray-500">
+                                Receive newsletters, promotional offers, and updates about new properties and services.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- WhatsApp Consent -->
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="whatsapp_consent" name="whatsapp_consent" type="checkbox" 
+                                    {% if user.whatsapp_consent %}checked{% endif %}
+                                    class="w-4 h-4 text-brand-gold bg-gray-100 border-gray-300 rounded focus:ring-brand-gold focus:ring-2">
+                        </div>
+                        <div class="ml-3">
+                            <label for="whatsapp_consent" class="text-sm font-medium text-gray-900">
+                                WhatsApp Notifications
+                            </label>
+                            <p class="text-sm text-gray-500">
+                                Receive important updates, payment reminders, and property notifications via WhatsApp.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Types -->
+            <div class="bg-white shadow-sm rounded-lg  pb-4">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-envelope text-brand-gold mr-3"></i>
+                    Email Notifications
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- Account & Security -->
+                    <div class="border-b border-gray-200 pb-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">Account & Security</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Login Alerts</p>
+                                    <p class="text-xs text-gray-500">Get notified when someone logs into your account</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-gold"></div>
+                                </label>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Password Changes</p>
+                                    <p class="text-xs text-gray-500">Get notified when your password is changed</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-gold"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property & Payments -->
+                    {% if user.user_type == 'resident' or user.user_type == 'landlord' %}
+                    <div class="border-b border-gray-200 pb-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">
+                            {% if user.user_type == 'resident' %}Property & Payments{% else %}Properties & Revenue{% endif %}
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">
+                                        {% if user.user_type == 'resident' %}Payment Reminders{% else %}Payment Notifications{% endif %}
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        {% if user.user_type == 'resident' %}Receive reminders before rent is due{% else %}Get notified when payments are received{% endif %}
+                                    </p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-gold"></div>
+                                </label>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Maintenance Updates</p>
+                                    <p class="text-xs text-gray-500">Get notified about maintenance requests and updates</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-gold"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Support & Communication -->
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">Support & Communication</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Support Ticket Updates</p>
+                                    <p class="text-xs text-gray-500">Get notified about support ticket responses and status changes</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-gold"></div>
+                                </label>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">System Announcements</p>
+                                    <p class="text-xs text-gray-500">Important updates about system maintenance and new features</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-gold"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div class="bg-white shadow-sm rounded-lg ">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-shield-alt text-brand-gold mr-3"></i>
+                    Privacy Settings
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-blue-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">Data Protection</h3>
+                                <div class="mt-2 text-sm text-blue-700">
+                                    <p>We respect your privacy and comply with GDPR regulations. Your data is processed according to our Privacy Policy.</p>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="#" class="text-sm font-medium text-blue-800 hover:text-blue-600">
+                                        View Privacy Policy <i class="fas fa-external-link-alt ml-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">Data Processing Consent</p>
+                            <p class="text-xs text-gray-500">Required for service delivery and account management</p>
+                        </div>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <i class="fas fa-check mr-1"></i>
+                            Required
+                        </span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">Profile Visibility</p>
+                            <p class="text-xs text-gray-500">Your profile is visible only to authorized BrandenBed staff</p>
+                        </div>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            <i class="fas fa-lock mr-1"></i>
+                            Private
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex flex-col justify-end sm:flex-row gap-4">
+                <button type="submit" 
+                        class="flex-1 sm:flex-none inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-brand-gold hover:bg-brand-gold-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-colors">
+                    <i class="fas fa-save mr-2"></i>
+                    Save Settings
+                </button>
+                
+                <a href="{% url 'dashboard:profile' %}" 
+                    class="flex-1 sm:flex-none inline-flex justify-center items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-colors">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+        <!-- Additional Information -->
+        <div class="mt-8 bg-gradient-to-r from-brand-navy to-brand-navy-2 rounded-lg  text-gray-900">
+            <h3 class="text-lg font-semibold mb-3">Need Help?</h3>
+            <p class="text-sm text-gray-500 mb-4">
+                If you have questions about these settings or need to update other preferences, our support team is here to help.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="#" class="inline-flex items-center px-4 py-2 bg-brand-gold hover:bg-brand-gold-600 text-white font-medium rounded-lg transition-colors">
+                    <i class="fas fa-headset mr-2"></i>
+                    Contact Support
+                </a>
+                <a href="#" class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-900 hover:bg-white hover:text-brand-navy font-medium rounded-lg transition-colors">
+                    <i class="fas fa-question-circle mr-2"></i>
+                    FAQ
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="fixed top-20 right-4 z-50 space-y-2">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} bg-white border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% elif message.tags == 'warning' %}border-yellow-500{% else %}border-blue-500{% endif %} p-4 rounded-lg shadow-lg max-w-sm" role="alert">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            {% if message.tags == 'success' %}
+                                <i class="fas fa-check-circle text-green-500"></i>
+                            {% elif message.tags == 'error' %}
+                                <i class="fas fa-exclamation-circle text-red-500"></i>
+                            {% elif message.tags == 'warning' %}
+                                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                            {% else %}
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                            {% endif %}
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-gray-900">{{ message }}</p>
+                        </div>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" onclick="this.parentElement.parentElement.remove()">
+                            <span class="sr-only">Close</span>
+                            <i class="fas fa-times text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.transition = 'opacity 0.5s ease-out';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+    </script>
+    
+{% endblock %}

@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if employee %}Edit Employee{% else %}Add Employee{% endif %} - BrandenBed{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                    {% if employee %}Edit Employee{% else %}Add New Employee{% endif %}
+                </h1>
+                <p class="text-gray-600">
+                    {% if employee %}Update employee information and details{% else %}Create a new employee profile{% endif %}
+                </p>
+            </div>
+            <a href="{% url 'employees:employee_list' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back to List
+            </a>
+        </div>
+    </div>
+
+    <form method="post" class="space-y-8">
+        {% csrf_token %}
+        
+        <!-- Personal Information Section -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Personal Information</h3>
+                <p class="text-sm text-gray-600">Basic personal details and contact information</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            First Name <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Last Name <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.last_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Email Address <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Username <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.password.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Password {% if not employee %}<span class="text-red-500">*</span>{% endif %}
+                        </label>
+                        {{ form.password }}
+                        {% if form.password.help_text %}
+                            <p class="mt-1 text-sm text-gray-600">{{ form.password.help_text }}</p>
+                        {% endif %}
+                        {% if form.password.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.password.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.phone_number.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Phone Number
+                        </label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.phone_number.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.whatsapp_number.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            WhatsApp Number
+                        </label>
+                        {{ form.whatsapp_number }}
+                        {% if form.whatsapp_number.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.whatsapp_number.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.date_of_birth.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Date of Birth
+                        </label>
+                        {{ form.date_of_birth }}
+                        {% if form.date_of_birth.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.date_of_birth.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Address Section -->
+                <div class="mt-6">
+                    <h4 class="text-md font-medium text-gray-900 mb-4">Address Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label for="{{ form.address_line_1.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                                Address Line 1
+                            </label>
+                            {{ form.address_line_1 }}
+                            {% if form.address_line_1.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.address_line_1.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="{{ form.address_line_2.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                                Address Line 2
+                            </label>
+                            {{ form.address_line_2 }}
+                            {% if form.address_line_2.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.address_line_2.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.city.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                                City
+                            </label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.city.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.state.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                                State
+                            </label>
+                            {{ form.state }}
+                            {% if form.state.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.state.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.pincode.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                                Pincode
+                            </label>
+                            {{ form.pincode }}
+                            {% if form.pincode.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.pincode.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employment Information Section -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Employment Information</h3>
+                <p class="text-sm text-gray-600">Work-related details and employment status</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label for="{{ form.employee_id.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Employee ID <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.employee_id }}
+                        {% if form.employee_id.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.employee_id.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.role.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Role <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.role }}
+                        {% if form.role.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.role.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.employment_type.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Employment Type <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.employment_type }}
+                        {% if form.employment_type.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.employment_type.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.employment_status.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Employment Status <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.employment_status }}
+                        {% if form.employment_status.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.employment_status.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.manager.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Manager
+                        </label>
+                        {{ form.manager }}
+                        {% if form.manager.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.manager.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.hire_date.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Hire Date <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.hire_date }}
+                        {% if form.hire_date.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.hire_date.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.probation_end_date.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Probation End Date
+                        </label>
+                        {{ form.probation_end_date }}
+                        {% if form.probation_end_date.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.probation_end_date.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.monthly_salary.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Monthly Salary (₹)
+                        </label>
+                        {{ form.monthly_salary }}
+                        {% if form.monthly_salary.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.monthly_salary.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.work_location.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Work Location
+                        </label>
+                        {{ form.work_location }}
+                        {% if form.work_location.help_text %}
+                            <p class="mt-1 text-sm text-gray-600">{{ form.work_location.help_text }}</p>
+                        {% endif %}
+                        {% if form.work_location.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.work_location.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.shift_timing.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Shift Timing
+                        </label>
+                        {{ form.shift_timing }}
+                        {% if form.shift_timing.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.shift_timing.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills and Additional Information Section -->
+        <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Skills & Additional Information</h3>
+                <p class="text-sm text-gray-600">Professional skills, certifications, and notes</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.skills.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Skills
+                        </label>
+                        {{ form.skills }}
+                        {% if form.skills.help_text %}
+                            <p class="mt-1 text-sm text-gray-600">{{ form.skills.help_text }}</p>
+                        {% endif %}
+                        {% if form.skills.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.skills.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.certifications.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Certifications
+                        </label>
+                        {{ form.certifications }}
+                        {% if form.certifications.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.certifications.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label for="{{ form.notes.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Notes
+                        </label>
+                        {{ form.notes }}
+                        {% if form.notes.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.notes.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+            <a href="{% url 'employees:employee_list' %}" class="inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Cancel
+            </a>
+            <button type="submit" style="background-color: var(--brand-navy);" class="inline-flex justify-center items-center px-6 py-3 rounded-lg text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                {% if employee %}Update Employee{% else %}Create Employee{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Form Validation Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add real-time validation feedback
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            input.addEventListener('input', function() {
+                clearValidationError(this);
+            });
+        });
+        
+        function validateField(field) {
+            // Add custom validation logic here if needed
+            if (field.hasAttribute('required') && !field.value.trim()) {
+                showValidationError(field, 'This field is required.');
+            }
+        }
+        
+        function showValidationError(field, message) {
+            clearValidationError(field);
+            const errorElement = document.createElement('p');
+            errorElement.className = 'mt-1 text-sm text-red-600 field-error';
+            errorElement.textContent = message;
+            field.parentNode.appendChild(errorElement);
+            field.classList.add('border-red-300', 'focus:ring-red-500', 'focus:border-red-500');
+        }
+        
+        function clearValidationError(field) {
+            const errorElement = field.parentNode.querySelector('.field-error');
+            if (errorElement) {
+                errorElement.remove();
+            }
+            field.classList.remove('border-red-300', 'focus:ring-red-500', 'focus:border-red-500');
+        }
+    });
+</script>
+{% endblock %}

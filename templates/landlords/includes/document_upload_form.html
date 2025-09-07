@@ -1,0 +1,304 @@
+<!-- landlords/includes/document_upload_form.html -->
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-medium text-gray-900">Upload New Document</h3>
+        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+    </div>
+    
+    <form method="post" enctype="multipart/form-data" action="{% url 'landlords:upload_document' landlord.landlord_id %}" class="space-y-4">
+        {% csrf_token %}
+        
+        <!-- Document Title -->
+        <div>
+            <label for="id_title" class="block text-sm font-medium text-gray-700 mb-1">
+                Document Title <span class="text-red-500">*</span>
+            </label>
+            <input 
+                type="text" 
+                name="title" 
+                id="id_title" 
+                required 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                placeholder="e.g., Property Deed - Apartment Building"
+            >
+            <p class="mt-1 text-xs text-gray-500">Choose a descriptive title for easy identification</p>
+        </div>
+        
+        <!-- Document Type -->
+        <div>
+            <label for="id_document_type" class="block text-sm font-medium text-gray-700 mb-1">
+                Document Type <span class="text-red-500">*</span>
+            </label>
+            <select 
+                name="document_type" 
+                id="id_document_type" 
+                required 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+                <option value="">Select document type</option>
+                <option value="property_deed">Property Deed</option>
+                <option value="tax_document">Tax Document</option>
+                <option value="bank_details">Bank Details</option>
+                <option value="partnership_agreement">Partnership Agreement</option>
+                <option value="identity_proof">Identity Proof</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        
+        <!-- File Upload Area -->
+        <div>
+            <label for="id_file" class="block text-sm font-medium text-gray-700 mb-1">
+                Document File <span class="text-red-500">*</span>
+            </label>
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
+                <div class="space-y-1 text-center">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="flex text-sm text-gray-600">
+                        <label for="id_file" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                            <span>Upload a file</span>
+                            <input 
+                                id="id_file" 
+                                name="file" 
+                                type="file" 
+                                class="sr-only" 
+                                required 
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.xls,.xlsx"
+                            >
+                        </label>
+                        <p class="pl-1">or drag and drop</p>
+                    </div>
+                    <p class="text-xs text-gray-500">PDF, DOC, DOCX, PNG, JPG, GIF, TXT, XLS up to 10MB</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Notes -->
+        <div>
+            <label for="id_notes" class="block text-sm font-medium text-gray-700 mb-1">
+                Additional Notes <span class="text-gray-400">(optional)</span>
+            </label>
+            <textarea 
+                name="notes" 
+                id="id_notes" 
+                rows="3" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                placeholder="Add any relevant notes about this document..."
+            ></textarea>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex items-center justify-end space-x-3 pt-4">
+            <button type="reset" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Clear Form
+            </button>
+            <button type="submit" style="background-color: var(--brand-navy);" class="inline-flex items-center px-6 py-2 text-sm font-medium text-white rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                Upload Document
+            </button>
+        </div>
+    </form>
+    
+    <!-- Upload Progress (hidden by default) -->
+    <div id="uploadProgress" class="hidden mt-4">
+        <div class="bg-gray-200 rounded-full h-2">
+            <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+        <p class="text-sm text-gray-600 mt-2">Uploading... <span id="progressPercent">0%</span></p>
+    </div>
+</div>
+
+<script>
+// Enhanced file upload with progress and validation
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('id_file');
+    const dropZone = fileInput.closest('.border-dashed');
+    const form = fileInput.closest('form');
+    const progressContainer = document.getElementById('uploadProgress');
+    const progressBar = document.getElementById('progressBar');
+    const progressPercent = document.getElementById('progressPercent');
+    
+    // File validation
+    const maxFileSize = 10 * 1024 * 1024; // 10MB in bytes
+    const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'text/plain',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    
+    // Drag and drop functionality
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight(e) {
+        dropZone.classList.add('border-blue-400', 'bg-blue-50');
+    }
+    
+    function unhighlight(e) {
+        dropZone.classList.remove('border-blue-400', 'bg-blue-50');
+    }
+    
+    dropZone.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length > 0) {
+            fileInput.files = files;
+            validateAndShowFile(files[0]);
+        }
+    }
+    
+    // File input change handler
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            validateAndShowFile(this.files[0]);
+        }
+    });
+    
+    function validateAndShowFile(file) {
+        // Reset any previous error states
+        fileInput.classList.remove('border-red-500');
+        
+        // Validate file size
+        if (file.size > maxFileSize) {
+            showFileError('File size must be less than 10MB');
+            return false;
+        }
+        
+        // Validate file type
+        if (!allowedTypes.includes(file.type)) {
+            showFileError('File type not supported. Please use PDF, DOC, DOCX, PNG, JPG, GIF, TXT, or XLS files.');
+            return false;
+        }
+        
+        // Show file info
+        const fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+        dropZone.querySelector('.text-xs').innerHTML = `<span class="text-green-600">✓ Selected: ${file.name} (${fileSize})</span>`;
+        
+        return true;
+    }
+    
+    function showFileError(message) {
+        fileInput.classList.add('border-red-500');
+        dropZone.querySelector('.text-xs').innerHTML = `<span class="text-red-600">${message}</span>`;
+    }
+    
+    // Form submission with progress
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        
+        // Show progress
+        progressContainer.classList.remove('hidden');
+        
+        const xhr = new XMLHttpRequest();
+        
+        xhr.upload.addEventListener('progress', function(e) {
+            if (e.lengthComputable) {
+                const percentComplete = (e.loaded / e.total) * 100;
+                progressBar.style.width = percentComplete + '%';
+                progressPercent.textContent = Math.round(percentComplete) + '%';
+            }
+        });
+        
+        xhr.addEventListener('load', function() {
+            if (xhr.status === 200) {
+                // Success - reload page or show success message
+                window.location.reload();
+            } else {
+                // Error handling
+                progressContainer.classList.add('hidden');
+                alert('Upload failed. Please try again.');
+            }
+        });
+        
+        xhr.addEventListener('error', function() {
+            progressContainer.classList.add('hidden');
+            alert('Upload failed. Please check your connection and try again.');
+        });
+        
+        xhr.open('POST', form.action);
+        xhr.send(formData);
+    });
+});
+
+// Dropdown functionality for landlord cards
+function toggleDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    
+    // Close all other dropdowns
+    document.querySelectorAll('[id^="dropdown-"]').forEach(function(el) {
+        if (el.id !== dropdownId) {
+            el.classList.add('hidden');
+        }
+    });
+    
+    // Toggle current dropdown
+    dropdown.classList.toggle('hidden');
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('button[onclick^="toggleDropdown"]')) {
+        document.querySelectorAll('[id^="dropdown-"]').forEach(function(el) {
+            el.classList.add('hidden');
+        });
+    }
+});
+
+// Partnership status update function
+function updatePartnershipStatus(landlordId, newStatus) {
+    if (confirm('Are you sure you want to update the partnership status?')) {
+        // Create and submit form
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/landlords/${landlordId}/update-partnership-status/`;
+        
+        // Add CSRF token
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        
+        // Add partnership status
+        const statusInput = document.createElement('input');
+        statusInput.type = 'hidden';
+        statusInput.name = 'partnership_status';
+        statusInput.value = newStatus;
+        form.appendChild(statusInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>

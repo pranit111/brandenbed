@@ -1,0 +1,588 @@
+<!-- templates/dashboards/admin_dashboard.html -->
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Command Center" %} - NeoSpace{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="mb-8">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-4xl font-bold font-orbitron neon-text mb-2">
+                {% trans "Mission Control" %}
+            </h1>
+            <p class="text-gray-400 text-lg">
+                {% trans "Welcome back, Commander" %} {{ user.get_full_name|default:user.username }}
+            </p>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400 font-orbitron live-update" data-type="timestamp">
+                    {{ "now"|date:"H:i" }}
+                </div>
+                <div class="text-xs text-gray-400 uppercase tracking-wide">
+                    {% trans "Local Time" %}
+                </div>
+            </div>
+            <button class="btn-gradient px-6 py-3 rounded-xl">
+                <i data-lucide="zap" class="w-5 h-5 mr-2"></i>
+                {% trans "Quick Actions" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- System Status Overview -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Total Users -->
+    <div class="stat-card glass-card p-6 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-cyan-600/20 flex items-center justify-center">
+                <i data-lucide="users" class="w-8 h-8 text-cyan-400"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-cyan-400 font-orbitron">{{ total_users|default:"2,847" }}</div>
+                <div class="text-sm text-gray-400">{% trans "Active Users" %}</div>
+            </div>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-300">{% trans "Growth" %}</span>
+            <div class="flex items-center space-x-2">
+                <i data-lucide="trending-up" class="w-4 h-4 text-green-400"></i>
+                <span class="text-sm text-green-400 font-medium">+12.5%</span>
+            </div>
+        </div>
+        <div class="mt-2 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-cyan-400 to-cyan-600 rounded-full" style="width: 75%"></div>
+        </div>
+    </div>
+
+    <!-- Space Stations (Properties) -->
+    <div class="stat-card glass-card p-6 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400/20 to-purple-600/20 flex items-center justify-center">
+                <i data-lucide="building-2" class="w-8 h-8 text-purple-400"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-purple-400 font-orbitron">{{ total_properties|default:"1,256" }}</div>
+                <div class="text-sm text-gray-400">{% trans "Space Stations" %}</div>
+            </div>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-300">{% trans "Occupancy" %}</span>
+            <div class="flex items-center space-x-2">
+                <i data-lucide="activity" class="w-4 h-4 text-purple-400"></i>
+                <span class="text-sm text-purple-400 font-medium">94.2%</span>
+            </div>
+        </div>
+        <div class="mt-2 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full" style="width: 94%"></div>
+        </div>
+    </div>
+
+    <!-- Residents -->
+    <div class="stat-card glass-card p-6 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400/20 to-green-600/20 flex items-center justify-center">
+                <i data-lucide="heart-handshake" class="w-8 h-8 text-green-400"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-green-400 font-orbitron">{{ total_residents|default:"3,142" }}</div>
+                <div class="text-sm text-gray-400">{% trans "Residents" %}</div>
+            </div>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-300">{% trans "Satisfaction" %}</span>
+            <div class="flex items-center space-x-2">
+                <i data-lucide="star" class="w-4 h-4 text-green-400"></i>
+                <span class="text-sm text-green-400 font-medium">4.8/5</span>
+            </div>
+        </div>
+        <div class="mt-2 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="width: 96%"></div>
+        </div>
+    </div>
+
+    <!-- Revenue -->
+    <div class="stat-card glass-card p-6 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400/20 to-orange-600/20 flex items-center justify-center">
+                <i data-lucide="banknote" class="w-8 h-8 text-orange-400"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-orange-400 font-orbitron">€2.4M</div>
+                <div class="text-sm text-gray-400">{% trans "Monthly Revenue" %}</div>
+            </div>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-300">{% trans "vs Last Month" %}</span>
+            <div class="flex items-center space-x-2">
+                <i data-lucide="arrow-up" class="w-4 h-4 text-orange-400"></i>
+                <span class="text-sm text-orange-400 font-medium">+18.7%</span>
+            </div>
+        </div>
+        <div class="mt-2 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" style="width: 87%"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- Activity Feed -->
+    <div class="lg:col-span-2">
+        <div class="glass-card p-6 rounded-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-semibold text-white flex items-center">
+                    <i data-lucide="activity" class="w-6 h-6 mr-3 text-cyan-400"></i>
+                    {% trans "Neural Activity Feed" %}
+                </h3>
+                <div class="flex items-center space-x-3">
+                    <button class="glass px-4 py-2 rounded-xl text-sm hover:bg-gray-700 transition-all duration-200">
+                        {% trans "Filter" %}
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-xs text-green-400">{% trans "Live" %}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-4 max-h-96 overflow-y-auto">
+                {% for user in recent_logins %}
+                <div class="glass p-4 rounded-xl hover:bg-gray-700/30 transition-all duration-200 fade-in-up">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-white font-bold">
+                                {{ user.get_full_name.0|default:user.username.0|upper }}
+                            </div>
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900"></div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-medium text-white">{{ user.get_full_name|default:user.username }}</h4>
+                                <span class="text-xs text-gray-400">{{ user.last_login|timesince }} {% trans "ago" %}</span>
+                            </div>
+                            <p class="text-sm text-gray-400">{{ user.email }}</p>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="px-2 py-1 bg-cyan-400/20 text-cyan-400 rounded-lg text-xs">
+                                    {% if user.is_superuser %}{% trans "Admin" %}
+                                    {% elif user.user_type == 'employee' %}{% trans "Employee" %}
+                                    {% elif user.user_type == 'landlord' %}{% trans "Partner" %}
+                                    {% else %}{% trans "Resident" %}{% endif %}
+                                </span>
+                                <i data-lucide="zap" class="w-3 h-3 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-8">
+                    <i data-lucide="radio" class="w-12 h-12 text-gray-600 mx-auto mb-4"></i>
+                    <p class="text-gray-400">{% trans "No recent activity detected" %}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- System Monitoring -->
+    <div class="space-y-6">
+        <!-- Performance Metrics -->
+        <div class="glass-card p-6 rounded-2xl">
+            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                <i data-lucide="cpu" class="w-5 h-5 mr-2 text-purple-400"></i>
+                {% trans "System Health" %}
+            </h3>
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-300">{% trans "CPU Usage" %}</span>
+                        <span class="text-sm text-purple-400 font-medium">34%</span>
+                    </div>
+                    <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-500" style="width: 34%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-300">{% trans "Memory" %}</span>
+                        <span class="text-sm text-cyan-400 font-medium">67%</span>
+                    </div>
+                    <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-cyan-400 to-cyan-600 rounded-full transition-all duration-500" style="width: 67%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-300">{% trans "Network" %}</span>
+                        <span class="text-sm text-green-400 font-medium">12%</span>
+                    </div>
+                    <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500" style="width: 12%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-300">{% trans "Storage" %}</span>
+                        <span class="text-sm text-orange-400 font-medium">89%</span>
+                    </div>
+                    <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all duration-500" style="width: 89%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="glass-card p-6 rounded-2xl">
+            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                <i data-lucide="trending-up" class="w-5 h-5 mr-2 text-green-400"></i>
+                {% trans "Live Metrics" %}
+            </h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "Active Sessions" %}</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-sm text-green-400 font-medium">247</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "Requests/min" %}</span>
+                    <span class="text-sm text-cyan-400 font-medium">1,234</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "Response Time" %}</span>
+                    <span class="text-sm text-purple-400 font-medium">23ms</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "Error Rate" %}</span>
+                    <span class="text-sm text-red-400 font-medium">0.01%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Status -->
+        <div class="glass-card p-6 rounded-2xl">
+            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                <i data-lucide="shield-check" class="w-5 h-5 mr-2 text-green-400"></i>
+                {% trans "Security Matrix" %}
+            </h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "Firewall" %}</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-xs text-green-400">{% trans "Active" %}</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "SSL/TLS" %}</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-xs text-green-400">{% trans "Secure" %}</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "2FA Users" %}</span>
+                    <span class="text-sm text-cyan-400 font-medium">87%</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-300">{% trans "Last Scan" %}</span>
+                    <span class="text-xs text-gray-400">2m ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Action Panels -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Quick Actions -->
+    <div class="glass-card p-6 rounded-2xl hover:bg-gray-700/30 transition-all duration-300 group cursor-pointer">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-cyan-600/20 flex items-center justify-center group-hover:from-cyan-400 group-hover:to-cyan-600 transition-all duration-300">
+                <i data-lucide="plus" class="w-8 h-8 text-cyan-400 group-hover:text-white"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-2">{% trans "Add Property" %}</h4>
+            <p class="text-sm text-gray-400">{% trans "Register new space station" %}</p>
+        </div>
+    </div>
+
+    <div class="glass-card p-6 rounded-2xl hover:bg-gray-700/30 transition-all duration-300 group cursor-pointer">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-400/20 to-purple-600/20 flex items-center justify-center group-hover:from-purple-400 group-hover:to-purple-600 transition-all duration-300">
+                <i data-lucide="user-plus" class="w-8 h-8 text-purple-400 group-hover:text-white"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-2">{% trans "Add User" %}</h4>
+            <p class="text-sm text-gray-400">{% trans "Invite new crew member" %}</p>
+        </div>
+    </div>
+
+    <div class="glass-card p-6 rounded-2xl hover:bg-gray-700/30 transition-all duration-300 group cursor-pointer">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-400/20 to-green-600/20 flex items-center justify-center group-hover:from-green-400 group-hover:to-green-600 transition-all duration-300">
+                <i data-lucide="file-text" class="w-8 h-8 text-green-400 group-hover:text-white"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-2">{% trans "Generate Report" %}</h4>
+            <p class="text-sm text-gray-400">{% trans "System analytics" %}</p>
+        </div>
+    </div>
+
+    <div class="glass-card p-6 rounded-2xl hover:bg-gray-700/30 transition-all duration-300 group cursor-pointer">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-orange-400/20 to-orange-600/20 flex items-center justify-center group-hover:from-orange-400 group-hover:to-orange-600 transition-all duration-300">
+                <i data-lucide="settings" class="w-8 h-8 text-orange-400 group-hover:text-white"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-2">{% trans "System Config" %}</h4>
+            <p class="text-sm text-gray-400">{% trans "Control parameters" %}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+            <button class="text-sm brand-gold hover:underline">{% trans "View Reports" %}</button>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="text-center p-4 rounded-lg" style="background-color: #f8fafc; border: 1px solid var(--brand-gold);">
+                <p class="text-sm text-gray-600 mb-1">{% trans "Monthly Revenue" %}</p>
+                <p class="text-2xl font-bold brand-navy">€45,250</p>
+                <p class="text-xs text-green-600">+8.5% {% trans "from last month" %}</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <div class="text-center p-3 bg-gray-50 rounded">
+                    <p class="text-xs text-gray-600">{% trans "Collected" %}</p>
+                    <p class="text-sm font-bold brand-navy">€42,100</p>
+                </div>
+                <div class="text-center p-3 bg-gray-50 rounded">
+                    <p class="text-xs text-gray-600">{% trans "Outstanding" %}</p>
+                    <p class="text-sm font-bold text-red-600">€3,150</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Overview -->
+    <div class="dashboard-card bg-white p-6 rounded-lg shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold brand-navy">{% trans "Support Center" %}</h3>
+            <button class="text-sm brand-gold hover:underline">{% trans "View Tickets" %}</button>
+        </div>
+        
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-600">{% trans "Critical Issues" %}</span>
+                </div>
+                <span class="text-sm font-medium text-red-600">2</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-600">{% trans "Pending Responses" %}</span>
+                </div>
+                <span class="text-sm font-medium text-yellow-600">8</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-600">{% trans "Resolved Today" %}</span>
+                </div>
+                <span class="text-sm font-medium text-green-600">15</span>
+            </div>
+            
+            <div class="mt-4 pt-3 border-t border-gray-200">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600">{% trans "Average Response Time" %}</span>
+                    <span class="font-medium brand-navy">2.3 hrs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity Feed -->
+<div class="mt-8">
+    <div class="dashboard-card bg-white p-6 rounded-lg shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold brand-navy">{% trans "Recent Platform Activity" %}</h3>
+            <div class="flex space-x-2">
+                <button class="px-3 py-1 text-xs font-medium text-gray-500 border border-gray-300 rounded hover:bg-gray-50">{% trans "All" %}</button>
+                <button class="px-3 py-1 text-xs font-medium text-white border border-transparent rounded" style="background-color: var(--brand-navy);">{% trans "Today" %}</button>
+                <button class="px-3 py-1 text-xs font-medium text-gray-500 border border-gray-300 rounded hover:bg-gray-50">{% trans "Week" %}</button>
+            </div>
+        </div>
+        
+        <div class="flow-root">
+            <ul role="list" class="-mb-8">
+                <li>
+                    <div class="relative pb-8">
+                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                        <div class="relative flex space-x-3">
+                            <div>
+                                <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white" style="background-color: var(--brand-gold);">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                <div>
+                                    <p class="text-sm text-gray-900">{% trans "New property added by" %} <span class="font-medium">Sarah Miller</span></p>
+                                    <p class="text-sm text-gray-500">{% trans "3-bedroom apartment in Mitte district" %}</p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                    <time>2h</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="relative pb-8">
+                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                        <div class="relative flex space-x-3">
+                            <div>
+                                <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                <div>
+                                    <p class="text-sm text-gray-900">{% trans "New resident registered" %} <span class="font-medium">Alex Chen</span></p>
+                                    <p class="text-sm text-gray-500">{% trans "International student from Singapore" %}</p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                    <time>4h</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="relative pb-8">
+                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                        <div class="relative flex space-x-3">
+                            <div>
+                                <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                <div>
+                                    <p class="text-sm text-gray-900">{% trans "Payment processed successfully" %}</p>
+                                    <p class="text-sm text-gray-500">{% trans "Monthly rent for Room 204, Friedrichshain" %}</p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                    <time>6h</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="relative">
+                        <div class="relative flex space-x-3">
+                            <div>
+                                <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white" style="background-color: var(--brand-navy);">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                <div>
+                                    <p class="text-sm text-gray-900">{% trans "Support ticket resolved" %}</p>
+                                    <p class="text-sm text-gray-500">{% trans "Wi-Fi connectivity issue in Building A" %}</p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                    <time>8h</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="mt-8 flex flex-wrap gap-4">
+    <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors" style="background-color: var(--brand-navy); focus:ring-color: var(--brand-navy);" onclick="location.href='#'">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+        </svg>
+        {% trans "Add Property" %}
+    </button>
+    
+    <button type="button" class="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors" style="background-color: var(--brand-gold); border-color: var(--brand-gold); focus:ring-color: var(--brand-gold);" onclick="location.href='#'">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
+        </svg>
+        {% trans "Manage Users" %}
+    </button>
+    
+    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" onclick="location.href='#'">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        {% trans "Download Report" %}
+    </button>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Dashboard-specific JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize any charts or interactive elements
+        console.log('Admin dashboard loaded');
+        
+        // Add click handlers for quick actions
+        const quickActionButtons = document.querySelectorAll('[data-action]');
+        quickActionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.dataset.action;
+                handleQuickAction(action);
+            });
+        });
+    });
+
+    function handleQuickAction(action) {
+        switch(action) {
+            case 'add_property':
+                window.location.href = '#'; // Add your URL here
+                break;
+            case 'manage_users':
+                window.location.href = '#'; // Add your URL here
+                break;
+            case 'view_reports':
+                window.location.href = '#'; // Add your URL here
+                break;
+            default:
+                console.log('Unknown action:', action);
+        }
+    }
+    
+    // Auto-refresh stats every 30 seconds
+    setInterval(function() {
+        // You can implement AJAX calls here to refresh stats
+        console.log('Refreshing dashboard stats...');
+    }, 30000);
+</script>
+{% endblock %}

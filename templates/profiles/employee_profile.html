@@ -1,0 +1,263 @@
+{% extends 'profiles/profile_base.html' %}
+
+{% block profile_content %}
+<!-- Personal Information Card -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-user text-brand-gold mr-3"></i>
+        Personal Information
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <p class="text-gray-900">{{ user.get_full_name|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <p class="text-gray-900">{{ user.email|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <p class="text-gray-900">{{ user.phone_number|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+            <p class="text-gray-900">{{ user.whatsapp_number|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <p class="text-gray-900">{{ user.date_of_birth|date:"F d, Y"|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
+            <p class="text-gray-900">{{ user.nationality|default:"Not provided" }}</p>
+        </div>
+    </div>
+    
+    <div class="mt-6">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+        <p class="text-gray-900">
+            {% if user.address_line_1 %}
+                {{ user.address_line_1 }}{% if user.address_line_2 %}, {{ user.address_line_2 }}{% endif %}<br>
+                {{ user.city }}{% if user.state %}, {{ user.state }}{% endif %} {{ user.pincode }}<br>
+                {{ user.country }}
+            {% else %}
+                Not provided
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<!-- Professional Information Card -->
+{% if employee %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-briefcase text-brand-gold mr-3"></i>
+        Professional Information
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Employee ID</label>
+            <p class="text-gray-900 font-mono">{{ employee.employee_id }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+            <p class="text-gray-900">{{ employee.department.get_name_display|default:"Not assigned" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <p class="text-gray-900">{{ employee.role.get_name_display|default:"Not assigned" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Employment Type</label>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                {% if employee.employment_type == 'full_time' %}bg-green-100 text-green-800
+                {% elif employee.employment_type == 'part_time' %}bg-blue-100 text-blue-800
+                {% elif employee.employment_type == 'contract' %}bg-yellow-100 text-yellow-800
+                {% else %}bg-purple-100 text-purple-800{% endif %}">
+                {{ employee.get_employment_type_display }}
+            </span>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Employment Status</label>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                {% if employee.employment_status == 'active' %}bg-green-100 text-green-800
+                {% elif employee.employment_status == 'on_leave' %}bg-yellow-100 text-yellow-800
+                {% else %}bg-red-100 text-red-800{% endif %}">
+                {{ employee.get_employment_status_display }}
+            </span>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Hire Date</label>
+            <p class="text-gray-900">{{ employee.hire_date|date:"F d, Y"|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Manager</label>
+            <p class="text-gray-900">{{ employee.manager.user.get_full_name|default:"No manager assigned" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Work Location</label>
+            <p class="text-gray-900">{{ employee.work_location|default:"Not specified" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Shift Timing</label>
+            <p class="text-gray-900">{{ employee.shift_timing|default:"Not specified" }}</p>
+        </div>
+    </div>
+    
+    {% if employee.skills %}
+    <div class="mt-6">
+        <label class="block text-sm font-medium text-gray-700 mb-3">Skills</label>
+        <div class="flex flex-wrap gap-2">
+            {% for skill in employee.skills %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-brand-gold bg-opacity-10 text-brand-gold">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if employee.certifications %}
+    <div class="mt-6">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Certifications</label>
+        <p class="text-gray-900">{{ employee.certifications }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Emergency Contact Card -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+        <i class="fas fa-phone text-brand-gold mr-3"></i>
+        Emergency Contact
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contact Name</label>
+            <p class="text-gray-900">{{ user.emergency_contact_name|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <p class="text-gray-900">{{ user.emergency_contact_phone|default:"Not provided" }}</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Relationship</label>
+            <p class="text-gray-900">{{ user.emergency_contact_relation|default:"Not provided" }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_content %}
+<!-- Quick Stats -->
+{% if employee %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Team Members</span>
+            <span class="text-lg font-bold text-brand-navy">{{ subordinates.count }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Years of Service</span>
+            <span class="text-lg font-bold text-brand-navy">
+                {% with today=request.user.date_joined|timesince %}
+                    {{ today }}
+                {% endwith %}
+            </span>
+        </div>
+        {% if employee.role.can_handle_support_tickets %}
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Active Tickets</span>
+            <span class="text-lg font-bold text-brand-navy">5</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Team Members -->
+{% if subordinates %}
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Team Members</h3>
+    <div class="space-y-3">
+        {% for subordinate in subordinates %}
+        <div class="flex items-center space-x-3">
+            {% if subordinate.user.profile_picture %}
+                <img class="w-8 h-8 rounded-full" src="{{ subordinate.user.profile_picture.url }}" alt="Profile">
+            {% else %}
+                <div class="w-8 h-8 rounded-full bg-brand-gold bg-opacity-20 flex items-center justify-center">
+                    <span class="text-xs font-medium text-brand-gold">{{ subordinate.user.first_name.0|upper }}</span>
+                </div>
+            {% endif %}
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">{{ subordinate.user.get_full_name }}</p>
+                <p class="text-xs text-gray-500">{{ subordinate.role.get_name_display }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+<!-- Communication Preferences -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Communication</h3>
+    <div class="space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Preferred Language</span>
+            <span class="text-sm text-gray-900">{{ user.preferred_language }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Marketing Emails</span>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+                {% if user.marketing_consent %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                {% if user.marketing_consent %}Enabled{% else %}Disabled{% endif %}
+            </span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">WhatsApp Updates</span>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+                {% if user.whatsapp_consent %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                {% if user.whatsapp_consent %}Enabled{% else %}Disabled{% endif %}
+            </span>
+        </div>
+    </div>
+    
+    <div class="mt-4 pt-4 border-t border-gray-200">
+        <a href="{% url 'dashboard:notification_settings' %}" 
+           class="text-sm text-brand-gold hover:text-brand-gold-600 font-medium">
+            <i class="fas fa-cog mr-1"></i>
+            Update Settings
+        </a>
+    </div>
+</div>
+
+<!-- Account Security -->
+<div class="bg-white shadow-sm rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Account Security</h3>
+    <div class="space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Last Login</span>
+            <span class="text-sm text-gray-900">{{ user.last_login|date:"M d, Y H:i"|default:"Never" }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Account Created</span>
+            <span class="text-sm text-gray-900">{{ user.date_joined|date:"M d, Y" }}</span>
+        </div>
+    </div>
+    
+    <div class="mt-4 pt-4 border-t border-gray-200">
+        <a href="{% url 'dashboard:change_password' %}" 
+           class="text-sm text-brand-gold hover:text-brand-gold-600 font-medium">
+            <i class="fas fa-key mr-1"></i>
+            Change Password
+        </a>
+    </div>
+</div>
+{% endblock %}

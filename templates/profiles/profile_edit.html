@@ -1,0 +1,518 @@
+{% extends 'profiles/profile_base.html' %}
+
+{% block profile_content %}
+    <!-- Main Content -->
+    <div class="w-auto min-h-screen">
+        <div class="w-auto mx-auto ">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Edit Profile</h1>
+                <p class="text-gray-600 mt-2">Update your personal information and preferences</p>
+            </div>
+
+            <!-- Edit Form -->
+            <form method="post" enctype="multipart/form-data" class="space-y-8">
+                {% csrf_token %}
+                
+                <!-- Personal Information -->
+                <div class="bg-white shadow-sm rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-user text-brand-gold mr-3"></i>
+                        Personal Information
+                    </h2>
+                    
+                    <!-- Profile Picture -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
+                        <div class="flex items-center space-x-6">
+                            <div class="shrink-0">
+                                {% if user.profile_picture %}
+                                    <img id="preview" class="h-16 w-16 object-cover rounded-full" src="{{ user.profile_picture.url }}" alt="Current profile photo">
+                                {% else %}
+                                    <div id="preview" class="h-16 w-16 rounded-full bg-brand-gold flex items-center justify-center">
+                                        <span class="text-xl font-bold text-white">{{ user.first_name.0|default:user.username.0|upper }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <label class="block">
+                                <span class="sr-only">Choose profile photo</span>
+                                <input type="file" name="profile_picture" accept="image/*" 
+                                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-gold file:text-white hover:file:bg-brand-gold-600"
+                                    onchange="previewImage(this)">
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username *</label>
+                            <input type="text" id="username" name="username" value="{{ user.username }}" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        <div>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" name="email" value="{{ user.email }}" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone_number" name="phone_number" value="{{ user.phone_number }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="whatsapp_number" class="block text-sm font-medium text-gray-700 mb-2">WhatsApp Number</label>
+                            <input type="tel" id="whatsapp_number" name="whatsapp_number" value="{{ user.whatsapp_number }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="date_of_birth" class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+                            <input type="date" id="date_of_birth" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="nationality" class="block text-sm font-medium text-gray-700 mb-2">Nationality</label>
+                            <input type="text" id="nationality" name="nationality" value="{{ user.nationality }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="preferred_language" class="block text-sm font-medium text-gray-700 mb-2">Preferred Language</label>
+                            <select id="preferred_language" name="preferred_language"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="English" {% if user.preferred_language == 'English' %}selected{% endif %}>English</option>
+                                <option value="German" {% if user.preferred_language == 'German' %}selected{% endif %}>German</option>
+                                <option value="Spanish" {% if user.preferred_language == 'Spanish' %}selected{% endif %}>Spanish</option>
+                                <option value="French" {% if user.preferred_language == 'French' %}selected{% endif %}>French</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="marketing_consent" name="marketing_consent" {% if user.marketing_consent %}checked{% endif %}
+                                class="h-4 w-4 text-brand-gold focus:ring-brand-gold border-gray-300 rounded">
+                            <label for="marketing_consent" class="ml-2 block text-sm text-gray-700">Marketing Consent</label>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="whatsapp_consent" name="whatsapp_consent" {% if user.whatsapp_consent %}checked{% endif %}
+                                class="h-4 w-4 text-brand-gold focus:ring-brand-gold border-gray-300 rounded">
+                            <label for="whatsapp_consent" class="ml-2 block text-sm text-gray-700">WhatsApp Consent</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="bg-white shadow-sm rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-map-marker-alt text-brand-gold mr-3"></i>
+                        Address Information
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label for="address_line_1" class="block text-sm font-medium text-gray-700 mb-2">Address Line 1</label>
+                            <input type="text" id="address_line_1" name="address_line_1" value="{{ user.address_line_1 }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="address_line_2" class="block text-sm font-medium text-gray-700 mb-2">Address Line 2</label>
+                            <input type="text" id="address_line_2" name="address_line_2" value="{{ user.address_line_2 }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City</label>
+                            <input type="text" id="city" name="city" value="{{ user.city }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="state" class="block text-sm font-medium text-gray-700 mb-2">State</label>
+                            <input type="text" id="state" name="state" value="{{ user.state }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="pincode" class="block text-sm font-medium text-gray-700 mb-2">Pincode</label>
+                            <input type="text" id="pincode" name="pincode" value="{{ user.pincode }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="country" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                            <input type="text" id="country" name="country" value="{{ user.country }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="bg-white shadow-sm rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-phone text-brand-gold mr-3"></i>
+                        Emergency Contact
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="emergency_contact_name" class="block text-sm font-medium text-gray-700 mb-2">Contact Name</label>
+                            <input type="text" id="emergency_contact_name" name="emergency_contact_name" value="{{ user.emergency_contact_name }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="emergency_contact_phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" value="{{ user.emergency_contact_phone }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="emergency_contact_relation" class="block text-sm font-medium text-gray-700 mb-2">Relationship</label>
+                            <input type="text" id="emergency_contact_relation" name="emergency_contact_relation" value="{{ user.emergency_contact_relation }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role-specific Information -->
+                {% if user.user_type == 'employee' and employee %}
+                <div class="bg-white shadow-sm rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-briefcase text-brand-gold mr-3"></i>
+                        Work Information
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="work_location" class="block text-sm font-medium text-gray-700 mb-2">Work Location</label>
+                            <input type="text" id="work_location" name="work_location" value="{{ employee.work_location }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="shift_timing" class="block text-sm font-medium text-gray-700 mb-2">Shift Timing</label>
+                            <input type="text" id="shift_timing" name="shift_timing" value="{{ employee.shift_timing }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills (comma-separated)</label>
+                            <input type="text" id="skills" name="skills" value="{{ employee.skills }}"
+                                placeholder="e.g., Project Management, Customer Service, Technical Support"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="certifications" class="block text-sm font-medium text-gray-700 mb-2">Certifications</label>
+                            <textarea id="certifications" name="certifications" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">{{ employee.certifications }}</textarea>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="employee_notes" class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                            <textarea id="employee_notes" name="employee_notes" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">{{ employee.notes }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                {% elif user.user_type == 'landlord' and landlord %}
+                <div class="bg-white shadow-sm rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-building text-brand-gold mr-3"></i>
+                        Business Information
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="landlord_type" class="block text-sm font-medium text-gray-700 mb-2">Landlord Type</label>
+                            <select id="landlord_type" name="landlord_type"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="individual" {% if landlord.landlord_type == 'individual' %}selected{% endif %}>Individual Owner</option>
+                                <option value="company" {% if landlord.landlord_type == 'company' %}selected{% endif %}>Property Management Company</option>
+                                <option value="investor" {% if landlord.landlord_type == 'investor' %}selected{% endif %}>Real Estate Investor</option>
+                                <option value="institutional" {% if landlord.landlord_type == 'institutional' %}selected{% endif %}>Institutional Owner</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="company_name" class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                            <input type="text" id="company_name" name="company_name" value="{{ landlord.company_name }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="tax_id" class="block text-sm font-medium text-gray-700 mb-2">Tax ID</label>
+                            <input type="text" id="tax_id" name="tax_id" value="{{ landlord.tax_id }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="preferred_communication" class="block text-sm font-medium text-gray-700 mb-2">Preferred Communication</label>
+                            <select id="preferred_communication" name="preferred_communication"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="Email" {% if landlord.preferred_communication == 'Email' %}selected{% endif %}>Email</option>
+                                <option value="Phone" {% if landlord.preferred_communication == 'Phone' %}selected{% endif %}>Phone</option>
+                                <option value="WhatsApp" {% if landlord.preferred_communication == 'WhatsApp' %}selected{% endif %}>WhatsApp</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="bank_name" class="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
+                            <input type="text" id="bank_name" name="bank_name" value="{{ landlord.bank_name }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="bank_account_number" class="block text-sm font-medium text-gray-700 mb-2">Bank Account Number</label>
+                            <input type="text" id="bank_account_number" name="bank_account_number" value="{{ landlord.bank_account_number }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="iban" class="block text-sm font-medium text-gray-700 mb-2">IBAN</label>
+                            <input type="text" id="iban" name="iban" value="{{ landlord.iban }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="preferred_payout_schedule" class="block text-sm font-medium text-gray-700 mb-2">Preferred Payout Schedule</label>
+                            <select id="preferred_payout_schedule" name="preferred_payout_schedule"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="Monthly" {% if landlord.preferred_payout_schedule == 'Monthly' %}selected{% endif %}>Monthly</option>
+                                <option value="Quarterly" {% if landlord.preferred_payout_schedule == 'Quarterly' %}selected{% endif %}>Quarterly</option>
+                                <option value="Bi-Annually" {% if landlord.preferred_payout_schedule == 'Bi-Annually' %}selected{% endif %}>Bi-Annually</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="guaranteed_rent_preference" name="guaranteed_rent_preference" {% if landlord.guaranteed_rent_preference %}checked{% endif %}
+                                class="h-4 w-4 text-brand-gold focus:ring-brand-gold border-gray-300 rounded">
+                            <label for="guaranteed_rent_preference" class="ml-2 block text-sm text-gray-700">Guaranteed Rent Preference</label>
+                        </div>
+                        
+                        <div>
+                            <label for="maintenance_handling" class="block text-sm font-medium text-gray-700 mb-2">Maintenance Handling</label>
+                            <select id="maintenance_handling" name="maintenance_handling"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="BrandenBed Managed" {% if landlord.maintenance_handling == 'BrandenBed Managed' %}selected{% endif %}>BrandenBed Managed</option>
+                                <option value="Self Managed" {% if landlord.maintenance_handling == 'Self Managed' %}selected{% endif %}>Self Managed</option>
+                                <option value="Hybrid" {% if landlord.maintenance_handling == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                            </select>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="landlord_notes" class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                            <textarea id="landlord_notes" name="landlord_notes" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">{{ landlord.notes }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                {% elif user.user_type == 'resident' and resident %}
+                <div class="bg-white shadow-sm rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-graduation-cap text-brand-gold mr-3"></i>
+                        Academic & Professional Information
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="resident_type" class="block text-sm font-medium text-gray-700 mb-2">Resident Type</label>
+                            <select id="resident_type" name="resident_type"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="student" {% if resident.resident_type == 'student' %}selected{% endif %}>International Student</option>
+                                <option value="local_student" {% if resident.resident_type == 'local_student' %}selected{% endif %}>Local Student</option>
+                                <option value="professional" {% if resident.resident_type == 'professional' %}selected{% endif %}>Working Professional</option>
+                                <option value="intern" {% if resident.resident_type == 'intern' %}selected{% endif %}>Intern</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="identification_type" class="block text-sm font-medium text-gray-700 mb-2">Identification Type</label>
+                            <select id="identification_type" name="identification_type"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                                <option value="passport" {% if resident.identification_type == 'passport' %}selected{% endif %}>Passport</option>
+                                <option value="national_id" {% if resident.identification_type == 'national_id' %}selected{% endif %}>National ID Card</option>
+                                <option value="student_id" {% if resident.identification_type == 'student_id' %}selected{% endif %}>Student ID</option>
+                                <option value="visa" {% if resident.identification_type == 'visa' %}selected{% endif %}>Visa</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="identification_number" class="block text-sm font-medium text-gray-700 mb-2">Identification Number</label>
+                            <input type="text" id="identification_number" name="identification_number" value="{{ resident.identification_number }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="university" class="block text-sm font-medium text-gray-700 mb-2">University</label>
+                            <input type="text" id="university" name="university" value="{{ resident.university }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="course" class="block text-sm font-medium text-gray-700 mb-2">Course</label>
+                            <input type="text" id="course" name="course" value="{{ resident.course }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="employer" class="block text-sm font-medium text-gray-700 mb-2">Employer</label>
+                            <input type="text" id="employer" name="employer" value="{{ resident.employer }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="job_title" class="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+                            <input type="text" id="job_title" name="job_title" value="{{ resident.job_title }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="monthly_income" class="block text-sm font-medium text-gray-700 mb-2">Monthly Income (EUR)</label>
+                            <input type="number" id="monthly_income" name="monthly_income" value="{{ resident.monthly_income }}" step="0.01"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="income_source" class="block text-sm font-medium text-gray-700 mb-2">Income Source</label>
+                            <input type="text" id="income_source" name="income_source" value="{{ resident.income_source }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="visa_type" class="block text-sm font-medium text-gray-700 mb-2">Visa Type</label>
+                            <input type="text" id="visa_type" name="visa_type" value="{{ resident.visa_type }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="visa_expiry" class="block text-sm font-medium text-gray-700 mb-2">Visa Expiry Date</label>
+                            <input type="date" id="visa_expiry" name="visa_expiry" value="{{ resident.visa_expiry|date:'Y-m-d' }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="preferred_room_type" class="block text-sm font-medium text-gray-700 mb-2">Preferred Room Type</label>
+                            <input type="text" id="preferred_room_type" name="preferred_room_type" value="{{ resident.preferred_room_type }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="preferred_location" class="block text-sm font-medium text-gray-700 mb-2">Preferred Location</label>
+                            <input type="text" id="preferred_location" name="preferred_location" value="{{ resident.preferred_location }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="budget_range" class="block text-sm font-medium text-gray-700 mb-2">Budget Range</label>
+                            <input type="text" id="budget_range" name="budget_range" value="{{ resident.budget_range }}"
+                                placeholder="e.g., 400-600 EUR"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="parent_guardian_name" class="block text-sm font-medium text-gray-700 mb-2">Parent/Guardian Name</label>
+                            <input type="text" id="parent_guardian_name" name="parent_guardian_name" value="{{ resident.parent_guardian_name }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="parent_guardian_phone" class="block text-sm font-medium text-gray-700 mb-2">Parent/Guardian Phone</label>
+                            <input type="tel" id="parent_guardian_phone" name="parent_guardian_phone" value="{{ resident.parent_guardian_phone }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="parent_guardian_email" class="block text-sm font-medium text-gray-700 mb-2">Parent/Guardian Email</label>
+                            <input type="email" id="parent_guardian_email" name="parent_guardian_email" value="{{ resident.parent_guardian_email }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="dietary_requirements" class="block text-sm font-medium text-gray-700 mb-2">Dietary Requirements</label>
+                            <input type="text" id="dietary_requirements" name="dietary_requirements" value="{{ resident.dietary_requirements }}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="medical_conditions" class="block text-sm font-medium text-gray-700 mb-2">Medical Conditions</label>
+                            <textarea id="medical_conditions" name="medical_conditions" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">{{ resident.medical_conditions }}</textarea>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="special_needs" class="block text-sm font-medium text-gray-700 mb-2">Special Needs</label>
+                            <textarea id="special_needs" name="special_needs" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">{{ resident.special_needs }}</textarea>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="resident_notes" class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                            <textarea id="resident_notes" name="resident_notes" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-brand-gold focus:border-brand-gold">{{ resident.notes }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Form Actions -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                    <button type="submit" 
+                            class="flex-1 sm:flex-none inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-brand-gold hover:bg-brand-gold-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-colors">
+                        <i class="fas fa-save mr-2"></i>
+                        Save Changes
+                    </button>
+                    
+                    <a href="{% url 'dashboard:profile' %}" 
+                    class="flex-1 sm:flex-none inline-flex justify-center items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-colors">
+                        <i class="fas fa-times mr-2"></i>
+                        Cancel
+                    </a>
+                </div>
+            </form>
+
+            <script>
+                function previewImage(input) {
+                    const preview = document.getElementById('preview');
+                    if (input.files && input.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            if (preview.tagName === 'IMG') {
+                                preview.src = e.target.result;
+                            } else {
+                                // Replace the div with an img element
+                                const newPreview = document.createElement('img');
+                                newPreview.id = 'preview';
+                                newPreview.className = 'h-16 w-16 object-cover rounded-full';
+                                newPreview.src = e.target.result;
+                                newPreview.alt = 'Preview profile photo';
+                                preview.parentNode.replaceChild(newPreview, preview);
+                            }
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            </script>
+        </div>
+    </div>
+
+    
+{% endblock %}

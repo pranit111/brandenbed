@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ landlord.company_name|default:landlord.user.get_full_name }} - Landlord Details - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <nav class="flex mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{% url 'landlords:landlord_dashboard' %}" class="text-gray-600 hover:text-blue-600">
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-500">{{ landlord.landlord_id }}</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex items-center">
+                <div class="w-16 h-16 bg-gray-900 rounded-xl flex items-center justify-center mr-4">
+                    <span class="text-2xl font-bold text-white">
+                        {% if landlord.company_name %}{{ landlord.company_name|first }}{% else %}{{ landlord.user.first_name|first }}{{ landlord.user.last_name|first }}{% endif %}
+                    </span>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">
+                        {% if landlord.company_name %}{{ landlord.company_name }}{% else %}{{ landlord.user.get_full_name }}{% endif %}
+                    </h1>
+                    <div class="flex items-center mt-2 space-x-4">
+                        <span class="text-lg text-gray-600">{{ landlord.landlord_id }}</span>
+                        {% if landlord.partnership_status == 'active' %}
+                            <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Active Partner
+                            </span>
+                        {% elif landlord.partnership_status == 'prospect' %}
+                            <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-blue-100 text-blue-800">Prospect</span>
+                        {% elif landlord.partnership_status == 'under_evaluation' %}
+                            <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800">Under Evaluation</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 lg:mt-0 flex flex-col sm:flex-row gap-3">
+                <a href="{% url 'landlords:performance_report' landlord.landlord_id %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Performance Report
+                </a>
+                <a href="{% url 'landlords:landlord_update' landlord.landlord_id %}" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Edit Details
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-blue-100">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Total Properties</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ performance_metrics.total_properties }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-green-100">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Active Properties</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ performance_metrics.active_properties }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-purple-100">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Total Rooms</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ performance_metrics.total_rooms }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-yellow-100">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Avg. Rent/Room</p>
+                    <p class="text-2xl font-bold text-gray-900">€{{ performance_metrics.avg_rent|floatformat:0 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Details & Properties -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Contact Information -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Email</label>
+                        <p class="text-gray-900 mt-1">{{ landlord.user.email }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Landlord Type</label>
+                        <p class="text-gray-900 mt-1">{{ landlord.get_landlord_type_display }}</p>
+                    </div>
+                    {% if landlord.company_name %}
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Company Name</label>
+                        <p class="text-gray-900 mt-1">{{ landlord.company_name }}</p>
+                    </div>
+                    {% endif %}
+                    {% if landlord.tax_id %}
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Tax ID</label>
+                        <p class="text-gray-900 mt-1">{{ landlord.tax_id }}</p>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">BD Executive</label>
+                        <p class="text-gray-900 mt-1">
+                            {% if landlord.assigned_bd_executive %}
+                                {{ landlord.assigned_bd_executive.user.get_full_name }}
+                            {% else %}
+                                <span class="text-gray-400">Unassigned</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Partnership Duration</label>
+                        <p class="text-gray-900 mt-1">
+                            {% if partnership_duration %}
+                                {{ partnership_duration }} days
+                            {% else %}
+                                Not yet started
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">Properties</h3>
+                        <a href="{% url 'properties:property_create' %}" class="text-sm text-blue-600 hover:text-blue-800">Add Property</a>
+                    </div>
+                </div>
+                
+                {% if properties %}
+                <div class="p-6">
+                    <div class="space-y-4">
+                        {% for property in properties %}
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-gray-900">{{ property.title }}</h4>
+                                    <p class="text-sm text-gray-600 mt-1">{{ property.address }}</p>
+                                    <div class="flex items-center mt-2 space-x-4">
+                                        <span class="text-xs text-gray-500">{{ property.total_rooms }} rooms</span>
+                                        <span class="text-xs text-gray-500">€{{ property.rent_per_room }}/room</span>
+                                        {% if property.status == 'active' %}
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                        {% else %}
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ property.get_status_display }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View Details</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-12">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">No Properties</h3>
+                    <p class="mt-2 text-sm text-gray-500">This landlord hasn't added any properties yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Column - Partnership & Documents -->
+        <div class="space-y-8">
+            <!-- Partnership Status -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Partnership Status</h3>
+                
+                <form method="post" action="{% url 'landlords:update_partnership' landlord.landlord_id %}">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Current Status</label>
+                        <select name="partnership_status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="prospect" {% if landlord.partnership_status == 'prospect' %}selected{% endif %}>Prospect</option>
+                            <option value="under_evaluation" {% if landlord.partnership_status == 'under_evaluation' %}selected{% endif %}>Under Evaluation</option>
+                            <option value="active" {% if landlord.partnership_status == 'active' %}selected{% endif %}>Active Partner</option>
+                            <option value="inactive" {% if landlord.partnership_status == 'inactive' %}selected{% endif %}>Inactive</option>
+                            <option value="terminated" {% if landlord.partnership_status == 'terminated' %}selected{% endif %}>Terminated</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                        <textarea name="notes" rows="3" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Add status update notes...">{{ landlord.notes }}</textarea>
+                    </div>
+                    
+                    <button type="submit" style="background-color: var(--brand-navy);" class="w-full px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                        Update Status
+                    </button>
+                </form>
+            </div>
+
+            <!-- Recent Documents -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">Recent Documents</h3>
+                        <a href="{% url 'landlords:document_list' landlord.landlord_id %}" class="text-sm text-blue-600 hover:text-blue-800">View All</a>
+                    </div>
+                </div>
+                
+                {% if recent_documents %}
+                <div class="p-6">
+                    <div class="space-y-3">
+                        {% for doc in recent_documents %}
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-blue-100 rounded-lg mr-3">
+                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">{{ doc.title }}</p>
+                                    <p class="text-xs text-gray-500">{{ doc.uploaded_at|timesince }} ago</p>
+                                </div>
+                            </div>
+                            <button type="button" class="text-red-600 hover:text-red-800" onclick="if(confirm('Delete this document?')) { document.getElementById('delete-doc-{{ doc.id }}').submit(); }">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                            <form id="delete-doc-{{ doc.id }}" method="post" action="{% url 'landlords:delete_document' landlord.landlord_id doc.id %}" class="hidden">
+                                {% csrf_token %}
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-8">
+                    <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <p class="mt-2 text-sm text-gray-500">No documents uploaded yet</p>
+                </div>
+                {% endif %}
+
+                <!-- Document Upload Form -->
+                <div class="border-t border-gray-200 p-6">
+                    <form method="post" action="{% url 'landlords:upload_document' landlord.landlord_id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Document Type</label>
+                                <select name="document_type" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="property_deed">Property Deed</option>
+                                    <option value="tax_document">Tax Document</option>
+                                    <option value="bank_details">Bank Details</option>
+                                    <option value="partnership_agreement">Partnership Agreement</option>
+                                    <option value="identity_proof">Identity Proof</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                                <input type="text" name="title" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter document title">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">File</label>
+                                <input type="file" name="file" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <button type="submit" style="background-color: var(--brand-navy);" class="w-full px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                                Upload Document
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

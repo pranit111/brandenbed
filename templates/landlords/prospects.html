@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Landlord Prospects - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <nav class="flex mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{% url 'landlords:landlord_dashboard' %}" class="text-gray-600 hover:text-blue-600">Dashboard</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-500">Prospects</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Landlord Prospects</h1>
+                <p class="text-gray-600">Potential partners and evaluations in progress</p>
+            </div>
+            <div class="mt-4 sm:mt-0">
+                <a href="{% url 'landlords:landlord_create' %}" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Add New Prospect
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-blue-100">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Total Prospects</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ total_prospects }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-green-100">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">New This Month</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ new_this_month }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-yellow-100">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Conversion Rate</p>
+                    <p class="text-2xl font-bold text-gray-900">73%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prospects Pipeline -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900">Prospects Pipeline</h3>
+        </div>
+        
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- New Prospects -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-900 mb-4 flex items-center">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                        New Prospects
+                        <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                            {{ prospects|length|add:"-10" }}
+                        </span>
+                    </h4>
+                    <div class="space-y-3">
+                        {% for prospect in prospects %}
+                        {% if prospect.partnership_status == 'prospect' and forloop.counter <= 5 %}
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h5 class="font-medium text-gray-900">
+                                        {% if prospect.company_name %}{{ prospect.company_name }}{% else %}{{ prospect.user.get_full_name }}{% endif %}
+                                    </h5>
+                                    <p class="text-sm text-gray-600 mt-1">{{ prospect.landlord_id }} • {{ prospect.get_landlord_type_display }}</p>
+                                    <p class="text-xs text-gray-500 mt-1">Added {{ prospect.created_at|timesince }} ago</p>
+                                </div>
+                                <a href="{% url 'landlords:landlord_detail' prospect.landlord_id %}" class="text-blue-600 hover:text-blue-800 text-sm">View</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Under Evaluation -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-900 mb-4 flex items-center">
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                        Under Evaluation
+                        <span class="ml-2 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
+                            {{ prospects|length|add:"-5" }}
+                        </span>
+                    </h4>
+                    <div class="space-y-3">
+                        {% for prospect in prospects %}
+                        {% if prospect.partnership_status == 'under_evaluation' and forloop.counter <= 5 %}
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h5 class="font-medium text-gray-900">
+                                        {% if prospect.company_name %}{{ prospect.company_name }}{% else %}{{ prospect.user.get_full_name }}{% endif %}
+                                    </h5>
+                                    <p class="text-sm text-gray-600 mt-1">{{ prospect.landlord_id }} • {{ prospect.get_landlord_type_display }}</p>
+                                    <p class="text-xs text-gray-500 mt-1">In evaluation for {{ prospect.created_at|timesince }}</p>
+                                </div>
+                                <a href="{% url 'landlords:landlord_detail' prospect.landlord_id %}" class="text-blue-600 hover:text-blue-800 text-sm">Review</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Prospects Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-900">All Prospects</h3>
+                <div class="flex items-center space-x-2">
+                    <button class="px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">Filter</button>
+                    <button class="px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">Sort</button>
+                </div>
+            </div>
+        </div>
+        
+        {% if prospects %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prospect</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BD Executive</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Added</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for prospect in prospects %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-medium text-white">
+                                        {% if prospect.company_name %}{{ prospect.company_name|first }}{% else %}{{ prospect.user.first_name|first }}{{ prospect.user.last_name|first }}{% endif %}
+                                    </span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {% if prospect.company_name %}{{ prospect.company_name }}{% else %}{{ prospect.user.get_full_name }}{% endif %}
+                                    </div>
+                                    <div class="text-sm text-gray-500">{{ prospect.landlord_id }}</div>
+                                    <div class="text-xs text-gray-400">{{ prospect.user.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900">{{ prospect.get_landlord_type_display }}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if prospect.partnership_status == 'prospect' %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    New Prospect
+                                </span>
+                            {% elif prospect.partnership_status == 'under_evaluation' %}
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Under Evaluation
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {% if prospect.assigned_bd_executive %}
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-gray-300 rounded-full mr-2"></div>
+                                    {{ prospect.assigned_bd_executive.user.get_full_name }}
+                                </div>
+                            {% else %}
+                                <span class="text-gray-400 italic">Unassigned</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <div>{{ prospect.created_at|date:"M d, Y" }}</div>
+                            <div class="text-xs text-gray-400">{{ prospect.created_at|timesince }} ago</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                            <a href="{% url 'landlords:landlord_detail' prospect.landlord_id %}" class="text-blue-600 hover:text-blue-900">View</a>
+                            {% if prospect.partnership_status == 'prospect' %}
+                                <button onclick="promoteToEvaluation('{{ prospect.landlord_id }}')" class="text-yellow-600 hover:text-yellow-900">Evaluate</button>
+                            {% elif prospect.partnership_status == 'under_evaluation' %}
+                                <button onclick="promoteToPartner('{{ prospect.landlord_id }}')" class="text-green-600 hover:text-green-900">Approve</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="px-6 py-4 border-t border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-700">
+                    Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} prospects
+                </div>
+                <div class="flex items-center space-x-2">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-1 border border-gray-300 rounded-lg text-sm hover:bg-gray-50">Previous</a>
+                    {% endif %}
+                    
+                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-sm">{{ page_obj.number }}</span>
+                    
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-1 border border-gray-300 rounded-lg text-sm hover:bg-gray-50">Next</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="text-center py-16">
+            <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <h3 class="mt-4 text-lg font-medium text-gray-900">No prospects yet</h3>
+            <p class="mt-2 text-sm text-gray-500">Start building your partnership pipeline by adding new prospects.</p>
+            <div class="mt-6">
+                <a href="{% url 'landlords:landlord_create' %}" style="background-color: var(--brand-navy);" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Add First Prospect
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function promoteToEvaluation(landlordId) {
+    if (confirm('Move this prospect to evaluation stage?')) {
+        fetch(`/landlords/${landlordId}/update-partnership-status/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: 'partnership_status=under_evaluation'
+        }).then(() => {
+            location.reload();
+        });
+    }
+}
+
+function promoteToPartner(landlordId) {
+    if (confirm('Approve this prospect as an active partner?')) {
+        fetch(`/landlords/${landlordId}/update-partnership-status/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: 'partnership_status=active'
+        }).then(() => {
+            location.reload();
+        });
+    }
+}
+</script>
+{% endblock %}

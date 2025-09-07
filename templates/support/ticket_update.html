@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Update Ticket {{ ticket.ticket_id }} - BrandenBed CRM{% endblock %}
+
+{% block content %}
+<div class="">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Update Ticket {{ ticket.ticket_id }}</h1>
+                <p class="text-gray-600">Modify ticket status, assignment, and other details</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="{% url 'support:ticket_detail' ticket.ticket_id %}" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    View Ticket
+                </a>
+                <a href="{% url 'support:ticket_list' %}" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    All Tickets
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Current Ticket Info -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Ticket Overview -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Current Ticket Details</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-gray-900">{{ ticket.subject }}</h4>
+                        <p class="text-sm text-gray-600 mt-1">{{ ticket.description|truncatewords:30 }}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-500">Resident:</span>
+                            <span class="ml-2 font-medium">{{ ticket.resident.user.get_full_name }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Category:</span>
+                            <span class="ml-2 font-medium">{{ ticket.category.get_name_display }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Property:</span>
+                            <span class="ml-2 font-medium">{{ ticket.property_ref.name }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Created:</span>
+                            <span class="ml-2 font-medium">{{ ticket.created_at|date:"M j, Y g:i A" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Status -->
+        <div class="space-y-6">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Current Status</h3>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Status</span>
+                        {% if ticket.status == 'open' %}
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Open</span>
+                        {% elif ticket.status == 'in_progress' %}
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                        {% elif ticket.status == 'resolved' %}
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Resolved</span>
+                        {% else %}
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ ticket.get_status_display }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Priority</span>
+                        <div class="flex items-center">
+                            {% if ticket.priority == 1 %}
+                                <div class="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium text-red-600">Emergency</span>
+                            {% elif ticket.priority == 2 %}
+                                <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium text-orange-600">High</span>
+                            {% elif ticket.priority == 3 %}
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium text-blue-600">Medium</span>
+                            {% else %}
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium text-green-600">Low</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Assigned To</span>
+                        <span class="text-sm font-medium">
+                            {% if ticket.assigned_to %}
+                                {{ ticket.assigned_to.user.get_full_name }}
+                            {% else %}
+                                <span class="text-gray-400">Unassigned</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    {% if ticket.is_overdue %}
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">SLA Status</span>
+                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Overdue
+                            </span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Form -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900">Update Ticket</h3>
+        </div>
+        
+        <form method="post" class="p-6 space-y-6">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div class="flex">
+                        <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <div class="ml-3">
+                            {% for error in form.non_field_errors %}
+                                <p class="text-sm text-red-800">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Status and Priority -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <label for="{{ form.status.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Status
+                    </label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.status.errors.0 }}</p>
+                    {% endif %}
+                    <p class="mt-1 text-xs text-gray-500">Update the current status of this ticket</p>
+                </div>
+
+                <div>
+                    <label for="{{ form.priority.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Priority
+                    </label>
+                    {{ form.priority }}
+                    {% if form.priority.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.priority.errors.0 }}</p>
+                    {% endif %}
+                    <p class="mt-1 text-xs text-gray-500">Change priority level if needed</p>
+                </div>
+            </div>
+
+            <!-- Assignment -->
+            <div>
+                <label for="{{ form.assigned_to.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    Assign To
+                </label>
+                {{ form.assigned_to }}
+                {% if form.assigned_to.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.assigned_to.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">Assign or reassign this ticket to an employee</p>
+            </div>
+
+            <!-- Cost Information -->
+            <div class="border-t border-gray-200 pt-6">
+                <h4 class="text-base font-medium text-gray-900 mb-4">Cost Information</h4>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.estimated_cost.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Estimated Cost
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">$</span>
+                            </div>
+                            <input type="number" name="{{ form.estimated_cost.name }}" value="{{ form.estimated_cost.value|default:'' }}" 
+                                   class="form-control pl-7" placeholder="0.00" step="0.01">
+                        </div>
+                        {% if form.estimated_cost.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.estimated_cost.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.actual_cost.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Actual Cost
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">$</span>
+                            </div>
+                            <input type="number" name="{{ form.actual_cost.name }}" value="{{ form.actual_cost.value|default:'' }}" 
+                                   class="form-control pl-7" placeholder="0.00" step="0.01">
+                        </div>
+                        {% if form.actual_cost.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.actual_cost.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Follow-up -->
+            <div class="border-t border-gray-200 pt-6">
+                <h4 class="text-base font-medium text-gray-900 mb-4">Follow-up</h4>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        {{ form.requires_followup }}
+                        <label for="{{ form.requires_followup.id_for_label }}" class="ml-2 text-sm text-gray-700">
+                            This ticket requires follow-up
+                        </label>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.followup_date.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Follow-up Date
+                        </label>
+                        {{ form.followup_date }}
+                        {% if form.followup_date.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.followup_date.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="border-t border-gray-200 pt-6 flex justify-between">
+                <div>
+                    {% if ticket.status != 'closed' %}
+                        <button type="button" onclick="showCloseModal()" 
+                                class="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700">
+                            Close Ticket
+                        </button>
+                    {% endif %}
+                </div>
+                
+                <div class="flex space-x-3">
+                    <a href="{% url 'support:ticket_detail' ticket.ticket_id %}" 
+                       class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        Cancel
+                    </a>
+                    <button type="submit" 
+                            style="background-color: var(--brand-navy);"
+                            class="px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                        Update Ticket
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Close Ticket Modal -->
+<div id="closeModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="hideCloseModal()"></div>
+        
+        <div class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div class="sm:flex sm:items-start">
+                <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Close Ticket</h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">Are you sure you want to close this ticket? Please provide resolution notes.</p>
+                        <form id="closeForm" method="post" action="{% url 'support:close_ticket' ticket.ticket_id %}" class="mt-4">
+                            {% csrf_token %}
+                            <textarea name="resolution_notes" rows="3" 
+                                      class="form-control" 
+                                      placeholder="Describe how the issue was resolved..."></textarea>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button type="submit" form="closeForm"
+                        class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Close Ticket
+                </button>
+                <button type="button" onclick="hideCloseModal()"
+                        class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Modal functions
+function showCloseModal() {
+    document.getElementById('closeModal').classList.remove('hidden');
+}
+
+function hideCloseModal() {
+    document.getElementById('closeModal').classList.add('hidden');
+}
+
+// Follow-up date toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const requiresFollowup = document.getElementById('{{ form.requires_followup.id_for_label }}');
+    const followupDate = document.getElementById('{{ form.followup_date.id_for_label }}');
+    
+    function toggleFollowupDate() {
+        if (requiresFollowup.checked) {
+            followupDate.required = true;
+            followupDate.parentElement.style.display = 'block';
+        } else {
+            followupDate.required = false;
+            followupDate.value = '';
+        }
+    }
+    
+    requiresFollowup.addEventListener('change', toggleFollowupDate);
+    toggleFollowupDate(); // Set initial state
+});
+</script>
+{% endblock %}

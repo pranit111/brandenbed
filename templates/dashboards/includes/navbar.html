@@ -1,0 +1,169 @@
+<!-- templates/dashboards/includes/navbar.html -->
+{% load i18n %}
+{% load static %}
+
+<nav class="bg-white shadow-sm border-b border-gray-200 fixed w-full z-30 top-0 start-0">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+        <div class="flex items-center justify-between">
+            <!-- Left section: Sidebar toggle + Logo + Search -->
+            <div class="flex items-center">
+                <!-- Sidebar toggle button -->
+                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" style="color: var(--brand-navy);">
+                    <span class="sr-only">{% trans "Open sidebar" %}</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                    </svg>
+                </button>
+
+                <!-- Logo (visible on larger screens when sidebar is collapsed) -->
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center ml-2 md:mr-24">
+                     <div class="w-12 h-12 bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
+                        <div class="bg-blue-900 rounded-xl p-1">
+                            <img src="{% static 'images/logo.png' %}" alt="Brandenbed Living Spaces" class="h-10 w-10 rounded-xl shadow-card group-hover:shadow-card-hover transition-shadow duration-300 object-contain">             
+                        </div>
+                    </div>
+                    <div class="self-center ml-3 flex flex-col">
+                        <span class="text-xl font-semibold sm:text-2xl whitespace-nowrap" style="color: var(--brand-navy);">BrandenBed</span>
+                        <span class="text-sm font-semibold -mt-1"style="color: var(--brand-gold);">Living Spaces</span>
+                    </div>
+                    <span class="ml-2 text-sm font-medium text-gray-500 hidden lg:block">{% trans "CRM" %}</span>
+                </a>
+
+                <!-- Search bar (hidden on mobile) -->
+                <div class="hidden lg:block lg:ml-6">
+                    <div class="relative w-80 xl:w-96">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input type="text" class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="{% trans 'Search properties, residents...' %}">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right section: Actions + User menu -->
+            <div class="flex items-center space-x-3">
+                <!-- Notifications -->
+                <div class="relative">
+                    {% comment %} <button type="button" class="relative inline-flex items-center p-2 text-sm font-medium text-center rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300" style="color: var(--brand-navy);" data-dropdown-toggle="notification-dropdown">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                        </svg>
+                        <!-- Notification badge -->
+                        <div class="absolute block w-3 h-3 -top-0.5 -right-0.5 rounded-full ring-2 ring-white" style="background-color: var(--brand-gold);"></div>
+                        <span class="sr-only">{% trans "Notifications" %}</span>
+                    </button> {% endcomment %}
+
+                    <!-- Notification dropdown -->
+                    <div class="z-50 hidden my-4 w-80 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg" id="notification-dropdown">
+                        <div class="px-4 py-3 border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-sm font-semibold" style="color: var(--brand-navy);">{% trans "Notifications" %}</h3>
+                                <button class="text-xs brand-gold hover:underline">{% trans "Mark all read" %}</button>
+                            </div>
+                        </div>
+                        <div class="max-h-64 overflow-y-auto">
+                            <a href="#" class="flex px-4 py-3 hover:bg-gray-50">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="w-full pl-3">
+                                    <div class="text-gray-500 text-sm mb-1.5">
+                                        {% trans "Urgent: Maintenance request requires immediate attention" %}
+                                    </div>
+                                    <div class="text-xs text-blue-600">{% trans "2 minutes ago" %}</div>
+                                </div>
+                            </a>
+                            <a href="#" class="flex px-4 py-3 hover:bg-gray-50">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background-color: var(--brand-gold);">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="w-full pl-3">
+                                    <div class="text-gray-500 text-sm mb-1.5">
+                                        {% trans "New resident registration completed" %}
+                                    </div>
+                                    <div class="text-xs text-blue-600">{% trans "1 hour ago" %}</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="px-4 py-3 border-t border-gray-200">
+                            <a href="#" class="text-sm brand-gold hover:underline">{% trans "View all notifications" %}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User dropdown -->
+                <div class="relative">
+                   <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300" id="user-menu-button" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                        <span class="sr-only">{% trans "Open user menu" %}</span>
+                        {% if user.profile_picture %}
+                            <img class="w-8 h-8 rounded-full" src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name|default:user.username }}">
+                        {% else %}
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background-color: var(--brand-gold);">
+                                {{ user.get_full_name.0|default:user.username.0|upper }}
+                            </div>
+                        {% endif %}
+                    </button>
+
+                    
+                    <!-- User dropdown menu -->
+                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg" id="user-dropdown">
+                        <div class="px-4 py-3">
+                            <span class="block text-sm font-medium" style="color: var(--brand-navy);">{{ user.get_full_name|default:user.username }}</span>
+                            <span class="block text-sm text-gray-500 truncate">{{ user.email }}</span>
+                            {% if user.user_type %}
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium mt-1 {% if user.user_type == 'admin' %}bg-purple-100 text-purple-800{% elif user.user_type == 'employee' %}bg-blue-100 text-blue-800{% elif user.user_type == 'landlord' %}bg-green-100 text-green-800{% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ user.get_user_type_display|default:user.user_type }}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <ul class="py-2">
+                            <li>
+                                <a href="{% url 'dashboard:profile' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                    </svg>
+                                    {% trans "My Profile" %}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'dashboard:notification_settings' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    {% trans "Account Settings" %}
+                                </a>
+                            </li>
+                            {% comment %} <li>
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-1.106-1.106A6.002 6.002 0 004 10c0 .91.203 1.773.567 2.543l1.591-1.426zM6.918 6.55l1.429-1.429A5.98 5.98 0 0110 4c.954 0 1.856.223 2.654.618l-1.105 1.105A3.989 3.989 0 0010 5.5c-.666 0-1.294.167-1.845.458l-1.237-1.237z" clip-rule="evenodd"/>
+                                    </svg>
+                                    {% trans "Help & Support" %}
+                                </a>
+                            </li> {% endcomment %}
+                        </ul>
+                        <div class="py-2">
+                            <a href="{% url 'accounts:logout' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                                </svg>
+                                {% trans "Sign Out" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

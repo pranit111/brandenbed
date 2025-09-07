@@ -1,0 +1,279 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Contact Us" %} - BrandenBed Living Spaces{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="relative overflow-hidden bg-gradient-to-br from-yellow-50 via-white to-yellow-50">
+    <!-- Background Decoration -->
+    <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-yellow-200/30 to-yellow-300/30 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-60 h-60 bg-gradient-to-br from-black/10 to-gray-800/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-br from-yellow-100/20 to-yellow-200/20 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="relative py-16 px-6 mx-auto max-w-screen-xl text-center lg:py-24">
+        <div class="mb-8 inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-yellow-200/20">
+            <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <span class="text-sm font-medium text-slate-700">{% trans "Get In Touch" %}</span>
+        </div>
+        
+        <h1 class="mb-6 text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+            <span class="bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-700 bg-clip-text text-transparent">
+                {% trans "Contact" %}
+            </span>
+            <br>
+            <span class="bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent">
+                {% trans "Us" %}
+            </span>
+        </h1>
+        
+        <p class="mb-10 text-xl font-normal text-slate-600 lg:text-2xl max-w-4xl mx-auto leading-relaxed">
+            {% trans "Get in touch with our team. We're here to help you find your perfect home in Berlin." %}
+        </p>
+        
+        <!-- Quick Contact Stats -->
+        <div class="flex flex-wrap justify-center gap-8 mb-8">
+            <div class="text-center">
+                <div class="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">24h</div>
+                <div class="text-sm text-slate-600">{% trans "Response Time" %}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-600 bg-clip-text text-transparent">5+</div>
+                <div class="text-sm text-slate-600">{% trans "Languages" %}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold bg-gradient-to-r from-black to-gray-800 bg-clip-text text-transparent">100%</div>
+                <div class="text-sm text-slate-600">{% trans "Support" %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form and Info -->
+<section class="relative bg-white/80 backdrop-blur-sm">
+    <div class="py-16 px-6 mx-auto max-w-screen-xl lg:py-20">
+        <div class="grid gap-12 mb-6 lg:mb-16 md:grid-cols-2">
+            <!-- Contact Form -->
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-yellow-300/20 to-yellow-500/20 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+                <div class="relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+                    <div class="mb-6 inline-flex items-center px-3 py-1 bg-yellow-100/80 backdrop-blur-sm rounded-full shadow-sm border border-yellow-200/20">
+                        <svg class="w-4 h-4 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700">{% trans "Contact Form" %}</span>
+                    </div>
+                    {% include 'leads/contact_form.html' %}
+                </div>
+            </div>
+            
+            <!-- Contact Information -->
+            <div>
+                <div class="mb-8">
+                    <div class="mb-6 inline-flex items-center px-3 py-1 bg-black/10 backdrop-blur-sm rounded-full shadow-sm border border-black/20">
+                        <svg class="w-4 h-4 text-gray-700 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700">{% trans "Contact Information" %}</span>
+                    </div>
+                    
+                    <h2 class="mb-6 text-4xl lg:text-5xl tracking-tight font-extrabold">
+                        <span class="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">{% trans "Get in" %}</span>
+                        <span class="bg-gradient-to-r from-black to-gray-800 bg-clip-text text-transparent"> {% trans "Touch" %}</span>
+                    </h2>
+                    <p class="mb-8 text-lg text-slate-600 leading-relaxed">
+                        {% trans "We're here to help you with all your housing needs. Reach out to us through any of the channels below." %}
+                    </p>
+                </div>
+
+                <!-- Contact Cards -->
+                <div class="space-y-6">
+                    <!-- Office Address -->
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-yellow-300/10 to-yellow-500/10 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+                        <div class="relative flex items-start p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-lg">
+                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-bold text-slate-900">{% trans "Office Address" %}</h3>
+                                <p class="text-slate-600 mt-1">
+                                BrandenBed Living Spaces UG<br>
+                                Friedrichstraße 123<br>
+                                10117 Berlin, Germany
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="flex items-start p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">{% trans "Phone Support" %}</h3>
+                            <p class="text-gray-600">
+                                {% trans "24/7 Support:" %} <a href="tel:+4930123456789" class="brand-gold hover:underline">+49 30 123 456 789</a><br>
+                                {% trans "Office Hours:" %} <a href="tel:+4930987654321" class="brand-gold hover:underline">+49 30 987 654 321</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-start p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">{% trans "Email Support" %}</h3>
+                            <p class="text-gray-600">
+                                {% trans "General Inquiries:" %} <a href="mailto:info@brandenbed.com" class="brand-gold hover:underline">info@brandenbed.com</a><br>
+                                {% trans "Housing Support:" %} <a href="mailto:housing@brandenbed.com" class="brand-gold hover:underline">housing@brandenbed.com</a><br>
+                                {% trans "Property Owners:" %} <a href="mailto:landlords@brandenbed.com" class="brand-gold hover:underline">landlords@brandenbed.com</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="flex items-start p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 brand-gold" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.696"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">{% trans "WhatsApp Support" %}</h3>
+                            <p class="text-gray-600">
+                                {% trans "Quick support via WhatsApp:" %} <a href="https://wa.me/4930123456789" class="brand-gold hover:underline">+49 30 123 456 789</a><br>
+                                <span class="text-sm text-gray-500">{% trans "Available 24/7 for urgent matters" %}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Office Hours -->
+                    <div class="flex items-start p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">{% trans "Office Hours" %}</h3>
+                            <p class="text-gray-600">
+                                {% trans "Monday - Friday:" %} 9:00 AM - 6:00 PM<br>
+                                {% trans "Saturday:" %} 10:00 AM - 4:00 PM<br>
+                                {% trans "Sunday:" %} {% trans "Closed" %}<br>
+                                <span class="text-sm text-gray-500">{% trans "Emergency support available 24/7" %}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="bg-gray-50">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl">
+        <div class="text-center mb-8">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                {% trans "Visit Our Office" %}
+            </h2>
+            <p class="text-gray-500 sm:text-xl">
+                {% trans "Located in the heart of Berlin, we're easily accessible by public transport." %}
+            </p>
+        </div>
+        
+        <!-- Placeholder for map - in a real application, you would integrate Google Maps or similar -->
+        <div class="bg-gray-300 rounded-lg shadow-lg h-96 flex items-center justify-center">
+            <div class="text-center">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                </svg>
+                <h3 class="text-lg font-medium text-gray-700">{% trans "Interactive Map" %}</h3>
+                <p class="text-gray-500">{% trans "Map integration would be implemented here" %}</p>
+                <a href="https://maps.google.com/maps?q=Friedrichstraße+123,+10117+Berlin" target="_blank" class="inline-flex items-center mt-4 text-brand-gold hover:underline">
+                    {% trans "View on Google Maps" %}
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="bg-white">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div class="max-w-screen-md mb-8 lg:mb-16 mx-auto text-center">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                {% trans "Frequently Asked Questions" %}
+            </h2>
+            <p class="text-gray-500 sm:text-xl">
+                {% trans "Find quick answers to common questions about our housing services." %}
+            </p>
+        </div>
+        
+        <div class="max-w-screen-md mx-auto">
+            <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-gray-900" data-inactive-classes="text-gray-500">
+                <h2 id="accordion-flush-heading-1">
+                    <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 hover:bg-gray-50" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
+                        <span>{% trans "How quickly can I move in?" %}</span>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
+                    <div class="py-5 border-b border-gray-200">
+                        <p class="mb-2 text-gray-500">{% trans "Most of our properties are available for immediate move-in. Once your application is approved and deposit is paid, you can typically move in within 2-3 business days." %}</p>
+                    </div>
+                </div>
+                
+                <h2 id="accordion-flush-heading-2">
+                    <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 hover:bg-gray-50" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+                        <span>{% trans "What documents do I need to apply?" %}</span>
+                        <svg data-accordion-icon class="w-3 h-3 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+                    <div class="py-5 border-b border-gray-200">
+                        <p class="mb-2 text-gray-500">{% trans "You'll need a valid passport/ID, proof of enrollment or employment, proof of income or financial guarantee, and completed application form. We accept international documents." %}</p>
+                    </div>
+                </div>
+                
+                <h2 id="accordion-flush-heading-3">
+                    <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 hover:bg-gray-50" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+                        <span>{% trans "Do you help with Anmeldung?" %}</span>
+                        <svg data-accordion-icon class="w-3 h-3 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+                    <div class="py-5 border-b border-gray-200">
+                        <p class="mb-2 text-gray-500">{% trans "Yes! We provide comprehensive Anmeldung support including appointment booking, document preparation, and accompaniment to appointments if needed." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

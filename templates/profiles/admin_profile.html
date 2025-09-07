@@ -1,0 +1,379 @@
+{% extends 'profiles/profile_base.html' %}
+
+{% block profile_content %}
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+<!-- Left Column - Profile Details -->
+    <div class="lg:col-span-2 space-y-8">
+
+        <!-- Personal Information Card -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-user-shield text-brand-gold mr-3"></i>
+                Administrator Information
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <p class="text-gray-900">{{ user.get_full_name|default:"Not provided" }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <p class="text-gray-900 font-mono">{{ user.username }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <p class="text-gray-900">{{ user.email|default:"Not provided" }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <p class="text-gray-900">{{ user.phone_number|default:"Not provided" }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                    <p class="text-gray-900">{{ user.date_of_birth|date:"F d, Y"|default:"Not provided" }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
+                    <p class="text-gray-900">{{ user.nationality|default:"Not provided" }}</p>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <p class="text-gray-900">
+                    {% if user.address_line_1 %}
+                        {{ user.address_line_1 }}{% if user.address_line_2 %}, {{ user.address_line_2 }}{% endif %}<br>
+                        {{ user.city }}{% if user.state %}, {{ user.state }}{% endif %} {{ user.pincode }}<br>
+                        {{ user.country }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- System Overview Card -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-chart-bar text-brand-gold mr-3"></i>
+                System Overview
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-users text-blue-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-blue-600">Total Users</p>
+                            <p class="text-2xl font-bold text-blue-800">{{ system_stats.total_users }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-user-tie text-green-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-green-600">Active Employees</p>
+                            <p class="text-2xl font-bold text-green-800">{{ system_stats.active_employees }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-building text-yellow-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-yellow-600">Active Landlords</p>
+                            <p class="text-2xl font-bold text-yellow-800">{{ system_stats.active_landlords }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-home text-purple-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-purple-600">Active Residents</p>
+                            <p class="text-2xl font-bold text-purple-800">{{ system_stats.active_residents }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-red-50 to-red-100 p-4 rounded-lg md:col-span-2">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-red-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-red-600">Total Properties</p>
+                            <p class="text-2xl font-bold text-red-800">{{ system_stats.total_properties }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex w-auto gap-12">
+            <!-- Admin Permissions Card -->
+            <div class="bg-white shadow-sm rounded-lg p-6 flex-1">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-shield-alt text-brand-gold mr-3"></i>
+                    Administrator Privileges
+                </h2>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check mr-3"></i>
+                        <span class="text-sm">Full system access</span>
+                    </div>
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check mr-3"></i>
+                        <span class="text-sm">User management</span>
+                    </div>
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check mr-3"></i>
+                        <span class="text-sm">Property management</span>
+                    </div>
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check mr-3"></i>
+                        <span class="text-sm">Financial oversight</span>
+                    </div>
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check mr-3"></i>
+                        <span class="text-sm">System configuration</span>
+                    </div>
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check mr-3"></i>
+                        <span class="text-sm">Audit logs access</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Activity Card -->
+            <div class="bg-white shadow-sm rounded-lg p-6 flex-1">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-history text-brand-gold mr-3"></i>
+                    Account Activity
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Login</label>
+                        <p class="text-gray-900">{{ user.last_login|date:"F d, Y H:i"|default:"Never" }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Account Created</label>
+                        <p class="text-gray-900">{{ user.date_joined|date:"F d, Y H:i" }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Profile Update</label>
+                        <p class="text-gray-900">{{ user.updated_at|date:"F d, Y H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Tools -->
+        <div class="bg-brand-navy-2 rounded-lg p-6 text-white">
+            <h3 class="text-lg font-semibold mb-4">System Tools</h3>
+            <div class="space-y-3">
+                <a href="/admin/" target="_blank" 
+                class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+                    <i class="fas fa-cogs mr-3 w-4"></i>
+                    Django Admin
+                </a>
+                <a href="#" 
+                class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+                    <i class="fas fa-database mr-3 w-4"></i>
+                    Database Management
+                </a>
+                <a href="#" 
+                class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+                    <i class="fas fa-download mr-3 w-4"></i>
+                    Export Data
+                </a>
+                <a href="#" 
+                class="flex items-center text-sm text-white hover:text-brand-gold transition-colors">
+                    <i class="fas fa-chart-pie mr-3 w-4"></i>
+                    Analytics Dashboard
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+     <div class="space-y-6">
+
+        <!-- Quick Admin Actions -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Admin Actions</h3>
+            <div class="space-y-3">
+                <a href="/admin/" target="_blank" 
+                class="flex items-center w-full text-left px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-cogs text-brand-gold mr-3"></i>
+                    Django Admin Panel
+                </a>
+                <a href="#" 
+                class="flex items-center w-full text-left px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-chart-line text-brand-gold mr-3"></i>
+                    System Reports
+                </a>
+                <a href="#" 
+                class="flex items-center w-full text-left px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-users-cog text-brand-gold mr-3"></i>
+                    User Management
+                </a>
+                <a href="#" 
+                class="flex items-center w-full text-left px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-database text-brand-gold mr-3"></i>
+                    Database Backup
+                </a>
+            </div>
+        </div>
+
+        <!-- System Health -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">System Health</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Database Status</span>
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <i class="fas fa-circle mr-1 text-xs"></i>
+                        Online
+                    </span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Server Status</span>
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <i class="fas fa-circle mr-1 text-xs"></i>
+                        Healthy
+                    </span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Last Backup</span>
+                    <span class="text-xs text-gray-900">2 hours ago</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication Preferences -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Communication</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Preferred Language</span>
+                    <span class="text-sm text-gray-900">{{ user.preferred_language }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">System Notifications</span>
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Enabled
+                    </span>
+                </div>
+            </div>
+            
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <a href="{% url 'dashboard:notification_settings' %}" 
+                class="text-sm text-brand-gold hover:text-brand-gold-600 font-medium">
+                    <i class="fas fa-cog mr-1"></i>
+                    Update Settings
+                </a>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Stats -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">System Statistics</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Total Users</span>
+                    <span class="text-lg font-bold text-brand-navy">{{ system_stats.total_users }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Active Employees</span>
+                    <span class="text-lg font-bold text-brand-navy">{{ system_stats.active_employees }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Active Landlords</span>
+                    <span class="text-lg font-bold text-brand-navy">{{ system_stats.active_landlords }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Active Residents</span>
+                    <span class="text-lg font-bold text-brand-navy">{{ system_stats.active_residents }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-600">Total Properties</span>
+                    <span class="text-lg font-bold text-brand-navy">{{ system_stats.total_properties }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent System Activity -->
+        <div class="bg-white shadow-sm rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+            <div class="space-y-3">
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 mt-1">
+                        <i class="fas fa-user-plus text-green-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">New user registration</p>
+                        <p class="text-xs text-gray-500">2 minutes ago</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 mt-1">
+                        <i class="fas fa-building text-blue-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">Property added</p>
+                        <p class="text-xs text-gray-500">15 minutes ago</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 mt-1">
+                        <i class="fas fa-euro-sign text-brand-gold"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">Payment processed</p>
+                        <p class="text-xs text-gray-500">1 hour ago</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 mt-1">
+                        <i class="fas fa-ticket-alt text-purple-500"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">Support ticket resolved</p>
+                        <p class="text-xs text-gray-500">3 hours ago</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <a href="#" class="text-sm text-brand-gold hover:text-brand-gold-600 font-medium">
+                    View Full Activity Log
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}
+

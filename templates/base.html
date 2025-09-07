@@ -1,0 +1,480 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "Dashboard" %} - BrandenBed{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS with New Design System -->
+    <style>
+        :root {
+            /* New Color Palette */
+            --primary-teal: #0F766E;
+            --primary-emerald: #059669;
+            --secondary-coral: #F97316;
+            --secondary-amber: #F59E0B;
+            --accent-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --neutral-900: #1E293B;
+            --neutral-800: #334155;
+            --neutral-700: #475569;
+            --neutral-600: #64748B;
+            --neutral-500: #94A3B8;
+            --neutral-400: #CBD5E1;
+            --neutral-300: #E2E8F0;
+            --neutral-200: #F1F5F9;
+            --neutral-100: #F8FAFC;
+            --white: #FFFFFF;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-teal), var(--primary-emerald));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary-coral), var(--secondary-amber));
+            --gradient-accent: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            --gradient-surface: linear-gradient(135deg, var(--neutral-100), var(--white));
+            
+            /* Shadows */
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-colored: 0 25px 50px -12px rgba(15, 118, 110, 0.25);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+        }
+        
+        /* Typography */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--gradient-surface);
+            color: var(--neutral-800);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* Utility Classes */
+        .text-primary { color: var(--primary-teal); }
+        .text-secondary { color: var(--secondary-coral); }
+        .text-accent { color: var(--accent-purple); }
+        .bg-primary { background: var(--gradient-primary); }
+        .bg-secondary { background: var(--gradient-secondary); }
+        .bg-accent { background: var(--gradient-accent); }
+        .border-primary { border-color: var(--primary-teal); }
+        .border-secondary { border-color: var(--secondary-coral); }
+        .border-accent { border-color: var(--accent-purple); }
+        
+        /* Enhanced Dashboard Cards */
+        .dashboard-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-large);
+            border-color: var(--primary-teal);
+        }
+        
+        .stat-card {
+            position: relative;
+            background: linear-gradient(135deg, var(--white) 0%, var(--neutral-100) 100%);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        
+        /* Enhanced Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-right: 1px solid var(--neutral-200);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .nav-item {
+            border-radius: var(--radius-md);
+            margin: 4px 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            left: 0;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--white);
+            transform: translateX(4px);
+        }
+        
+        .nav-item.active {
+            background: var(--gradient-primary);
+            color: var(--white);
+            font-weight: 600;
+        }
+        
+        /* Enhanced Navbar */
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--neutral-200);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(20px);
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .btn-accent {
+            background: var(--gradient-accent);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Form Elements */
+        .form-input {
+            border: 2px solid var(--neutral-300);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            background: var(--neutral-100);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        /* Message Alerts */
+        .alert {
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: var(--white);
+        }
+        
+        .alert-error {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            color: var(--white);
+        }
+        
+        .alert-warning {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: var(--white);
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: var(--white);
+        }
+        
+        /* Animated Background */
+        .dashboard-content {
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .dashboard-content::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(15, 118, 110, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+        
+        @keyframes backgroundFloat {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Mobile responsive adjustments */
+        @media (max-width: 640px) {
+            .dashboard-content {
+                margin-left: 0 !important;
+                padding: 1rem;
+            }
+            
+            .dashboard-card {
+                margin-bottom: 16px;
+            }
+        }
+        
+        /* Ensure proper spacing with sidebar */
+        .dashboard-content {
+            margin-left: 0;
+            transition: margin-left 0.3s ease-in-out;
+            padding: 24px;
+        }
+        
+        @media (min-width: 640px) {
+            .dashboard-content {
+                margin-left: 16rem;
+            }
+        }
+        
+        /* Loading States */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
+        
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100">
+    <!-- Navigation -->
+    {% include 'dashboards/includes/navbar.html' %}
+    
+    <!-- Sidebar -->
+    {% include 'dashboards/includes/sidebar.html' %}
+    
+    <!-- Main content -->
+    <div class="dashboard-content">
+        <div class="p-4 pt-20">
+            <!-- Messages -->
+            {% if messages %}
+                <div class="mb-6">
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-error{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %} fade-in" role="alert">
+                        <div class="flex items-center gap-3">
+                            {% if message.tags == 'error' %}
+                                <i class="fas fa-exclamation-triangle text-lg"></i>
+                            {% elif message.tags == 'warning' %}
+                                <i class="fas fa-exclamation-circle text-lg"></i>
+                            {% elif message.tags == 'success' %}
+                                <i class="fas fa-check-circle text-lg"></i>
+                            {% else %}
+                                <i class="fas fa-info-circle text-lg"></i>
+                            {% endif %}
+                            <span class="font-medium">{{ message }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <!-- Page Header -->
+            {% block page_header %}
+            <div class="mb-8">
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold text-slate-900 mb-2">
+                                {% block page_title %}{% trans "Dashboard" %}{% endblock %}
+                            </h1>
+                            <p class="text-slate-600 text-lg">
+                                {% block page_description %}{% trans "Welcome to your management portal" %}{% endblock %}
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            {% block page_actions %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            
+            <!-- Main Content -->
+            <div class="fade-in">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Fade in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Enhanced card interactions
+        document.querySelectorAll('.dashboard-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        
+        // Auto-hide alerts
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-20px)';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
+        
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('logo-sidebar');
+            const sidebarToggle = document.querySelector('[data-drawer-toggle="logo-sidebar"]');
+            
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('-translate-x-full');
+                });
+            }
+            
+            // Set active navigation item
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

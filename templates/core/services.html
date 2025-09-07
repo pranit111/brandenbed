@@ -1,0 +1,280 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Services" %} - BrandenBed Living Spaces{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-gray-50">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl brand-navy">
+            {% trans "Our Services" %}
+        </h1>
+        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">
+            {% trans "Comprehensive housing solutions designed to make your Berlin experience seamless and enjoyable." %}
+        </p>
+    </div>
+</section>
+
+<!-- Student Services -->
+<section class="bg-white">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+        <div class="max-w-screen-md mb-8 lg:mb-16 mx-auto text-center">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                {% trans "Student Housing Solutions" %}
+            </h2>
+            <p class="text-gray-500 sm:text-xl">
+                {% trans "Everything you need to feel at home in Berlin from day one." %}
+            </p>
+        </div>
+        
+        <div class="grid gap-8 lg:grid-cols-2 lg:gap-16 mb-16">
+            <div>
+                <img class="w-full rounded-lg shadow-lg mb-4" src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Modern furnished room">
+            </div>
+            <div class="flex flex-col justify-center">
+                <h3 class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                    {% trans "Fully Furnished Accommodations" %}
+                </h3>
+                <p class="mb-6 font-light text-gray-500 md:text-lg">
+                    {% trans "Move into your new home with everything you need already provided. Our rooms come fully furnished with modern furniture, bedding, and all essential items." %}
+                </p>
+                <ul class="space-y-2 text-gray-500">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Modern furniture and appliances" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "High-speed WiFi included" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Dedicated work desk and study area" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Shared kitchens and common areas" %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-2 lg:gap-16 mb-16">
+            <div class="flex flex-col justify-center lg:order-2">
+                <h3 class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                    {% trans "All-Inclusive Pricing" %}
+                </h3>
+                <p class="mb-6 font-light text-gray-500 md:text-lg">
+                    {% trans "No hidden fees or surprise bills. Our transparent pricing includes everything you need for comfortable living." %}
+                </p>
+                <ul class="space-y-2 text-gray-500">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Utilities (electricity, heating, water)" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "High-speed internet and WiFi" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "24/7 maintenance and support" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Regular cleaning of common areas" %}
+                    </li>
+                </ul>
+            </div>
+            <div class="lg:order-1">
+                <img class="w-full rounded-lg shadow-lg mb-4" src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80" alt="Modern kitchen">
+            </div>
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <div>
+                <img class="w-full rounded-lg shadow-lg mb-4" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2084&q=80" alt="Support team">
+            </div>
+            <div class="flex flex-col justify-center">
+                <h3 class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                    {% trans "Multilingual Support & Onboarding" %}
+                </h3>
+                <p class="mb-6 font-light text-gray-500 md:text-lg">
+                    {% trans "Our dedicated support team speaks multiple languages and helps you navigate German bureaucracy and settle into your new life." %}
+                </p>
+                <ul class="space-y-2 text-gray-500">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Anmeldung (city registration) assistance" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Bank account opening guidance" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "24/7 emergency support hotline" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Local orientation and neighborhood tours" %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Property Management Services -->
+<section class="bg-gray-50">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div class="max-w-screen-md mb-8 lg:mb-16 mx-auto text-center">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                {% trans "For Property Owners" %}
+            </h2>
+            <h3 class="mb-4 text-xl text-gray-600">
+                {% trans "We manage. You earn. Zero drama." %}
+            </h3>
+            <p class="text-gray-500 sm:text-xl">
+                {% trans "From marketing to maintenance, BrandenBed handles every moving piece so your property stays full and fuss-free." %}
+            </p>
+        </div>
+
+        <!-- Problems We Solve -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="mb-2 text-lg font-bold text-red-600">{% trans "Without BrandenBed" %}</h4>
+                <p class="text-gray-500 mb-4">{% trans "Empty rooms and constant vacancies" %}</p>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Our Solution" %}</h4>
+                <p class="text-gray-600">{% trans "Dynamic pricing + multi-channel advertising" %}</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="mb-2 text-lg font-bold text-red-600">{% trans "Without BrandenBed" %}</h4>
+                <p class="text-gray-500 mb-4">{% trans "Lead ghosting and no-shows" %}</p>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Our Solution" %}</h4>
+                <p class="text-gray-600">{% trans "Auto CRM follow-ups + WhatsApp bot" %}</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="mb-2 text-lg font-bold text-red-600">{% trans "Without BrandenBed" %}</h4>
+                <p class="text-gray-500 mb-4">{% trans "Late rent and chasing payments" %}</p>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Our Solution" %}</h4>
+                <p class="text-gray-600">{% trans "Auto reminders + secure payment links" %}</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="mb-2 text-lg font-bold text-red-600">{% trans "Without BrandenBed" %}</h4>
+                <p class="text-gray-500 mb-4">{% trans "Contract errors and paperwork mistakes" %}</p>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Our Solution" %}</h4>
+                <p class="text-gray-600">{% trans "E-stamp + templates + version control" %}</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="mb-2 text-lg font-bold text-red-600">{% trans "Without BrandenBed" %}</h4>
+                <p class="text-gray-500 mb-4">{% trans "2 AM emergency repair calls" %}</p>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Our Solution" %}</h4>
+                <p class="text-gray-600">{% trans "24/7 vendor SLAs + spare parts inventory" %}</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="mb-2 text-lg font-bold text-red-600">{% trans "Without BrandenBed" %}</h4>
+                <p class="text-gray-500 mb-4">{% trans "No visibility on property performance" %}</p>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Our Solution" %}</h4>
+                <p class="text-gray-600">{% trans "Owner dashboard + scheduled payouts" %}</p>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="max-w-screen-md mx-auto text-center mb-8">
+            <h3 class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                {% trans "How It Works" %}
+            </h3>
+            <p class="text-gray-500 sm:text-xl">
+                {% trans "Getting started with BrandenBed is simple and straightforward." %}
+            </p>
+        </div>
+
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div class="text-center">
+                <div class="flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-brand-gold text-white font-bold text-xl mx-auto">
+                    1
+                </div>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Share Property Details" %}</h4>
+                <p class="text-gray-500">{% trans "Tell us about your property and investment goals." %}</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-brand-gold text-white font-bold text-xl mx-auto">
+                    2
+                </div>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "We Visit & Evaluate" %}</h4>
+                <p class="text-gray-500">{% trans "Our team inspects the property and assesses market potential." %}</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-brand-gold text-white font-bold text-xl mx-auto">
+                    3
+                </div>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Finalize Terms" %}</h4>
+                <p class="text-gray-500">{% trans "We agree on management terms and sign the partnership agreement." %}</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-brand-gold text-white font-bold text-xl mx-auto">
+                    4
+                </div>
+                <h4 class="mb-2 text-lg font-bold brand-navy">{% trans "Start Earning" %}</h4>
+                <p class="text-gray-500">{% trans "We onboard tenants and you start receiving regular rental income." %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-brand-navy">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div class="mx-auto max-w-screen-sm text-center">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white">
+                {% trans "Ready to Get Started?" %}
+            </h2>
+            <p class="mb-6 font-light text-gray-300 md:text-lg">
+                {% trans "Whether you're looking for housing or want to maximize your property investment, we're here to help." %}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'core:properties' %}" class="text-white bg-brand-gold hover:bg-brand-gold-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">
+                    {% trans "Find Housing" %}
+                </a>
+                <a href="{% url 'core:landlords' %}" class="text-gray-300 bg-transparent border border-gray-300 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">
+                    {% trans "List Your Property" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

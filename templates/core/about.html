@@ -1,0 +1,313 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "About Us" %} - BrandenBed Living Spaces{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="relative overflow-hidden bg-gradient-to-br from-yellow-50 via-white to-yellow-50">
+    <!-- Background Decoration -->
+    <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-yellow-200/30 to-yellow-300/30 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-60 h-60 bg-gradient-to-br from-black/10 to-gray-800/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-br from-yellow-100/20 to-yellow-200/20 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="relative py-16 px-6 mx-auto max-w-screen-xl text-center lg:py-24">
+        <div class="mb-8 inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-yellow-200/20">
+            <div class="w-6 h-6 mr-3 bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg p-1">
+                <img src="{% static 'images/logo.png' %}" alt="BrandenBed" class="w-full h-full object-contain">
+            </div>
+            <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            <span class="text-sm font-medium text-slate-700">{% trans "About Our Company" %}</span>
+        </div>
+        
+        <h1 class="mb-6 text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+            <span class="bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-700 bg-clip-text text-transparent">
+                {% trans "About" %}
+            </span>
+            <br>
+            <span class="bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent">
+                {% trans "BrandenBed" %}
+            </span>
+        </h1>
+        
+        <p class="mb-10 text-xl font-normal text-slate-600 lg:text-2xl max-w-4xl mx-auto leading-relaxed">
+            {% trans "Your trusted partner in finding the perfect home for your academic and professional journey in Berlin." %}
+        </p>
+        
+        <!-- Quick Stats -->
+        <div class="flex flex-wrap justify-center gap-8 mb-8">
+            <div class="text-center">
+                <div class="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">5+</div>
+                <div class="text-sm text-slate-600">{% trans "Years Experience" %}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-600 bg-clip-text text-transparent">1000+</div>
+                <div class="text-sm text-slate-600">{% trans "Happy Residents" %}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold bg-gradient-to-r from-black to-gray-800 bg-clip-text text-transparent">24/7</div>
+                <div class="text-sm text-slate-600">{% trans "Support" %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="relative bg-white/80 backdrop-blur-sm">
+    <div class="py-16 px-6 mx-auto max-w-screen-xl lg:py-20">
+        <div class="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+            <div class="flex flex-col justify-center">
+                <div class="mb-6 inline-flex items-center px-3 py-1 bg-yellow-100/80 backdrop-blur-sm rounded-full shadow-sm border border-yellow-200/20">
+                    <svg class="w-4 h-4 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-slate-700">{% trans "Our Mission" %}</span>
+                </div>
+                
+                <h2 class="mb-6 text-4xl lg:text-5xl tracking-tight font-extrabold">
+                    <span class="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">{% trans "Our" %}</span>
+                    <span class="bg-gradient-to-r from-black to-gray-800 bg-clip-text text-transparent"> {% trans "Mission" %}</span>
+                </h2>
+                
+                <p class="mb-6 text-lg font-normal text-slate-600 leading-relaxed">
+                    {% trans "At BrandenBed, we understand the challenges of finding accommodation in a new city. Our goal is to deliver a stress-free, reliable service that connects students and professionals with quality apartments that suit their needs and budgets." %}
+                </p>
+                <p class="mb-8 text-lg font-normal text-slate-600 leading-relaxed">
+                    {% trans "We foster a supportive environment where residents can focus on their goals and enjoy their time in Berlin, making the transition from their home country as smooth as possible." %}
+                </p>
+                
+                <!-- Mission Features -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
+                        <span class="text-sm font-medium text-slate-600">{% trans "Quality Assurance" %}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
+                        <span class="text-sm font-medium text-slate-600">{% trans "24/7 Support" %}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-black rounded-full mr-3"></div>
+                        <span class="text-sm font-medium text-slate-600">{% trans "Fair Pricing" %}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-black rounded-full mr-3"></div>
+                        <span class="text-sm font-medium text-slate-600">{% trans "Prime Locations" %}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -inset-4 bg-gradient-to-r from-yellow-200/20 to-black/10 rounded-2xl blur-2xl"></div>
+                <img class="relative w-full rounded-2xl shadow-2xl" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Students collaborating">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <!-- Background Decoration -->
+    <div class="absolute inset-0">
+        <div class="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-yellow-200/20 to-yellow-300/20 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-20 left-10 w-48 h-48 bg-gradient-to-br from-black/5 to-gray-800/5 rounded-full blur-2xl"></div>
+    </div>
+    
+    <div class="relative py-16 px-6 mx-auto max-w-screen-xl sm:py-20 lg:px-6">
+        <div class="max-w-screen-md mb-12 lg:mb-16 mx-auto text-center">
+            <div class="mb-6 inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-yellow-200/20">
+                <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm font-medium text-slate-700">{% trans "Our Values" %}</span>
+            </div>
+            
+            <h2 class="mb-6 text-4xl lg:text-5xl tracking-tight font-extrabold">
+                <span class="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">{% trans "Why Choose" %}</span>
+                <br>
+                <span class="bg-gradient-to-r from-black to-gray-800 bg-clip-text text-transparent">{% trans "BrandenBed Living Spaces" %}</span>
+            </h2>
+            <p class="text-slate-600 text-xl leading-relaxed">
+                {% trans "We're not just a housing company - we're your partners in making Berlin feel like home." %}
+            </p>
+        </div>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-yellow-300/20 to-yellow-500/20 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+                <div class="relative bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
+                    <div class="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-500 to-yellow-600 shadow-lg mx-auto">
+                        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="mb-4 text-xl font-bold text-slate-900">{% trans "Local Expertise" %}</h3>
+                    <p class="text-slate-600 leading-relaxed">{% trans "Deep knowledge of the Berlin housing scene and international student needs, ensuring you get the best accommodation options." %}</p>
+                </div>
+            </div>
+            
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-black/10 to-gray-800/10 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+                <div class="relative bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
+                    <div class="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-700 to-black shadow-lg mx-auto">
+                        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="mb-4 text-xl font-bold text-slate-900">{% trans "Trusted Partnerships" %}</h3>
+                    <p class="text-slate-600 leading-relaxed">{% trans "Reputable property owners and quality housing in prime locations across Berlin's most desirable neighborhoods." %}</p>
+                </div>
+            </div>
+            
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+                <div class="relative bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
+                    <div class="flex justify-center items-center mb-6 w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-lg mx-auto">
+                        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="mb-4 text-xl font-bold text-slate-900">{% trans "Commitment to Excellence" %}</h3>
+                    <p class="text-slate-600 leading-relaxed">{% trans "Exceptional service and long-term relationships for a positive rental experience throughout your stay in Berlin." %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Story Section -->
+<section class="bg-white">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+        <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <div>
+                <img class="w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Berlin cityscape">
+            </div>
+            <div class="flex flex-col justify-center">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                    {% trans "Our Story" %}
+                </h2>
+                <p class="mb-6 font-light text-gray-500 md:text-lg">
+                    {% trans "BrandenBed Living Spaces UG was founded with a simple mission: to make finding quality student accommodation in Berlin as easy and stress-free as possible." %}
+                </p>
+                <p class="mb-6 font-light text-gray-500 md:text-lg">
+                    {% trans "As a Berlin-based housing company, we specialize in providing high-quality, fully managed accommodation for international students, expats, and young professionals who are making Germany their new home." %}
+                </p>
+                <p class="font-light text-gray-500 md:text-lg">
+                    {% trans "We understand the unique challenges that come with relocating to a new country, which is why we've built our services around comprehensive support - from helping with Anmeldung to creating community spaces where lifelong friendships are formed." %}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Overview -->
+<section class="bg-gray-50">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div class="max-w-screen-md mb-8 lg:mb-16 mx-auto text-center">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 brand-navy">
+                {% trans "What We Offer" %}
+            </h2>
+            <p class="text-gray-500 sm:text-xl">
+                {% trans "Comprehensive housing solutions tailored for international students and young professionals." %}
+            </p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-2">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="mb-4 text-2xl font-bold brand-navy">{% trans "For Students" %}</h3>
+                <ul class="space-y-2 text-gray-500">
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Furnished private & shared rooms" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "All-inclusive rent (utilities, Wi-Fi, heating)" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Multilingual tenant onboarding & support" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Anmeldung assistance" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Community events & networking" %}
+                    </li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="mb-4 text-2xl font-bold brand-navy">{% trans "For Property Owners" %}</h3>
+                <ul class="space-y-2 text-gray-500">
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Professional property management" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Guaranteed rent options" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Marketing & tenant screening" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Maintenance & repairs coordination" %}
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 brand-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {% trans "Transparent reporting & timely payouts" %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-brand-navy">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div class="mx-auto max-w-screen-sm text-center">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white">
+                {% trans "Ready to Start Your Berlin Journey?" %}
+            </h2>
+            <p class="mb-6 font-light text-gray-300 md:text-lg">
+                {% trans "Whether you're a student looking for the perfect home or a property owner seeking professional management, we're here to help." %}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'core:properties' %}" class="text-white bg-brand-gold hover:bg-brand-gold-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">
+                    {% trans "Find Housing" %}
+                </a>
+                <a href="{% url 'core:contact' %}" class="text-gray-300 bg-transparent border border-gray-300 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">
+                    {% trans "Contact Us" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

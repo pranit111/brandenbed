@@ -1,0 +1,218 @@
+<!-- Comment Form Component -->
+<!-- Usage: {% include 'support/includes/comment_form.html' with ticket=ticket form=comment_form %} -->
+
+<div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Add Comment</h3>
+    </div>
+    
+    <form method="post" action="{% url 'support:add_comment' ticket.ticket_id %}" enctype="multipart/form-data" class="p-6">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="mb-4 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex">
+                    <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                    <div class="ml-3">
+                        {% for error in form.non_field_errors %}
+                            <p class="text-sm text-red-800">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="space-y-4">
+            <!-- Comment Type -->
+            <div>
+                <label for="{{ form.comment_type.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    Comment Type
+                </label>
+                {{ form.comment_type }}
+                {% if form.comment_type.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.comment_type.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Comment Text -->
+            <div>
+                <label for="{{ form.comment.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    Comment <span class="text-red-500">*</span>
+                </label>
+                {{ form.comment }}
+                {% if form.comment.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.comment.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-sm text-gray-500">Provide details about the update, response, or notes for this ticket.</p>
+            </div>
+
+            <!-- Visibility -->
+            <div class="flex items-start">
+                <div class="flex items-center h-5">
+                    {{ form.is_internal }}
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="{{ form.is_internal.id_for_label }}" class="font-medium text-gray-700">
+                        Internal Note
+                    </label>
+                    <p class="text-gray-500">Check this box if this comment should only be visible to staff members and not to the resident.</p>
+                </div>
+            </div>
+            {% if form.is_internal.errors %}
+                <p class="text-sm text-red-600">{{ form.is_internal.errors.0 }}</p>
+            {% endif %}
+
+            <!-- File Attachment -->
+            <div>
+                <label for="{{ form.attachment.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    Attachment (Optional)
+                </label>
+                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors">
+                    <div class="space-y-1 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="flex text-sm text-gray-600">
+                            <label for="{{ form.attachment.id_for_label }}" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                <span>Upload a file</span>
+                                {{ form.attachment }}
+                            </label>
+                            <p class="pl-1">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">PNG, JPG, PDF, DOC up to 5MB</p>
+                    </div>
+                </div>
+                {% if form.attachment.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.attachment.errors.0 }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-6 flex justify-end space-x-3">
+            <button type="button" onclick="resetForm()" 
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                Clear
+            </button>
+            <button type="submit" 
+                    style="background-color: var(--brand-navy);"
+                    class="px-4 py-2 rounded-lg text-sm font-medium text-white hover:opacity-90">
+                Add Comment
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Quick Action Buttons (for common responses) -->
+<div class="mt-4 bg-gray-50 rounded-lg p-4">
+    <h4 class="text-sm font-medium text-gray-700 mb-3">Quick Actions</h4>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <button type="button" onclick="insertQuickResponse('investigating')" 
+                class="px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50">
+            📋 Investigating Issue
+        </button>
+        <button type="button" onclick="insertQuickResponse('scheduled')" 
+                class="px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50">
+            📅 Scheduled for Repair
+        </button>
+        <button type="button" onclick="insertQuickResponse('more_info')" 
+                class="px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50">
+            ❓ Need More Info
+        </button>
+        <button type="button" onclick="insertQuickResponse('completed')" 
+                class="px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50">
+            ✅ Work Completed
+        </button>
+    </div>
+</div>
+
+<script>
+// Quick response templates
+const quickResponses = {
+    investigating: "We have received your request and are currently investigating the issue. We will update you shortly with our findings.",
+    scheduled: "Your maintenance request has been scheduled. Our team will contact you to arrange a convenient time for the repair.",
+    more_info: "To better assist you with this request, could you please provide additional details about the issue? This will help us resolve it more efficiently.",
+    completed: "The maintenance work has been completed. Please let us know if you notice any further issues or if you're satisfied with the resolution."
+};
+
+function insertQuickResponse(type) {
+    const textarea = document.getElementById('{{ form.comment.id_for_label }}');
+    const template = quickResponses[type];
+    
+    if (textarea.value.trim() === '') {
+        textarea.value = template;
+    } else {
+        textarea.value += '\n\n' + template;
+    }
+    
+    // Set comment type based on quick action
+    const commentType = document.getElementById('{{ form.comment_type.id_for_label }}');
+    if (type === 'more_info' || type === 'investigating') {
+        commentType.value = 'resident_response';
+        document.getElementById('{{ form.is_internal.id_for_label }}').checked = false;
+    } else {
+        commentType.value = 'status_update';
+        document.getElementById('{{ form.is_internal.id_for_label }}').checked = false;
+    }
+    
+    textarea.focus();
+}
+
+function resetForm() {
+    document.getElementById('{{ form.comment.id_for_label }}').value = '';
+    document.getElementById('{{ form.comment_type.id_for_label }}').value = 'internal';
+    document.getElementById('{{ form.is_internal.id_for_label }}').checked = true;
+    document.getElementById('{{ form.attachment.id_for_label }}').value = '';
+}
+
+// File upload preview
+document.getElementById('{{ form.attachment.id_for_label }}').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const uploadArea = e.target.closest('.border-dashed');
+        const fileName = file.name;
+        const fileSize = (file.size / 1024 / 1024).toFixed(2);
+        
+        // Show file info
+        const fileInfo = document.createElement('div');
+        fileInfo.className = 'mt-2 text-sm text-gray-600';
+        fileInfo.innerHTML = `
+            <div class="flex items-center">
+                <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>${fileName} (${fileSize} MB)</span>
+                <button type="button" onclick="clearFile()" class="ml-2 text-red-600 hover:text-red-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        `;
+        
+        // Remove existing file info
+        const existingFileInfo = uploadArea.querySelector('.mt-2');
+        if (existingFileInfo) {
+            existingFileInfo.remove();
+        }
+        
+        uploadArea.appendChild(fileInfo);
+    }
+});
+
+function clearFile() {
+    document.getElementById('{{ form.attachment.id_for_label }}').value = '';
+    const fileInfo = document.querySelector('.border-dashed .mt-2');
+    if (fileInfo) {
+        fileInfo.remove();
+    }
+}
+
+// Auto-resize textarea
+document.getElementById('{{ form.comment.id_for_label }}').addEventListener('input', function(e) {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+});
+</script>
