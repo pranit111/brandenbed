@@ -13,10 +13,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-fallback-key-change-i
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.onrender.com',  # Allow all Render subdomains
-    os.getenv('RENDER_EXTERNAL_HOSTNAME', ''),  # Render auto injects this
+"*"# Render auto injects this
 ]
 # Application definition
 DJANGO_APPS = [
